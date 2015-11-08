@@ -1,0 +1,5 @@
+suites:
+    main:
+        namespace: FisiLog
+        psr4_prefix: FisiLog
+        src_path: app
