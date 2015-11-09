@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ScheduleSeeder::class);
         $this->call(ClassRoomSeeder::class);
         $this->call(StudentSeeder::class);
+        $this->call(AcademicDepartmentSeeder::class);
         Model::reguard();
     }
 }
