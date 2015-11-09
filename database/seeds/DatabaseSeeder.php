@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
         $this->call(DocumentSeeder::class);
         $this->call(FacultadSeeder::class);
+        $this->call(SchoolSeeder::class);
         Model::reguard();
     }
 }
