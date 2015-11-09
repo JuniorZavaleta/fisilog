@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
         $this->call(DocumentSeeder::class);
         $this->call(FacultadSeeder::class);
         $this->call(SchoolSeeder::class);
+        $this->call(ScheduleSeeder::class);
         Model::reguard();
     }
 }
