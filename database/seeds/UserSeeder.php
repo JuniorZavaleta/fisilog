@@ -14,6 +14,14 @@ class UserSeeder extends Seeder
             'email' => 'juniorclaudiozavaleta@gmail.com',
             'phone' => '76726604',
             'password' => Hash::make('123456'),
+         ],
+         [
+            'id' => 2, 
+            'name' => 'prueba profesor',
+            'lastname' => 'prueba profesor',
+            'email' => 'test@email.com',
+            'phone' => '12345678',
+            'password' => Hash::make('123456'),
          ]
       ]);
    }
