@@ -5,7 +5,14 @@ class AcademicPlan {
 	private $school;
 	private $yearOfPublication;
 	private $isActive;
+	private $name;
 
+	public function setName($name) {
+		$this->name = $name;
+	}
+	public function getName() {
+		return $this->name;
+	}
 	public function setSchool(School $school) {
 		$this->school = $school;
 	}
