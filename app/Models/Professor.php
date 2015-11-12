@@ -3,8 +3,8 @@
 namespace FisiLog\Models;
 use FisiLog\Models\Clase;
 use FisiLog\Models\AcademicDepartament;
-use Illuminate\Database\Eloquent\Model;
 use FisiLog\Models\User;
+use Illuminate\Database\Eloquent\Model;
 
 class Professor extends User
 {
@@ -12,6 +12,10 @@ class Professor extends User
 
     public function academicDepartament(){
         return $this->belongsTo(AcademicDepartament::class);
+    } 
+
+    public function user(){
+        return $this->belongsTo(User::class);
     } 
 
     public function clase(){

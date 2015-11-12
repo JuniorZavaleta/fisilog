@@ -14,11 +14,12 @@ class CourseOpened extends Model
         return $this->belongsTo(AcademicCycle::class);
   	}
 
+    public function course(){
+        return $this->belongsTo(Course::class);
+    } 
+
   	public function group(){
         return $this->hasMany(Group::class,'id');
   	}
 
-  	public function course(){
-        return $this->belongsTo(Course::class);
-    } 
 }

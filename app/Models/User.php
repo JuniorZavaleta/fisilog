@@ -1,7 +1,10 @@
 <?php
 
 namespace FisiLog\Models;
-
+use FisiLog\Models\Student;
+use FisiLog\Models\User;
+use Fisilog\Models\Document;
+use Fisilog\Models\Device;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
@@ -36,4 +39,20 @@ class User extends Model implements AuthenticatableContract,
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
+
+    public function device(){
+        return $this->hasMany(Device::class,'id');
+    }
+
+    public function document(){
+        return $this->hasMany(Document::class,'id');
+    }
+
+    public function student(){
+        return $this->hasMany(Student::class,'id');
+    }
+
+    public function professor(){
+        return $this->hasMany(Professor::class,'id');
+    }
 }
