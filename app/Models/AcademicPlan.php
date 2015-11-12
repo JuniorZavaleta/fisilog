@@ -10,10 +10,10 @@ class AcademicPlan extends Model
     protected $table = 'academic_plans';
 
     public function school(){
-        return $this->belongsTo(School::class,'code');
+        return $this->belongsTo(School::class);
     } 
 
     public function course(){
-    	return $this->hasMany(Course::class,'code');
+    	return $this->hasMany(Course::class,'id');
     }
 }

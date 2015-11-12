@@ -11,10 +11,10 @@ class Course extends Model
 
 
 	public function academicPlan(){
-        return $this->belongsTo(AcademicPlan::class,'yearOfPublication');
+        return $this->belongsTo(AcademicPlan::class);
     } 
 
     public function courseOpened(){
-    	return $this->hasMany(CourseOpened::class,'code');
+    	return $this->hasMany(CourseOpened::class,'id');
     }
 }
