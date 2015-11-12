@@ -1,6 +1,6 @@
 <?php
 
-namespace FisiLog;
+namespace FisiLog\Models;
 use FisiLog\Models\User;
 use Illuminate\Database\Eloquent\Model;
 

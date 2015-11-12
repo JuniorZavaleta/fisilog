@@ -12,20 +12,21 @@ class CreateDeviceTable extends Migration
      */
     public function up()
     {
-        Schema::create('device',function(Blueprint $table){
+        Schema::create('devices', function(Blueprint $table){
+            $table->increments('id');
+            $table->integer('professor_id')->unsigned();
             $table->string('serialNumber', 22)->unique();
             $table->string('brand', 10);
             $table->string('model', 30);
-            $table->integer('professor_id');
             $table->timestamps();
         });
 
-        Schema::table('device', function(Blueprint $table){
-            $table  ->foreign('professor_id')
-                    ->references('id')
-                    ->on('professors')
-                    ->onUpdate('cascade')
-                    ->onDelete('cascade');
+        Schema::table('devices', function(Blueprint $table){
+            $table->foreign('professor_id')
+                  ->references('id')
+                  ->on('professors')
+                  ->onUpdate('cascade')
+                  ->onDelete('cascade');
         });
     }
 
@@ -36,9 +37,9 @@ class CreateDeviceTable extends Migration
      */
     public function down()
     {   
-        Schema::table('device', function(Blueprint $table){
-            $table->dropForeign('device_professor_id_foreign');
+        Schema::table('devices', function(Blueprint $table){
+            $table->dropForeign('devices_professor_id_foreign');
         });
-        Schema::drop('device');
+        Schema::drop('devices');
     }
 }

@@ -32,6 +32,7 @@ class DatabaseSeeder extends Seeder
         $this->call(GroupSeeder::class);
         $this->call(ClaseSeeder::class);
         $this->call(AttendanceSeeder::class);
+        $this->call(DeviceSeeder::class);
         Model::reguard();
     }
 }

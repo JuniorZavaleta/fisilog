@@ -1,10 +1,10 @@
 <?php
-
 namespace FisiLog\Models;
+
 use FisiLog\Models\Student;
 use FisiLog\Models\User;
-use Fisilog\Models\Document;
-use Fisilog\Models\Device;
+use FisiLog\Models\Document;
+use FisiLog\Models\Device;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
@@ -19,40 +19,19 @@ class User extends Model implements AuthenticatableContract,
 {
     use Authenticatable, Authorizable, CanResetPassword;
 
-    /**
-     * The database table used by the model.
-     *
-     * @var string
-     */
     protected $table = 'users';
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = ['name', 'email', 'password'];
-
-    /**
-     * The attributes excluded from the model's JSON form.
-     *
-     * @var array
-     */
     protected $hidden = ['password', 'remember_token'];
 
-    public function device(){
-        return $this->hasMany(Device::class,'id');
-    }
-
-    public function document(){
-        return $this->hasMany(Document::class,'id');
+    public function documents(){
+        return $this->hasMany(Document::class);
     }
 
     public function student(){
-        return $this->hasMany(Student::class,'id');
+        return $this->hasOne(Student::class);
     }
 
     public function professor(){
-        return $this->hasMany(Professor::class,'id');
+        return $this->hasOne(Professor::class);
     }
 }

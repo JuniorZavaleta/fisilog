@@ -2,16 +2,16 @@
 
 namespace FisiLog\Models;
 use FisiLog\Models\User;
-use Fisilog\Models\School;
-use Fisilog\Models\Group;
+use FisiLog\Models\School;
+use FisiLog\Models\Group;
 use Illuminate\Database\Eloquent\Model;
 
-class Student extends User
+class Student extends Model
 {
     protected $table = 'students';
 
-    public function group(){
-        return $this->belongsToMany(Group::class);
+    public function groups(){
+        return $this->belongsToMany(Group::class,'students_x_groups','student_id','group_id');
     }
 
     public function user(){
