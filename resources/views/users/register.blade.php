@@ -19,7 +19,7 @@
 				{!! Form::open(array('route'=>'user.register.process', 'class'=>'form-horizontal', 'method'=>'POST')) !!}
 				<div class="form-group">
 					<div class="col-sm-2">
-						<label class="control-label col-sm-4">Nombre</label>
+						<label class="control-label">Nombre</label>
 					</div>
 					<div class="col-sm-4">
 						{!! Form::text('name', null ,['class'=>'form-control','placeholder'=>'Ingrese sus nombres']) !!}
@@ -44,6 +44,19 @@
 						  2 => 'Docente',
 						] , 0, 
 						['class'=>'form-control',]) !!}
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-2">
+						<label class="control-label">Tipo de documento</label>
+					</div>
+					<div class="col-sm-4">
+						<select class="form-control">
+							<option value="0">Seleccione un tipo de Documento</option>
+							@foreach($document_types as $document_type)
+								<option value="{{$document_type->id}}">{{$document_type->name}}</option>
+							@endforeach
+						</select>
 					</div>
 				</div>
 				{!! Form::close() !!}

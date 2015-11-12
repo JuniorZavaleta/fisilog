@@ -20,7 +20,7 @@ class UserRegisterController extends Controller
         return view('users.register', $data);
     }
 
-    public function process() {
+    public function process(Request $request) {
 
     }
 }
