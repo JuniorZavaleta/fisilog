@@ -5,6 +5,7 @@ use FisiLog\Models\Group;
 use FisiLog\Models\Professor;
 use FisiLog\Models\ClassRoom;
 use FisiLog\Models\Schedule;
+use FisiLog\Models\Attendance;
 use Illuminate\Database\Eloquent\Model;
 
 class Clase extends Model
