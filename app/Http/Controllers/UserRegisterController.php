@@ -8,6 +8,7 @@ use FisiLog\Http\Requests;
 use FisiLog\Http\Controllers\Controller;
 use FisiLog\Models\DocumentType;
 use FisiLog\Services\UserRegisterService;
+use FisiLog\BusinessClasses\User;
 use Validator;
 
 class UserRegisterController extends Controller
@@ -37,7 +38,7 @@ class UserRegisterController extends Controller
             return redirect()->route('user.register.index')->withErrors($validator->errors())->withInput();
 
         $this->user_service->registerUser($input);
-        //$this->document_service->registerDocument($user, $document);
+
         return view('users.complete');
     }
 
@@ -47,7 +48,7 @@ class UserRegisterController extends Controller
             'lastname' => $request->input('lastname'),
             'email' => $request->input('email'),
             'document_type' => $request->input('document_type'),
-            'document_id' => $request->input('document_id'),
+            'code' => $request->input('document_id'),
             'phone' => $request->input('phone'),
             'phone_length' => strlen($request->input('phone')),
         ];
@@ -58,7 +59,7 @@ class UserRegisterController extends Controller
             'lastname' => 'required|alpha',
             'email' => 'required|email',
             'document_type' => 'required|exists:document_types,id',
-            'document_id' => 'required',
+            'code' => 'required',
             'phone' => 'required|numeric',
             'phone_length' => 'required|in:7,9',
         ];

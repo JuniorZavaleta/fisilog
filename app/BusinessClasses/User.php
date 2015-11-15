@@ -2,12 +2,19 @@
 namespace FisiLog\BusinessClasses;
 use Hash;
 class User {
+	protected $id;
 	protected $name;
 	protected $lastname;
 	protected $email;
 	protected $phone;
 	protected $password;
 
+	public function setId($id) {
+		$this->id = $id;
+	}
+	public function getId() {
+		return $this->id;
+	}
 	public function setName($name) {
 		$this->name = $name;
 	}
