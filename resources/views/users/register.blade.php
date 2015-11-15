@@ -38,7 +38,7 @@
 						<label class="control-label">Tipo Usuario</label>
 					</div>
 					<div class="col-sm-4">
-						{!! Form::select('type', 
+						{!! Form::select('user_type',
 						[ 0 => 'Seleccione el tipo de Usuario',
 						  1 => 'Alumno',
 						  2 => 'Docente',

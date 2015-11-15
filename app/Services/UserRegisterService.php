@@ -23,7 +23,7 @@ class UserRegisterService {
 		$document = new Document;
 		$document->setUser( $user );
 		$document->setDocumentType( $document_type );
-		$document->setCode( $data['code'] );
+		$document->setCode( $data['document_code'] );
 
 		$this->documentPersistence->save($document);
 	}
