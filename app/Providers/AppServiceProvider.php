@@ -3,7 +3,7 @@
 namespace FisiLog\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use FisiLog\Dao\DaoEloquentFactory;
+use FisiLog\DAO\DaoEloquentFactory;
 use FisiLog\Services\UserRegisterService;
 
 class AppServiceProvider extends ServiceProvider
