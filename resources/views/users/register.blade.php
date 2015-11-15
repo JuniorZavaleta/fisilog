@@ -59,6 +59,37 @@
 						</select>
 					</div>
 				</div>
+				<div class="form-group">
+					<div class="col-sm-2">
+						<label class="control-label">Número de Documento</label>
+					</div>
+					<div class="col-sm-4">
+						{!! Form::text('document_id', null ,['class'=>'form-control','placeholder'=>'Ingrese el número de documento']) !!}
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-2">
+						<label class="control-label">Telefono</label>
+					</div>
+					<div class="col-sm-4">
+						{!! Form::text('phone', null ,['class'=>'form-control','placeholder'=>'Ingrese sus telefono']) !!}
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-2">
+						<label class="control-label">E-mail</label>
+					</div>
+					<div class="col-sm-4">
+						{!! Form::text('email', null ,['class'=>'form-control','placeholder'=>'Ingrese su e-mail']) !!}
+					</div>
+				</div>
+				<div action="demo_form.asp" method="get" style="text-align: left;">
+					<button class="btn btn-primary" name="registerButton" type="submit" value="register"
+
+					>Registrar</button>
+				</div>
+				 
+				 </button> 
 				{!! Form::close() !!}
 			</div>
 		</div>
