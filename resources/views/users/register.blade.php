@@ -51,7 +51,7 @@
 						<label class="control-label">Tipo de documento</label>
 					</div>
 					<div class="col-sm-4">
-						<select class="form-control">
+						<select name="document_type" class="form-control">
 							<option value="0">Seleccione un tipo de Documento</option>
 							@foreach($document_types as $document_type)
 								<option value="{{$document_type->id}}">{{$document_type->name}}</option>
@@ -83,13 +83,11 @@
 						{!! Form::text('email', null ,['class'=>'form-control','placeholder'=>'Ingrese su e-mail']) !!}
 					</div>
 				</div>
-				<div action="demo_form.asp" method="get" style="text-align: left;">
-					<button class="btn btn-primary" name="registerButton" type="submit" value="register"
-
-					>Registrar</button>
+				<div class="form-group">
+					<div class="col-sm-2">
+						<button class="btn btn-primary" name="registerButton" type="submit" value="register">Registrar</button>
+					</div>
 				</div>
-				 
-				 </button> 
 				{!! Form::close() !!}
 			</div>
 		</div>
