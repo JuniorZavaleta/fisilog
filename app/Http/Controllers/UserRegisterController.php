@@ -14,6 +14,10 @@ class UserRegisterController extends Controller
 {
     private $service;
 
+    public function __construct(UserRegisterService $service) {
+        $this->service = $service;
+    }
+
     public function index() {
         $document_types = DocumentType::all();
         $data = [
@@ -30,8 +34,7 @@ class UserRegisterController extends Controller
         if($validator->fails())
             return redirect()->route('user.register.index')->withErrors($validator->errors)->withInput();
 
-        $service = new UserRegisterService;
-        $service->registerUser($input);
+        $this->service->registerUser($input);
 
         return view('users.complete');
     }
