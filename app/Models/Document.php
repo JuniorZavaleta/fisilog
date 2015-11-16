@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Document extends Model
 {
     protected $table = 'documents';
+    public $timestamps = false;
 
     public function user(){
         return $this->belongsTo(User::class);
