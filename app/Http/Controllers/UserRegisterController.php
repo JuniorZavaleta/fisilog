@@ -25,10 +25,12 @@ class UserRegisterController extends Controller
         $document_types = DocumentType::all();
         $schools = School::all();
         $academic_departments = AcademicDepartment::all();
+        $professor_types = config('enums.professor_types');
 
         $data = [
             'document_types' => $document_types,
             'schools' => $schools,
+            'professor_types' => $professor_types,
         ];
 
         return view('users.register', $data);
