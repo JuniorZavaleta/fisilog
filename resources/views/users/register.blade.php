@@ -14,6 +14,17 @@
 </head>
 <body class="container">
   <div class="container">
+    @if(count($errors) > 0)
+      <div class="alert alert-danger">
+        <ul>
+        @foreach($errors->all() as $error)
+          <li>{{$error}}</li>
+        @endforeach
+        </ul>
+      </div>
+    @endif
+  </div>
+  <div class="container">
     <div class="row">
       <h2>Registrar usuario</h2>
     </div>
@@ -124,6 +135,19 @@
               <option value="0" selected>Seleccione el tipo de profesor</option>
               @foreach($professor_types as $id => $name)
                 <option value="{{$id}}">{{$name}}</option>
+              @endforeach
+            </select>
+          </div>
+        </div>
+        <div class="form-group professor-field" hidden>
+          <div class="col-sm-2">
+            <label class="control-label">Dep. Academico</label>
+          </div>
+          <div class="col-sm-4">
+            <select name="academic_department_id" class="form-control">
+              <option value="0" selected>Seleccione el Dep. Academico del profesor</option>
+              @foreach($academic_departments as $academic_department)
+                <option value="{{$academic_department->id}}">{{$academic_department->name}}</option>
               @endforeach
             </select>
           </div>

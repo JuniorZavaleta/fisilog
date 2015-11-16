@@ -30,6 +30,7 @@ class UserRegisterController extends Controller
       $data = [
           'document_types' => $document_types,
           'schools' => $schools,
+          'academic_departments' => $academic_departments,
           'professor_types' => $professor_types,
       ];
 
@@ -89,7 +90,7 @@ class UserRegisterController extends Controller
       $validator->sometimes('year_of_entry', 'required|numeric|digits:4', function($input) {
           return $this->isStudent($input);
       });
-      $validator->sometimes('academic_department_id','required|academic_departments,id',function($input) {
+      $validator->sometimes('academic_department_id','required|exists:academic_departments,id',function($input) {
           return $this->isProfessor($input);
       });
       $validator->sometimes('professor_type', 'required|in:'.$this->getProfessorTypes(), function($input) {

@@ -5,6 +5,8 @@ use FisiLog\DAO\Document\DocumentDaoEloquent;
 use FisiLog\DAO\DocumentType\DocumentTypeDaoEloquent;
 use FisiLog\DAO\Student\StudentDaoEloquent;
 use FisiLog\DAO\School\SchoolDaoEloquent;
+use FisiLog\DAO\AcademicDepartment\AcademicDepartmentDaoEloquent;
+use FisiLog\DAO\Professor\ProfessorDaoEloquent;
 
 class DaoEloquentFactory {
   public static function getUserDAO() {
@@ -21,5 +23,11 @@ class DaoEloquentFactory {
   }
   public static function getSchoolDAO() {
     return new SchoolDaoEloquent;
+  }
+  public static function getAcademicDepartmentDAO() {
+    return new AcademicDepartmentDaoEloquent;
+  }
+  public static function getProfessorDAO() {
+    return new ProfessorDaoEloquent;
   }
 }

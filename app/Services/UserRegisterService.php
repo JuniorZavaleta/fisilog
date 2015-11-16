@@ -12,7 +12,9 @@ class UserRegisterService {
     $this->documentTypePersistence = $dao->getDocumentTypeDAO();
     $this->documentPersistence = $dao->getDocumentDAO();
     $this->studentPersistence = $dao->getStudentDAO();
+    $this->professorPersistence = $dao->getProfessorDAO();
     $this->schoolPersistence = $dao->getSchoolDAO();
+    $this->academicDepartmentPersistence = $dao->getAcademicDepartmentDAO();
   }
   public function registerUser($data) {
     if( $data['user_type'] == 1 ) {
@@ -42,6 +44,13 @@ class UserRegisterService {
       $user->setYearOfEntry( $data['year_of_entry'] );
 
       $this->studentPersistence->save($user);
+    } elseif( $data['user_type'] == 2 ) {
+      $academicDepartment = $this->academicDepartmentPersistence->findById( $data['academic_department_id'] );
+      $professor_types = config('enums.professor_types');
+      $user->setAcademicDepartment($academicDepartment);
+      $user->setType( $professor_types[ $data['professor_type'] ] );
+
+      $this->professorPersistence->save($user);
     }
   }
 }
