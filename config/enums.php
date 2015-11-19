@@ -5,4 +5,8 @@ return [
 		'2' => 'Contratado',
 		'3' => 'Auxiliar',
 	],
+	'user_types' => [
+		'1' => 'Estudiante',
+		'2' => 'Profesor',
+	],
 ];

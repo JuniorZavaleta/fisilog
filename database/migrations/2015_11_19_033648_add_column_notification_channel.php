@@ -32,7 +32,7 @@ class AddColumnNotificationChannel extends Migration
     public function down()
     {
         Schema::table('users', function(Blueprint $table) {
-            $table->foreign('users_notification_channel_id_foreign');
+            $table->dropForeign('users_notification_channel_id_foreign');
         });
         Schema::table('users', function(Blueprint $table) {
             $table->dropColumn('notification_channel_id');

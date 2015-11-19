@@ -19,6 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('phone');
+            $table->enum('type',['Estudiante', 'Profesor']);
             $table->rememberToken();
             $table->timestamps();
         });
