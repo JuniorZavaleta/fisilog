@@ -6,10 +6,22 @@ use FisiLog\Models\School as SchoolModel;
 class SchoolDaoEloquent implements SchoolDao {
   public function findById($id) {
     $schoolModel = SchoolModel::find($id);
-    $SchoolBusiness = new SchoolBusiness;
-    $SchoolBusiness->setId($id);
-    $SchoolBusiness->setName($schoolModel->name);
+    $schoolBusiness = new SchoolBusiness;
+    $schoolBusiness->setId($id);
+    $schoolBusiness->setName($schoolModel->name);
 
-    return $SchoolBusiness;
+    return $schoolBusiness;
+  }
+  public function getAll() {
+    $schoolBusiness = [];
+    $schoolModel = SchoolModel::all();
+    foreach ($schoolModel as $value) {
+      $newSchoolBusiness = new SchoolBusiness;
+      $newSchoolBusiness->setId($value->id);
+      $newSchoolBusiness->setName($value->name);
+
+      $schoolBusiness[] = $newSchoolBusiness;
+    }
+    return $schoolBusiness;
   }
 }

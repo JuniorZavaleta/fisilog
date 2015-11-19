@@ -6,14 +6,14 @@ use Illuminate\Http\Request;
 
 use FisiLog\Http\Requests;
 use FisiLog\Http\Controllers\Controller;
+use FisiLog\Services\AttendanceRegisterService;
 
 class AttendanceController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct(AttendanceRegisterService $attendance_service) {
+        $this->attendance_service = $attendance_service;
+    }
+
     public function index()
     {
         

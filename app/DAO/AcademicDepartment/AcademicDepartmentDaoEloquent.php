@@ -12,4 +12,16 @@ class AcademicDepartmentDaoEloquent implements AcademicDepartmentDao {
 
     return $academicDepartmentBusiness;
   }
+  public function getAll() {
+    $academicDepartmentBusiness = [];
+    $academicDepartmentModel = AcademicDepartmentModel::all();
+    foreach ($academicDepartmentModel as $value) {
+      $newAcademicDepartmentBusiness = new AcademicDepartmentBusiness;
+      $newAcademicDepartmentBusiness->setId($value->id);
+      $newAcademicDepartmentBusiness->setName($value->name);
+
+      $academicDepartmentBusiness[] = $newAcademicDepartmentBusiness;
+    }
+    return $academicDepartmentBusiness;
+  }
 }

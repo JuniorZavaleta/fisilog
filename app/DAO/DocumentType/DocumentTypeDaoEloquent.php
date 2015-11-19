@@ -12,4 +12,16 @@ class DocumentTypeDaoEloquent implements DocumentTypeDao {
 
     return $documentTypeBusiness;
   }
+  public function getAll() {
+    $documentTypeBusiness = [];
+    $documentTypeModel = DocumentTypeModel::all();
+    foreach ($documentTypeModel as $value) {
+      $newDocumentTypeBusiness = new DocumentTypeBusiness;
+      $newDocumentTypeBusiness->setId($value->id);
+      $newDocumentTypeBusiness->setName($value->name);
+
+      $documentTypeBusiness[] = $newDocumentTypeBusiness;
+    }
+    return $documentTypeBusiness;
+  }
 }
