@@ -16,3 +16,6 @@ Route::get('/', function () {
 });
 Route::get('/users/register',['as'=>'user.register.index','uses'=>'UserRegisterController@index']);
 Route::post('/users/register',['as'=>'user.register.process','uses'=>'UserRegisterController@process']);
+
+Route::get('users/{id}/edit/register_document', ['as' => 'user.register.document', 'uses' => 'DocumentController@index']);
+Route::post('users/{id}/edit/register_document', ['as' => 'user.register.document', 'uses' => 'DocumentController@process']);
