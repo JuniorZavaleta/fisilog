@@ -5,7 +5,7 @@
      <div class="row">
       <div class="col-md-7 col-md-offset-2">
        <div class="panel panel-default">
-         <div class="panel-heading">Login</div>
+         <div class="panel-heading">Iniciar Sesión</div>
          <div class="panel-body">
           {!! Form::open(array('route'=>'user.register.process', 'class'=>'form-horizontal', 'method'=>'POST')) !!}
 
