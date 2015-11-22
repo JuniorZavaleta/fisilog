@@ -35,6 +35,11 @@ class AttendanceController extends Controller
     {
         $clase = $this->clase_persistence_service->findById($clase_id);
 
+        $data = [
+            'class' => $clase,
+        ];
+
+        return view('attendance.student', $data);
     }
 
     /**
