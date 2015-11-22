@@ -35,6 +35,7 @@
           <th>Horario</th>
           <th>Aula</th>
           <th>Dia</th>
+          <th>Marcar asistencia</th>
         </thead>
         <tbody>
           @foreach($classes as $clase)
@@ -43,6 +44,8 @@
               <td>{{$clase->getSchedule()->getStartHour()." - ".$clase->getSchedule()->getEndHour()}}
               <td>{{$clase->getClassRoom()->getName()}}</td>
               <td>{{$clase->getSchedule()->getDayOfTheWeek()}}</td>
+              <td><a href="{{route('attendance.student',['id'=>$clase->getId()])}}"><i class="fa fa-pencil"></i>
+</a></td>
             </tr>
           @endforeach
         </tbody>

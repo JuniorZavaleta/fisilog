@@ -17,7 +17,7 @@ class Clase {
 		$this->id = $id;
 	}
 	public function getId() {
-		return $id;
+		return $this->id;
 	}
 	public function setSchedule(Schedule $schedule) {
 		$this->schedule = $schedule;

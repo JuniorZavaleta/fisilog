@@ -1,6 +1,7 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" type="text/css" href={{asset('css/bootstrap.min.css')}}>
+    <link rel="stylesheet" type="text/css" href={{asset('css/font-awesome.min.css')}}>
   	<script type="text/javascript" src="../js/jquery-1.11.3.min.js"></script>
   	<script type="text/javascript" src="../js/bootstrap.min.js"></script>
   	
