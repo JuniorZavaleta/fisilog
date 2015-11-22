@@ -36,7 +36,7 @@
 				    
 				    @if (Auth::guest())
 				        <li><a href="#">Iniciar Sesión</a></li>
-						<li><a href="#">Registrarse</a></li>
+						<li><a href="{{route('user.register.index')}}">Registrarse</a></li>
 				    @else
 		                <li>
 		                    <a href="#">{{ Auth::user()->name }}</a>
