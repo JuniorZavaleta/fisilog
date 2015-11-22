@@ -1,6 +1,8 @@
 <?php
 namespace FisiLog\DAO\Document;
 use FisiLog\BusinessClasses\Document as DocumentBusiness;
+use FisiLog\BusinessClasses\User as UserBusiness;
+use FisiLog\BusinessClasses\DocumentType as DocumentTypeBusiness;
 use FisiLog\Models\Document as DocumentModel;
 
 class DocumentDaoEloquent implements DocumentDao {
@@ -11,6 +13,21 @@ class DocumentDaoEloquent implements DocumentDao {
     $documentModel->code = $documentBusiness->getCode();
     $documentModel->save();
     $documentBusiness->setId($documentModel->id);
+
+    return $documentBusiness;
+  }
+  public function findByUserAndDocumentType(UserBusiness $user, DocumentTypeBusiness $documentType) {
+    $documentModel = DocumentModel::where('user_id', '=' ,$user->getId())
+                                  ->where('document_type_id', '=', $documentType->getId())
+                                  ->first();
+    if ($documentModel == null)
+      return null;
+
+    $documentBusiness = new DocumentBusiness;
+    $documentBusiness->setId($documentModel->id);
+    $documentBusiness->setUser($user);
+    $documentBusiness->setDocumentType($documentType);
+    $documentBusiness->setCode($documentModel->code);
 
     return $documentBusiness;
   }
