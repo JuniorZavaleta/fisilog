@@ -22,7 +22,7 @@ class Clase {
 	public function setSchedule(Schedule $schedule) {
 		$this->schedule = $schedule;
 	}
-	public function getSchedule($schedule) {
+	public function getSchedule() {
 		return $this->schedule;
 	}
 	public function setClassRoom(ClassRoom $classroom) {

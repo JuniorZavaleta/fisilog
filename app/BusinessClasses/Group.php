@@ -3,6 +3,7 @@ namespace FisiLog\BusinessClasses;
 use FisiLog\BusinessClasses\CourseOpened;
 use FisiLog\BusinessClasses\Student;
 class Group {
+	private $id;
 	private $courseOpened;
 	private $numberOfGroup;
 	private $students;
@@ -11,6 +12,12 @@ class Group {
 		$students = array();
 	}
 
+	public function setId($id) {
+		$this->id = $id;
+	}
+	public function getId() {
+		return $this->id;
+	}
 	public function setCourseOpened(CourseOpened $courseOpened) {
 		$this->courseOpened = $courseOpened;
 	}

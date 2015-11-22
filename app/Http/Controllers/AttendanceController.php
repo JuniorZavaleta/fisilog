@@ -7,16 +7,28 @@ use Illuminate\Http\Request;
 use FisiLog\Http\Requests;
 use FisiLog\Http\Controllers\Controller;
 use FisiLog\Services\AttendanceRegisterService;
+use FisiLog\Services\ClasePersistenceService;
 
 class AttendanceController extends Controller
 {
-    public function __construct(AttendanceRegisterService $attendance_service) {
+    public function __construct(
+        AttendanceRegisterService $attendance_service,
+        ClasePersistenceService $clase_persistence_service
+    ) {
         $this->attendance_service = $attendance_service;
+        $this->clase_persistence_service = $clase_persistence_service;
     }
 
     public function index()
     {
-        
+        $id = 2;
+        $classes = $this->clase_persistence_service->getByProfessor($id);
+
+        $data = [
+            'classes' => $classes,
+        ];
+
+        return view('attendance.index', $data);
     }
 
     /**

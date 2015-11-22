@@ -12,6 +12,10 @@ class AttendanceRegisterService {
     $this->professorPersistence = $dao->getProfessorDAO();
     $this->schoolPersistence = $dao->getSchoolDAO();
     $this->academicDepartmentPersistence = $dao->getAcademicDepartmentDAO();
+    $this->classPersistence = $dao->getClaseDAO();
+  }
+  public function index() {
+
   }
   public function registerStudent() {
     

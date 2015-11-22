@@ -5,6 +5,7 @@ namespace FisiLog\Providers;
 use Illuminate\Support\ServiceProvider;
 use FisiLog\DAO\DaoEloquentFactory;
 use FisiLog\Services\UserRegisterService;
+use FisiLog\Services\AttendanceRegisterService;
 
 class AppServiceProvider extends ServiceProvider
 {
