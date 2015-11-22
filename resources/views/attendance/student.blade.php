@@ -32,7 +32,6 @@
   </div>
 </div>
 <div class="container">
-  {!! Form::open(array('route'=>'user.register.process', 'class'=>'form-horizontal', 'method'=>'POST')) !!}
   <div class="form-group">
     <div class="col-sm-2">
       <label class="control-label">Tipo de documento</label>
@@ -57,7 +56,6 @@
       <button class="btn btn-primary" id="Registrar asistencia">Registrar asistencia</button>
     </div>
   </div>
-  {!! Form::close() !!}
 </div>
 <div class="container">
   <div class="row">

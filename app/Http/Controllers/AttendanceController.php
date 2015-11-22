@@ -14,8 +14,8 @@ class AttendanceController extends Controller
 {
     public function __construct(
         AttendanceRegisterService $attendance_service,
-        ClasePersistenceService $clase_persistence_service,
-        DocumentTypePersistenceService $document_type_persistence_service
+        DocumentTypePersistenceService $document_type_persistence_service,
+        ClasePersistenceService $clase_persistence_service
     ) {
         $this->attendance_service = $attendance_service;
         $this->clase_persistence_service = $clase_persistence_service;
