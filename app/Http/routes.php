@@ -24,5 +24,5 @@ Route::get('/verify_attendance/index',['as'=>'verify_attendance.professor', 'use
 Route::get('/verify_attendance/professor',['as'=>'verify_attendance.professor', 'uses'=>'VerifyAttendanceController@getProfessor']);
 
 Route::get('/attendance/index',['as'=>'attendance.index','uses'=>'AttendanceController@index']);
-Route::get('/attendance/{$clase_id}/student',['as'=>'attendance.student','uses'=>'AttendanceController@getStudent']);
+Route::get('/attendance/{clase_id}/student',['as'=>'attendance.student','uses'=>'AttendanceController@getStudent']);
 Route::get('/attendance/professor',['as'=>'attendance.professor','uses'=>'AttendanceController@getProfessor']);

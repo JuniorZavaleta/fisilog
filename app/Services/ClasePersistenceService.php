@@ -12,4 +12,7 @@ class ClasePersistenceService {
 
     return $this->classPersistence->getByProfessor($professor_business, null);
   }
+  public function findById($id) {
+  	return $this->classPersistence->findById($id);
+  }
 }

@@ -31,6 +31,12 @@ class AttendanceController extends Controller
         return view('attendance.index', $data);
     }
 
+    public function getStudent($clase_id) 
+    {
+        $clase = $this->clase_persistence_service->findById($clase_id);
+
+    }
+
     /**
      * Show the form for creating a new resource.
      *
