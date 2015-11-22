@@ -10,6 +10,7 @@ class UserDaoEloquent implements UserDao {
     $userModel->lastname = $userBusiness->getLastname();
     $userModel->email = $userBusiness->getEmail();
     $userModel->phone = $userBusiness->getPhone();
+    $userModel->type = $userBusiness->getType();
     $userModel->save();
     $userBusiness->setId($userModel->id);
 

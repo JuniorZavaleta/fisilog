@@ -17,11 +17,14 @@ class UserRegisterService {
     $this->academicDepartmentPersistence = $dao->getAcademicDepartmentDAO();
   }
   public function registerUser($data) {
-    if( $data['user_type'] == 1 ) {
+    $user_types = config('enums.user_types');
+
+    if( $user_types[ $data['user_type'] ] == "Estudiante") {
       $user = new Student;
-    } elseif( $data['user_type'] == 2 ) {
+    } elseif( $user_types[ $data['user_type'] ] == "Profesor" ) {
       $user = new Professor;
     }
+    $user->setType( $user_types[ $data['user_type'] ] );
     $user->setName( $data['name'] );
     $user->setLastname( $data['lastname'] );
     $user->setEmail( $data['email'] );

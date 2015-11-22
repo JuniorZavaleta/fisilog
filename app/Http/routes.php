@@ -16,3 +16,13 @@ Route::get('/', function () {
 });
 Route::get('/users/register',['as'=>'user.register.index','uses'=>'UserRegisterController@index']);
 Route::post('/users/register',['as'=>'user.register.process','uses'=>'UserRegisterController@process']);
+
+Route::get('users/{id}/edit/register_document', ['as' => 'user.register.document', 'uses' => 'DocumentController@index']);
+Route::post('users/{id}/edit/register_document', ['as' => 'user.register.document', 'uses' => 'DocumentController@process']);
+
+Route::get('/verify_attendance/index',['as'=>'verify_attendance.professor', 'uses'=>'VerifyAttendanceController@index']);
+Route::get('/verify_attendance/professor',['as'=>'verify_attendance.professor', 'uses'=>'VerifyAttendanceController@getProfessor']);
+
+Route::get('/attendance/index',['as'=>'attendance.index','uses'=>'AttendanceController@index']);
+Route::get('/attendance/student',['as'=>'attendance.student','uses'=>'AttendanceController@getStudent']);
+Route::get('/attendance/professor',['as'=>'attendance.professor','uses'=>'AttendanceController@getProfessor']);

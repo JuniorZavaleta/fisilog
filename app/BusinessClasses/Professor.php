@@ -3,7 +3,7 @@ namespace FisiLog\BusinessClasses;
 use FisiLog\BusinessClasses\AcademicDepartment;
 class Professor extends User {
   private $academicDepartment;
-  private $type;
+  private $professor_type;
 
   public function setAcademicDepartment(AcademicDepartment $academicDepartment) {
     $this->academicDepartment = $academicDepartment;
@@ -11,10 +11,10 @@ class Professor extends User {
   public function getAcademicDepartment(){
     return $this->academicDepartment;
   }
-  public function setType($type) {
-    $this->type = $type;
+  public function setProfessorType($professor_type) {
+    $this->professor_type = $professor_type;
   }
-  public function getType() {
-    return $this->type;
+  public function getProfessorType() {
+    return $this->professor_type;
   }
 }

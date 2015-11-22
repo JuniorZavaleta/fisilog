@@ -14,6 +14,8 @@ class UserSeeder extends Seeder
             'email' => 'juniorclaudiozavaleta@gmail.com',
             'phone' => '76726604',
             'password' => Hash::make('123456'),
+            'notification_channel_id' => 1,
+            'type' => 'Estudiante',
          ],
          [
             'id' => 2, 
@@ -22,6 +24,8 @@ class UserSeeder extends Seeder
             'email' => 'test@email.com',
             'phone' => '12345678',
             'password' => Hash::make('123456'),
+            'notification_channel_id' => 2,
+            'type' => 'Profesor',
          ]
       ]);
    }

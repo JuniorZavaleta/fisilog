@@ -68,7 +68,7 @@
             <select name="document_type" class="form-control">
               <option value="0" selected>Seleccione un tipo de Documento</option>
               @foreach($document_types as $document_type)
-                <option value="{{$document_type->id}}">{{$document_type->name}}</option>
+                <option value="{{$document_type->getId()}}">{{$document_type->getName()}}</option>
               @endforeach
             </select>
           </div>
@@ -105,7 +105,7 @@
             <select name="school_id" class="form-control">
               <option value="0" selected>Seleccione la EAP del alumno</option>
               @foreach($schools as $school)
-                <option value="{{$school->id}}">{{$school->name}}</option>
+                <option value="{{$school->getId()}}">{{$school->getName()}}</option>
               @endforeach
             </select>
           </div>
@@ -147,7 +147,7 @@
             <select name="academic_department_id" class="form-control">
               <option value="0" selected>Seleccione el Dep. Academico del profesor</option>
               @foreach($academic_departments as $academic_department)
-                <option value="{{$academic_department->id}}">{{$academic_department->name}}</option>
+                <option value="{{$academic_department->getId()}}">{{$academic_department->getName()}}</option>
               @endforeach
             </select>
           </div>

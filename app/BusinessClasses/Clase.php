@@ -5,6 +5,7 @@ use FisiLog\BusinessClasses\ClassRoom;
 use FisiLog\BusinessClasses\Professor;
 use FisiLog\BusinessClasses\Group;
 class Clase {
+	private $id;
 	private $schedule;
 	private $classroom;
 	private $professor;
@@ -12,10 +13,16 @@ class Clase {
 	private $type;
 	private $status;
 
+	public function setId($id) {
+		$this->id = $id;
+	}
+	public function getId() {
+		return $id;
+	}
 	public function setSchedule(Schedule $schedule) {
 		$this->schedule = $schedule;
 	}
-	public function getSchedule($schedule) {
+	public function getSchedule() {
 		return $this->schedule;
 	}
 	public function setClassRoom(ClassRoom $classroom) {

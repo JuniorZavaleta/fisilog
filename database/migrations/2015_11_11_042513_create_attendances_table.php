@@ -17,6 +17,7 @@ class CreateAttendancesTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->integer('class_id')->unsigned();
             $table->dateTime('date');
+            $table->boolean('verified');
             $table->timestamps();
         });
         Schema::table('attendances', function(Blueprint $table) {
