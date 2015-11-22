@@ -16,6 +16,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('123456'),
             'notification_channel_id' => 1,
             'type' => 'Estudiante',
+            'photo_url' => '/',
          ],
          [
             'id' => 2, 
@@ -26,6 +27,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('123456'),
             'notification_channel_id' => 2,
             'type' => 'Profesor',
+            'photo_url' => '/',
          ]
       ]);
    }
