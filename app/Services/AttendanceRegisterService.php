@@ -21,7 +21,7 @@ class AttendanceRegisterService {
     $document_type = $this->documentTypePersistence->findById( $data['document_type'] );
     $document = $this->documentPersistence->findByCodeAndDocumentType( $data['document_code'], $document_type);
     $user = $this->userPersistence->findByDocument($document);
-    dd($user);
+
     return $user;
   }
   public function registerStudent() {

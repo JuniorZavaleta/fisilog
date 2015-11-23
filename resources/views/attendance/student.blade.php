@@ -60,6 +60,11 @@
     </div>
   </div>
 </div>
+<div class="container" id="student_data" hidden>
+  <img id="student_photo" src="">
+  <button class="btn btn-success">Confirmar</button>
+  <button class="btn btn-danger">Cancelar</button>
+</div>
 <div class="container">
   <div class="row">
     <div class="panel panel-primary">

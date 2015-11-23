@@ -64,6 +64,7 @@
 		    </div>
 		@endif
     </div>
+    <input type="hidden" value="{{URL::to('/')}}" id="base_url">
     @yield('content')
 </body>
 </html>  

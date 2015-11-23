@@ -78,6 +78,7 @@ class UserRegisterController extends Controller
         'student_code' => $request->input('student_code'),
         'year_of_entry' => $request->input('year_of_entry'),
         'professor_type' => $request->input('professor_type'),
+        'photo_url' => $request->file('photo'),
       ];
     }
     private function makeRules() {

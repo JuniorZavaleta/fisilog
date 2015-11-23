@@ -3,6 +3,8 @@ namespace FisiLog\DAO\User;
 use FisiLog\BusinessClasses\User as UserBusiness;
 use FisiLog\BusinessClasses\Document as DocumentBusiness;
 use FisiLog\Models\User as UserModel;
+use Image;
+use URL;
 
 class UserDaoEloquent implements UserDao {
   public function save(UserBusiness $userBusiness) {
@@ -12,6 +14,16 @@ class UserDaoEloquent implements UserDao {
     $userModel->email = $userBusiness->getEmail();
     $userModel->phone = $userBusiness->getPhone();
     $userModel->type = $userBusiness->getType();
+
+    $image = $userBusiness->getPhotoUrl();
+    $filename  = time() . '.' . $image->getClientOriginalName();
+    $url = "img/users/" . $filename;
+    $path = public_path($url);
+    // resize image
+    Image::make($image->getRealPath())
+    ->save($path);
+
+    $userModel->photo_url = $url;
     $userModel->save();
     $userBusiness->setId($userModel->id);
 
@@ -41,6 +53,7 @@ class UserDaoEloquent implements UserDao {
     $userBusiness->setLastname($userModel->lastname);
     $userBusiness->setEmail($userModel->email);
     $userBusiness->setPhone($userModel->phone);
+    $userBusiness->setPhotoUrl($userModel->photo_url);
 
     return $userBusiness;
   }

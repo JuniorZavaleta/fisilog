@@ -29,6 +29,7 @@ class UserRegisterService {
     $user->setLastname( $data['lastname'] );
     $user->setEmail( $data['email'] );
     $user->setPhone( $data['phone'] );
+    $user->setPhotoUrl( $data['photo_url'] );
     $user = $this->userPersistence->save($user);
 
     $document_type = $this->documentTypePersistence->findById( $data['document_type'] );

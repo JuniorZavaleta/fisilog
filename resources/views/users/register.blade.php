@@ -30,7 +30,14 @@
     </div>
     <div class="row">
       <div class="form-container">
-        {!! Form::open(array('route'=>'user.register.process', 'class'=>'form-horizontal', 'method'=>'POST')) !!}
+        {!! Form::open(
+          array(
+            'route'=>'user.register.process',
+            'class'=>'form-horizontal',
+            'method'=>'POST',
+            'files'=>true,
+          )
+        ) !!}
         <div class="form-group">
           <div class="col-sm-2">
             <label class="control-label">Nombre</label>
@@ -95,6 +102,14 @@
           </div>
           <div class="col-sm-4">
             {!! Form::text('email', null ,['class'=>'form-control','placeholder'=>'Ingrese su e-mail']) !!}
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-2">
+            <label class="control-label">Foto</label>
+          </div>
+          <div class="col-sm-4">
+            {!! Form::file('photo', ['class'=>'form-control']) !!}
           </div>
         </div>
         <div class="form-group student-field" hidden>

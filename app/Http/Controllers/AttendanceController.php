@@ -51,7 +51,12 @@ class AttendanceController extends Controller
         $input = $this->makeInputFind($request);
         $user = $this->attendance_service->preRegisterStudent($input);
 
-        return response()->json($user);
+        $output = [
+            'name' => $user->getName(),
+            'lastname' => $user->getLastname(),
+            'photo_url' => $user->getPhotoUrl(),
+        ];
+        return response()->json($output);
     }
 
     public function postStudent(Request $request, $clase_id) {
