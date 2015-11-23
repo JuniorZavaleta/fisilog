@@ -1,6 +1,7 @@
 <?php
 namespace FisiLog\DAO\User;
 use FisiLog\BusinessClasses\User as UserBusiness;
+use FisiLog\BusinessClasses\Document as DocumentBusiness;
 use FisiLog\Models\User as UserModel;
 
 class UserDaoEloquent implements UserDao {
@@ -18,8 +19,21 @@ class UserDaoEloquent implements UserDao {
   }
   public function findByEmail($email) {
     $userModel = UserModel::where('email','=',$email)->first();
+
+    return $this->createUser($userModel);;
+  }
+  public function findByDocument(DocumentBusiness $document) {
+    $userModel = UserModel::whereHas('documents', function($query)use($document){
+      $query->where('document_type_id','=',$document->getDocumentType()->getId() )
+            ->where('code','=',$document->getCode());
+    })->first();
+
+    return $this->createUser($userModel);;
+  }
+  private function createUser(UserModel $userModel) {
     if ($userModel == null)
       return null;
+
     $userBusiness = new UserBusiness;
     $userBusiness->setId($userModel->id);
     $userBusiness->setPassword($userModel->password);

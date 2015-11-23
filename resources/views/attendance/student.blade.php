@@ -6,6 +6,8 @@
     margin-top: 20px;
   }
 </style>
+
+{!! Html::script('js/attendances/students/main.js') !!}
 <div class="container">
   <div class="row" style="text-align: center;">
     <h2>Registro de Asistencia</h2>
@@ -32,12 +34,13 @@
   </div>
 </div>
 <div class="container">
+  {!! Form::token() !!}
   <div class="form-group">
     <div class="col-sm-2">
       <label class="control-label">Tipo de documento</label>
     </div>
     <div class="col-sm-4">
-      <select name="document_type" class="form-control">
+      <select name="document_type" class="form-control" id="document_type">
         <option value="0" selected>Seleccione un tipo de Documento</option>
         @foreach($document_types as $document_type)
           <option value="{{$document_type->getId()}}">{{$document_type->getName()}}</option>
@@ -48,12 +51,12 @@
       <label class="control-label">Número de Documento</label>
     </div>
     <div class="col-sm-4">
-      {!! Form::text('document_id', null ,['class'=>'form-control','placeholder'=>'Ingrese el número de documento']) !!}
+      {!! Form::text('document_code', null ,['id'=>'document_code', 'class'=>'form-control','placeholder'=>'Ingrese el número de documento']) !!}
     </div>
   </div>
   <div class="form-group">
     <div class="col-sm-4">
-      <button class="btn btn-primary" id="Registrar asistencia">Registrar asistencia</button>
+      <button class="btn btn-primary" id="button_pre_register">Registrar asistencia</button>
     </div>
   </div>
 </div>
