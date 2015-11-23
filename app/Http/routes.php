@@ -27,3 +27,5 @@ Route::get('/attendance/index',['as'=>'attendance.index','uses'=>'AttendanceCont
 Route::get('/attendance/{clase_id}/student',['as'=>'attendance.student.index','uses'=>'AttendanceController@getStudent']);
 Route::post('/attendance/{clase_id}/student',['as'=>'attendance.student.process','uses'=>'AttendanceController@postStudent']);
 Route::get('/attendance/professor',['as'=>'attendance.professor','uses'=>'AttendanceController@getProfessor']);
+
+Route::get('index', ['as' => 'index', 'uses' => 'IndexController@index']);
