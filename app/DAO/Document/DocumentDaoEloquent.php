@@ -20,14 +20,27 @@ class DocumentDaoEloquent implements DocumentDao {
     $documentModel = DocumentModel::where('user_id', '=' ,$user->getId())
                                   ->where('document_type_id', '=', $documentType->getId())
                                   ->first();
+
+    return $this->createDocument($documentModel, $user, $document_type);
+  }
+  public function findByCodeAndDocumentType($code, DocumentTypeBusiness $documentType) {
+    $documentModel = DocumentModel::where('code','=',$code)
+                                  ->where('document_type_id', '=', $documentType->getId())
+                                  ->first();
+
+    return $this->createDocument($documentModel, null, $documentType);
+  }
+  private function createDocument(DocumentModel $documentModel = null, UserBusiness $user = null, DocumentTypeBusiness $document_type = null) {
     if ($documentModel == null)
       return null;
 
     $documentBusiness = new DocumentBusiness;
     $documentBusiness->setId($documentModel->id);
-    $documentBusiness->setUser($user);
-    $documentBusiness->setDocumentType($documentType);
     $documentBusiness->setCode($documentModel->code);
+    if ($user != null)
+      $documentBusiness->setUser($user);
+    if ($document_type != null)
+      $documentBusiness->setDocumentType($document_type);
 
     return $documentBusiness;
   }

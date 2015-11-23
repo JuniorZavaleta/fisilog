@@ -1,7 +1,10 @@
 <?php
 namespace FisiLog\DAO\User;
 use FisiLog\BusinessClasses\User as UserBusiness;
+use FisiLog\BusinessClasses\Document as DocumentBusiness;
 use FisiLog\Models\User as UserModel;
+use Image;
+use URL;
 
 class UserDaoEloquent implements UserDao {
   public function save(UserBusiness $userBusiness) {
@@ -11,6 +14,16 @@ class UserDaoEloquent implements UserDao {
     $userModel->email = $userBusiness->getEmail();
     $userModel->phone = $userBusiness->getPhone();
     $userModel->type = $userBusiness->getType();
+
+    $image = $userBusiness->getPhotoUrl();
+    $filename  = time() . '.' . $image->getClientOriginalName();
+    $url = "img/users/" . $filename;
+    $path = public_path($url);
+    // resize image
+    Image::make($image->getRealPath())
+    ->save($path);
+
+    $userModel->photo_url = $url;
     $userModel->save();
     $userBusiness->setId($userModel->id);
 
@@ -18,8 +31,21 @@ class UserDaoEloquent implements UserDao {
   }
   public function findByEmail($email) {
     $userModel = UserModel::where('email','=',$email)->first();
+
+    return $this->createUser($userModel);;
+  }
+  public function findByDocument(DocumentBusiness $document) {
+    $userModel = UserModel::whereHas('documents', function($query)use($document){
+      $query->where('document_type_id','=',$document->getDocumentType()->getId() )
+            ->where('code','=',$document->getCode());
+    })->first();
+
+    return $this->createUser($userModel);;
+  }
+  private function createUser(UserModel $userModel) {
     if ($userModel == null)
       return null;
+
     $userBusiness = new UserBusiness;
     $userBusiness->setId($userModel->id);
     $userBusiness->setPassword($userModel->password);
@@ -27,6 +53,7 @@ class UserDaoEloquent implements UserDao {
     $userBusiness->setLastname($userModel->lastname);
     $userBusiness->setEmail($userModel->email);
     $userBusiness->setPhone($userModel->phone);
+    $userBusiness->setPhotoUrl($userModel->photo_url);
 
     return $userBusiness;
   }

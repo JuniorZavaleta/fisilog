@@ -47,14 +47,33 @@ class AttendanceController extends Controller
         return view('attendance.student', $data);
     }
 
+    public function findStudent(Request $request) {
+        $input = $this->makeInputFind($request);
+        $user = $this->attendance_service->preRegisterStudent($input);
+
+        $output = [
+            'name' => $user->getName(),
+            'lastname' => $user->getLastname(),
+            'photo_url' => $user->getPhotoUrl(),
+        ];
+        return response()->json($output);
+    }
+
     public function postStudent(Request $request, $clase_id) {
         $input = $this->makeInput($request);
     }
 
-    private function makeInput(Request $request) {
+    private function makeInputFind(Request $request) {
         return [
             'document_type' => $request->input('document_type'),
-            'document_code' => $request->input('document_id'),
+            'document_code' => $request->input('document_code'),
+        ];
+    }
+
+    private function makeRules() {
+        return [
+            'document_type' => 'required|exists:document_types,id',
+            'document_code' => 'required',
         ];
     }
 }

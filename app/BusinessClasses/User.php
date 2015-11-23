@@ -9,6 +9,7 @@ class User {
 	protected $phone;
 	protected $password;
 	protected $type;
+	protected $photo_url;
 
 	public function setId($id) {
 		$this->id = $id;
@@ -51,5 +52,11 @@ class User {
 	}
 	public function getPassword() {
 		return $this->password;
+	}
+	public function setPhotoUrl($photo_url) {
+		$this->photo_url = $photo_url;
+	}
+	public function getPhotoUrl() {
+		return $this->photo_url;
 	}
 }
