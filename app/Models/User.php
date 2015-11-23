@@ -5,6 +5,7 @@ use FisiLog\Models\Student;
 use FisiLog\Models\User;
 use FisiLog\Models\Document;
 use FisiLog\Models\Device;
+use FisiLog\Models\Attendance;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
@@ -33,5 +34,9 @@ class User extends Model implements AuthenticatableContract,
 
     public function professor(){
         return $this->hasOne(Professor::class);
+    }
+
+    public function attendances(){
+        return $this->hasMany(Attendance::class);
     }
 }

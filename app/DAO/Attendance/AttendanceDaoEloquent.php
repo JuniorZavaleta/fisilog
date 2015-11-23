@@ -29,4 +29,44 @@ class AttendanceDaoEloquent implements AttendanceDao {
         $attendanceModel->verified = $check;
         $attendanceModel->save();
     }
+    public function getById($id) {
+        $attendanceModel    = AttendanceModel::find($id);
+        if ($attendanceModel == null)
+            return null;
+        $attendanceBusiness = new attendanceBusiness;
+        $attendanceBusiness->setId($id);
+        $attendanceBusiness->setUser($attendanceModel->user);
+        $attendanceBusiness->setClase($attendanceModel->claser);
+        $attendanceBusiness->setDate($attendanceModel->date);
+        $attendanceBusiness->setVerified($attendanceModel->verified);
+        return $attendanceBusiness;
+    }
+    public function all() {
+        $attendanceModels = AttendanceModel::all();
+        $attendances      = [];
+        foreach ($attendanceModels as $model) {
+            $attendanceBusiness = new attendanceBusiness;
+            $attendanceBusiness->setId($id);
+            $attendanceBusiness->setUser($model->user);
+            $attendanceBusiness->setClase($model->claser);
+            $attendanceBusiness->setDate($model->date);
+            $attendanceBusiness->setVerified($model->verified);
+            $attendances[] = $attendanceBusiness;
+        }
+        return $attendances;
+    }
+    public function getByClase(ClaseBusiness $claseBusiness) {
+        $attendanceModels = AttendanceModel::where('class_id', $claseBusiness->getId())->get();
+        $attendances      = [];
+        foreach ($attendanceModels as $model) {
+            $attendanceBusiness = new attendanceBusiness;
+            $attendanceBusiness->setId($id);
+            $attendanceBusiness->setUser($model->user);
+            $attendanceBusiness->setClase($model->claser);
+            $attendanceBusiness->setDate($model->date);
+            $attendanceBusiness->setVerified($model->verified);
+            $attendances[] = $attendanceBusiness;
+        }
+        return $attendances;
+    }
 }
