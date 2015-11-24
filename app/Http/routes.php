@@ -30,3 +30,6 @@ Route::post('/attendance/{clase_id}/student',['as'=>'attendance.student.process'
 Route::get('/attendance/professor',['as'=>'attendance.professor','uses'=>'AttendanceController@getProfessor']);
 
 Route::get('index', ['as' => 'index', 'uses' => 'IndexController@index']);
+
+Route::get('login', ['as' => 'auth.login' , 'uses' => 'Auth\AuthController@getLogin']);
+Route::post('login', ['as' => 'auth.login' , 'uses' => 'Auth\AuthController@postLogin']);

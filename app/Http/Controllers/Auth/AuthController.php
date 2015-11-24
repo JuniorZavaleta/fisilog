@@ -7,6 +7,7 @@ use Validator;
 use FisiLog\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
@@ -61,5 +62,29 @@ class AuthController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+    }
+
+    protected function getLogin() {
+        return view('users.login');
+    }
+
+    protected function postLogin(Request $request) {
+        $data = $this->makeInput($request);
+        dd($data);
+        die();
+    }
+
+    protected function makeInput($request) {
+        $data = [];
+        if ($request->has('email')) {
+            $data['email'] = $request['email'];
+            $data['password'] = bcrypt($request['password']);
+
+        } else if ($request->has('document_id')) {
+            $data['document_type'] = $request['document_type'];
+            $data['document_id']   = $request['document_id'];
+            $data['password']      = bcrypt($request['password']);
+        }
+        return $data;
     }
 }
