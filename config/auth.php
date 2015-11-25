@@ -28,7 +28,7 @@ return [
     |
     */
 
-    'model' => FisiLog\User::class,
+    'model' => FisiLog\Models\User::class,
 
     /*
     |--------------------------------------------------------------------------
