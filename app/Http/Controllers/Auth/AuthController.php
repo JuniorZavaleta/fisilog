@@ -2,12 +2,13 @@
 
 namespace FisiLog\Http\Controllers\Auth;
 
-use FisiLog\User;
+use FisiLog\Models\User;
 use Validator;
 use FisiLog\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Http\Request;
+use Auth;
 
 class AuthController extends Controller
 {
@@ -70,20 +71,31 @@ class AuthController extends Controller
 
     protected function postLogin(Request $request) {
         $data = $this->makeInput($request);
-        dd($data);
-        die();
+        if ($request->has('email')) {
+            if (Auth::attempt(['email' => $data['email'], 'password' => $data['password']])) {
+                // Authentication passed...
+                return redirect()->intended('index');
+            } 
+        } else if ($request->has('document_id')) {
+            if (Auth::attempt(['document_id' => $data['document_id'], 'password' => $data['password']])) {
+                // Authentication passed...
+                return redirect()->intended('index');
+            }
+        }
+        return redirect()->route('auth.login');
     }
+
 
     protected function makeInput($request) {
         $data = [];
         if ($request->has('email')) {
             $data['email'] = $request['email'];
-            $data['password'] = bcrypt($request['password']);
+            $data['password'] = $request['password'];
 
         } else if ($request->has('document_id')) {
             $data['document_type'] = $request['document_type'];
             $data['document_id']   = $request['document_id'];
-            $data['password']      = bcrypt($request['password']);
+            $data['password']      = $request['password'];
         }
         return $data;
     }

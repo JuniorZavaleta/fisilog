@@ -14,6 +14,7 @@ class UserDaoEloquent implements UserDao {
     $userModel->email = $userBusiness->getEmail();
     $userModel->phone = $userBusiness->getPhone();
     $userModel->type = $userBusiness->getType();
+    $userModel->password = $userBusiness->getPassword();
 
     $image = $userBusiness->getPhotoUrl();
     $filename  = time() . '.' . $image->getClientOriginalName();

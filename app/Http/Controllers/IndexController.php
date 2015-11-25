@@ -20,7 +20,10 @@ class IndexController extends Controller
      */
     public function index()
     {
-        return view('users.student.index');
+        if ($this->user->type == 'Estudiante')
+            return view('users.student.index');
+        else if ($this->user->type == 'Profesor');
+            return view('users.complete');
     }
 
     /**

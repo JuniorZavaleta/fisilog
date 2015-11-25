@@ -79,12 +79,13 @@ class UserRegisterController extends Controller
         'year_of_entry' => $request->input('year_of_entry'),
         'professor_type' => $request->input('professor_type'),
         'photo_url' => $request->file('photo'),
+        'password' => $request->input('password')
       ];
     }
     private function makeRules() {
       return [
         'name' => 'required|alpha',
-        'lastname' => 'required|alpha',
+        'lastname' => 'required|string',
         'email' => 'required|email',
         'document_type' => 'required|exists:document_types,id',
         'document_code' => 'required',
