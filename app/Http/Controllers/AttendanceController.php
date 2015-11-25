@@ -9,6 +9,7 @@ use FisiLog\Http\Controllers\Controller;
 use FisiLog\Services\AttendanceRegisterService;
 use FisiLog\Services\ClasePersistenceService;
 use FisiLog\Services\DocumentTypePersistenceService;
+use Validator;
 
 class AttendanceController extends Controller
 {
@@ -48,8 +49,28 @@ class AttendanceController extends Controller
     }
 
     public function findStudent(Request $request) {
-        $input = $this->makeInputFind($request);
+        $input = $this->makeInput($request);
+        $rules = $this->makeRules();
+
+        $validator = Validator::make($input, $rules);
+
+        if($validator->fails()) {
+            $output = [
+                'error' => 'Datos inválidos',
+            ];
+
+            return response()->json($output, 404);
+        }
+
         $user = $this->attendance_service->preRegisterStudent($input);
+
+        if ($user == null) {
+            $output = [
+                'error' => 'Este alumno no pertence a la clase',
+            ];
+
+            return response()->json($output, 404);
+        }
 
         $output = [
             'name' => $user->getName(),
@@ -60,20 +81,56 @@ class AttendanceController extends Controller
     }
 
     public function postStudent(Request $request, $clase_id) {
-        $input = $this->makeInput($request);
+        $input = $this->makeInputPost($request, $clase_id);
+        $rules = $this->makeRules();
+
+        $validator = Validator::make($input, $rules);
+
+        if($validator->fails()) {
+            $output = [
+                'error' => 'Datos inválidos',
+            ];
+
+            return response()->json($output, 404);
+        }
+
+        $attendance = $this->attendance_service->registerStudent($input);
+
+        if ($attendance->getUser() == null) {
+            $output = [
+                'error' => 'Este alumno no pertence a la clase',
+            ];
+
+            return response()->json($output, 404);
+        }
+
+        $output = [
+            'name' => $attendance->getUser()->getName(),
+            'lastname' => $attendance->getUser()->getLastname(),
+            'photo_url' => $attendance->getUser()->getPhotoUrl(),
+        ];
+        return response()->json($output);
     }
 
-    private function makeInputFind(Request $request) {
+    private function makeInput(Request $request) {
         return [
             'document_type' => $request->input('document_type'),
             'document_code' => $request->input('document_code'),
         ];
     }
 
+    private function makeInputPost(Request $request, $clase_id) {
+        return [
+            'document_type' => $request->input('document_type'),
+            'document_code' => $request->input('document_code'),
+            'clase_id' => $clase_id,
+        ];
+    }
+
     private function makeRules() {
         return [
             'document_type' => 'required|exists:document_types,id',
-            'document_code' => 'required',
+            'document_code' => 'required|exists:documents,code',
         ];
     }
 }

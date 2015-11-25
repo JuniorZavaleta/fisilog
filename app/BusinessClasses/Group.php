@@ -1,15 +1,15 @@
 <?php
 namespace FisiLog\BusinessClasses;
 use FisiLog\BusinessClasses\CourseOpened;
-use FisiLog\BusinessClasses\Student;
+use FisiLog\BusinessClasses\Clase;
 class Group {
 	private $id;
 	private $courseOpened;
 	private $numberOfGroup;
-	private $students;
+	private $clases;
 
 	public function __construct() {
-		$students = array();
+		$clases = [];
 	}
 
 	public function setId($id) {
@@ -30,14 +30,10 @@ class Group {
 	public function getNumberOfGroup() {
 		return $this->numberOfGroup;
 	}
-	public function addStudent(Student $student) {
-		$this->students[] = $student;
+	public function addClase(Clase $clase) {
+		$this->clases[] = $clase;
 	}
-	public function removeStudent(Student $studentToDelete) {
-		foreach ($this->students as $key => $student) {
-			if($student->code == $studentToDelete->code) {
-				unset($this->students[$key]);
-			}
-		}
+	public function getClases() {
+		return $this->clases;
 	}
 }

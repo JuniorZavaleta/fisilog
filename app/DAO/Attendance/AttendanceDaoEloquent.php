@@ -16,9 +16,9 @@ class AttendanceDaoEloquent implements AttendanceDao {
     public function save(AttendanceBusiness $attendanceBusiness) {
         $attendanceModel = new AttendanceModel;
         $attendanceModel->user_id = $attendanceBusiness->getUser()->getId();
-        $attendanceModel->clase_id = $attendanceBusiness->getClase()->getId();
+        $attendanceModel->class_id = $attendanceBusiness->getClase()->getId();
         $attendanceModel->date = date('Y-m-d H:i:s');
-        $attendanceModel->verified = ( $attendanceBusiness->getUser()->getType() == "Estudiante" );
+        $attendanceModel->verified = $attendanceBusiness->getVerified();
         $attendanceModel->save();
         $attendanceBusiness->setId($attendanceModel->id);
 

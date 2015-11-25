@@ -9,6 +9,7 @@ use FisiLog\DAO\AcademicDepartment\AcademicDepartmentDaoEloquent;
 use FisiLog\DAO\Professor\ProfessorDaoEloquent;
 use FisiLog\DAO\Attendance\AttendanceDaoEloquent;
 use FisiLog\DAO\Clase\ClaseDaoEloquent;
+use FisiLog\DAO\Group\GroupDaoEloquent;
 
 class DaoEloquentFactory {
   public static function getUserDAO() {
@@ -37,5 +38,8 @@ class DaoEloquentFactory {
   }
   public static function getAttendanceDAO() {
     return new AttendanceDaoEloquent;
+  }
+  public static function getGroupDAO() {
+    return new GroupDaoEloquent;
   }
 }

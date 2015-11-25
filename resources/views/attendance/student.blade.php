@@ -5,6 +5,13 @@
   #view-student {
     margin-top: 20px;
   }
+  .form-group {
+    margin-top: 6.5px;
+  }
+  .error-message {
+    color: red;
+    font-size: 1em;
+  }
 </style>
 
 {!! Html::script('js/attendances/students/main.js') !!}
@@ -34,36 +41,48 @@
   </div>
 </div>
 <div class="container">
-  {!! Form::token() !!}
-  <div class="form-group">
-    <div class="col-sm-2">
-      <label class="control-label">Tipo de documento</label>
+  <div class="col-md-6">
+    {!! Form::token() !!}
+    <div class="row form-group">
+      <div class="col-sm-4">
+        <label class="control-label">Tipo de documento</label>
+      </div>
+      <div class="col-sm-6">
+        <select name="document_type" class="form-control" id="document_type">
+          <option value="0" selected>Seleccione un tipo de Documento</option>
+          @foreach($document_types as $document_type)
+            <option value="{{$document_type->getId()}}">{{$document_type->getName()}}</option>
+          @endforeach
+        </select>
+      </div>
     </div>
-    <div class="col-sm-4">
-      <select name="document_type" class="form-control" id="document_type">
-        <option value="0" selected>Seleccione un tipo de Documento</option>
-        @foreach($document_types as $document_type)
-          <option value="{{$document_type->getId()}}">{{$document_type->getName()}}</option>
-        @endforeach
-      </select>
+    <div class="row form-group">
+      <div class="col-sm-4">
+        <label class="control-label">Número de Documento</label>
+      </div>
+      <div class="col-sm-6">
+        {!! Form::text('document_code', null ,['id'=>'document_code', 'class'=>'form-control','placeholder'=>'Ingrese el número de documento']) !!}
+      </div>
     </div>
-    <div class="col-sm-2">
-      <label class="control-label">Número de Documento</label>
+    <div class="row form-group">
+      <div class="col-sm-4">
+        <button class="btn btn-primary" id="button_pre_register">Registrar asistencia</button>
+      </div>
+      <div class="col-sm-3">
+        <button class="btn btn-success" id="button_register">Confirmar</button>
+      </div>
+      <div class="col-sm-3">
+        <button class="btn btn-danger" id="button_cancel">Cancelar</button>
+      </div>
     </div>
-    <div class="col-sm-4">
-      {!! Form::text('document_code', null ,['id'=>'document_code', 'class'=>'form-control','placeholder'=>'Ingrese el número de documento']) !!}
+    <div class="row">
+      <label class="error-message" id="response_error" hidden></label>
     </div>
   </div>
-  <div class="form-group">
-    <div class="col-sm-4">
-      <button class="btn btn-primary" id="button_pre_register">Registrar asistencia</button>
-    </div>
+  <div class="col-md-6" id="student_data" hidden>
+    <p><label>Foto del estudiante</label></p>
+    <img id="student_photo" src="" height="360px">
   </div>
-</div>
-<div class="container" id="student_data" hidden>
-  <img id="student_photo" src="">
-  <button class="btn btn-success">Confirmar</button>
-  <button class="btn btn-danger">Cancelar</button>
 </div>
 <div class="container">
   <div class="row">

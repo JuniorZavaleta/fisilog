@@ -2,7 +2,7 @@
 namespace FisiLog\BusinessClasses;
 use FisiLog\BusinessClasses\User;
 use FisiLog\BusinessClasses\Clase;
-class Attendace {
+class Attendance {
 	private $id;
 	private $clase;
 	private $user;
