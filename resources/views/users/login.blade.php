@@ -29,7 +29,7 @@
               <label class="control-label">E-Mail</label>
             </div>
             <div class="col-sm-6">
-              {!! Form::text('email', null ,['classini'=>'form-control','placeholder'=>'Ingrese su e-mail']) !!}
+              {!! Form::text('email', null ,['class'=>'form-control','placeholder'=>'Ingrese su e-mail']) !!}
             </div>
           </div>
 

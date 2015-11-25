@@ -43,7 +43,7 @@
 		                <li>
 		                    <a href="#">{{ Auth::user()->name }}</a>
 		                </li>
-		                <li><a href="#">Cerrar Sesión</a></li>
+		                <li><a href="{{route('auth.logout')}}">Cerrar Sesión</a></li>
 		                
 			        @endif
 				   

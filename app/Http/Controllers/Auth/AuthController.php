@@ -32,7 +32,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest', ['except' => 'getLogout']);
+        $this->middleware('guest', ['except' => 'logout']);
     }
 
     /**
@@ -98,5 +98,10 @@ class AuthController extends Controller
             $data['password']      = $request['password'];
         }
         return $data;
+    }
+
+    public function logout() {
+        Auth::logout();
+        return redirect()->route('auth.login');
     }
 }

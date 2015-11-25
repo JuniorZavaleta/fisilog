@@ -33,3 +33,5 @@ Route::get('index', ['as' => 'index', 'uses' => 'IndexController@index']);
 
 Route::get('login', ['as' => 'auth.login' , 'uses' => 'Auth\AuthController@getLogin']);
 Route::post('login', ['as' => 'auth.login' , 'uses' => 'Auth\AuthController@postLogin']);
+
+Route::get('logout', ['as' => 'auth.logout' , 'uses' => 'Auth\AuthController@logout']);
