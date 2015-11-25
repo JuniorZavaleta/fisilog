@@ -44,7 +44,7 @@
               <td>{{$clase->getSchedule()->getStartHour()." - ".$clase->getSchedule()->getEndHour()}}
               <td>{{$clase->getClassRoom()->getName()}}</td>
               <td>{{$clase->getSchedule()->getDayOfTheWeek()}}</td>
-              <td><a href="{{route('attendance.student',['id'=>$clase->getId()])}}"><i class="fa fa-pencil"></i>
+              <td><a href="{{route('attendance.student.index',['clase_id'=>$clase->getId()])}}"><i class="fa fa-pencil"></i>
 </a></td>
             </tr>
           @endforeach

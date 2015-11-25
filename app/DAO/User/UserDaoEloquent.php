@@ -14,6 +14,7 @@ class UserDaoEloquent implements UserDao {
     $userModel->email = $userBusiness->getEmail();
     $userModel->phone = $userBusiness->getPhone();
     $userModel->type = $userBusiness->getType();
+    $userModel->password = $userBusiness->getPassword();
 
     $image = $userBusiness->getPhotoUrl();
     $filename  = time() . '.' . $image->getClientOriginalName();
@@ -56,5 +57,17 @@ class UserDaoEloquent implements UserDao {
     $userBusiness->setPhotoUrl($userModel->photo_url);
 
     return $userBusiness;
+  }
+  public function getById($id) {
+        $userModel    = UserModel::find($id);
+        if ($userModel == null)
+          return null;
+        $userBusiness = new userBusiness;
+        $userBusiness->setId($id);
+        $userBusiness->setUser($userModel->user);
+        $userBusiness->setClase($userModel->claser);
+        $userBusiness->setDate($userModel->date);
+        $userBusiness->setVerified($userModel->verified);
+        return $userBusiness;
   }
 }

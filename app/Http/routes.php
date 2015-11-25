@@ -28,3 +28,11 @@ Route::get('/attendance/{clase_id}/student',['as'=>'attendance.student.index','u
 Route::post('/attendance/{clase_id}/student',['as'=>'attendance.student.preprocess','uses'=>'AttendanceController@findStudent']);
 Route::post('/attendance/{clase_id}/student_verified',['as'=>'attendance.student.process','uses'=>'AttendanceController@postStudent']);
 Route::get('/attendance/professor',['as'=>'attendance.professor','uses'=>'AttendanceController@getProfessor']);
+
+Route::get('index', ['as' => 'index', 'uses' => 'IndexController@index']);
+
+Route::get('login', ['as' => 'auth.login' , 'uses' => 'Auth\AuthController@getLogin']);
+Route::post('login', ['as' => 'auth.login' , 'uses' => 'Auth\AuthController@postLogin']);
+
+Route::get('logout', ['as' => 'auth.logout' , 'uses' => 'Auth\AuthController@logout']);
+

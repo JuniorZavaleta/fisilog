@@ -22,7 +22,7 @@
         </div>
 
         <div class="container email-field" id="withEmail" hidden >
-          {!! Form::open(array('route'=>'user.register.process', 'class'=>'form-horizontal', 'method'=>'POST')) !!}
+          {!! Form::open(array('route'=>'auth.login', 'class'=>'form-horizontal', 'method'=>'POST')) !!}
 
           <div class="form-group">
             <div class="col-sm-4">
@@ -44,7 +44,7 @@
 
           <div class="form-group">
             <div class="col-sm-4">
-              <button class="btn btn-primary" name="registerButton" type="submit" value="register">Iniciar Sesión</button>
+              <button class="btn btn-primary" name="submit" type="submit">Iniciar Sesión</button>
             </div>
           </div>
 
@@ -52,7 +52,7 @@
         </div> 
 
           <div class="container document-field" id="withDocument" hidden>
-            {!! Form::open(array('route'=>'user.register.process', 'class'=>'form-horizontal', 'method'=>'POST')) !!}
+            {!! Form::open(array('route'=>'auth.login', 'class'=>'form-horizontal', 'method'=>'POST')) !!}
 
             <div class="form-group">
               <div class="col-sm-4">
@@ -86,7 +86,7 @@
 
             <div class="form-group">
               <div class="col-sm-4">
-                <button class="btn btn-primary" name="loginButton" type="submit" value="login">Iniciar Sesión</button>
+                <button class="btn btn-primary" name="submit" type="submit">Iniciar Sesión</button>
               </div>
             </div>
 

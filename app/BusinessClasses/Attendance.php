@@ -32,4 +32,10 @@ class Attendace {
 	public function getDate() {
 		return $this->date;
 	}
+	public function setVerified($verified) {
+		$this->verified = $verified;
+	}
+	public function getVerified() {
+		return $this->verified;
+	}
 }
