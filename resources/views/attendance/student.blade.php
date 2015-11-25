@@ -12,6 +12,10 @@
     color: red;
     font-size: 1em;
   }
+  .success-message {
+    color: green;
+    font-size: 1em;
+  }
 </style>
 
 {!! Html::script('js/attendances/students/main.js') !!}
@@ -75,8 +79,15 @@
         <button class="btn btn-danger" id="button_cancel">Cancelar</button>
       </div>
     </div>
-    <div class="row">
-      <label class="error-message" id="response_error" hidden></label>
+    <div class="row form-group">
+      <div class="col-xs-12">
+        <label class="error-message" id="response_error" hidden></label>
+      </div>
+    </div>
+    <div class="row form-group">
+      <div class="col-xs-12">
+        <label class="success-message" id="response_success" hidden>Asistencia registrada correctamente.</label>
+      </div>
     </div>
   </div>
   <div class="col-md-6" id="student_data" hidden>

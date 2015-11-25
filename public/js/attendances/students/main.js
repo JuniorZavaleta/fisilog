@@ -8,6 +8,7 @@ $(function  () {
   var div_student_data = $('#student_data');
   var img_student_photo = $('#student_photo');
   var response_error = $('#response_error');
+  var response_success = $('#response_success');
   var base_url = $('#base_url');
 
   button_pre_register.on('click', function(){
@@ -34,9 +35,14 @@ $(function  () {
       document_code: input_document_code.val(),
       _token: input_token.val()
     },function(data){
-      //display ok message
-
-    });
+      response_error.hide();
+      response_success.show();
+    }).fail(function(data){
+      div_student_data.hide();
+      response_error.show();
+      response_success.show();
+      response_error.html(data.responseJSON.error);
+    });;
   });
 
 });

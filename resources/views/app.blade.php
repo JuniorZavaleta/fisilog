@@ -6,11 +6,6 @@
     <!-- Scripts -->
     {!! Html::script('js/jquery-1.11.3.min.js') !!}
     {!! Html::script('js/bootstrap.min.js') !!}
-    <style type="text/css">
-    .container {
-    padding: 10px;
-     }
-    </style>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -36,7 +31,7 @@
         </ul>
         <ul class="nav navbar-nav navbar-right">
         @if (Auth::guest())
-          <li><a href="#">Iniciar Sesión</a></li>
+          <li><a href="{{route('auth.login')}}">Iniciar Sesión</a></li>
           <li><a href="{{route('user.register.index')}}">Registrarse</a></li>
         @else
           <li><a href="#">{{ Auth::user()->name }}</a></li>
