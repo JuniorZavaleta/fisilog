@@ -60,6 +60,7 @@ class AttendanceRegisterService {
       $professor = $clase->getProfessor();
       if ( $professor->getId() == $user->getId() ) {
         $new_attendance = new Attendance;
+        $user->setId($data['user_id']);
         $new_attendance->setUser($user);
         $new_attendance->setClase($clase);
         $new_attendance->setDate(date('Y-m-d'));
