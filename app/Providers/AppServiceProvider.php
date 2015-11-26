@@ -7,6 +7,7 @@ use FisiLog\DAO\DaoEloquentFactory;
 use FisiLog\Services\UserRegisterService;
 use FisiLog\Services\AttendanceRegisterService;
 use FisiLog\Services\UserLoginService;
+use FisiLog\Services\NotificationService;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -41,6 +42,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(UserLoginService::class, function($app){
             $persistence = $app->make(DaoEloquentFactory::class);
             return new UserLoginService($persistence);
+        });
+        $this->app->singleton(NotificationService::class, function($app){
+            $persistence = $app->make(DaoEloquentFactory::class);
+            return new NotificationService($persistence);
         });
     }
 }

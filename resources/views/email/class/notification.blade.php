@@ -5,7 +5,7 @@
 </head>
 <body>
 <div style="width: 660px">
-{{$message}}
+{{$notification_message}}
 </div>
 </body>
 </html>

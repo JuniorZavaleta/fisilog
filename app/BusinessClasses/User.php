@@ -10,6 +10,7 @@ class User {
 	protected $password;
 	protected $type;
 	protected $photo_url;
+	protected $notification_channel;
 
 	public function setId($id) {
 		$this->id = $id;
@@ -58,5 +59,11 @@ class User {
 	}
 	public function getPhotoUrl() {
 		return $this->photo_url;
+	}
+	public function setNotificationChannel(NotificationChannel $notification_channel) {
+		$this->notification_channel = $notification_channel;
+	}
+	public function getNotificationChannel() {
+		return $this->notification_channel;
 	}
 }

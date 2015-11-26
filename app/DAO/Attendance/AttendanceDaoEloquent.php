@@ -8,10 +8,25 @@ use FisiLog\Models\User as UserModel;
 use FisiLog\Models\Clase as ClaseModel;
 
 class AttendanceDaoEloquent implements AttendanceDao {
-    public function getAttendancesByUserAndClase(
+    public function getAttendancesByUserAndClaseAndDate(
         UserBusiness $userBusiness, 
-        ClaseBusiness $claseBusiness) {
+        ClaseBusiness $claseBusiness,
+        $date) {
+        $attendanceModel = AttendanceModel::where('user_id','=',$userBusiness->getId())
+                                          ->where('class_id','=',$claseBusiness->getId())
+                                          ->where('date','=',$date)
+                                          ->first();
 
+        if ($attendanceModel == null)
+            return null;
+        $attendanceBusiness = new AttendanceBusiness;
+        $attendanceBusiness->setId($attendanceModel->id);
+        $attendanceBusiness->setUser($userBusiness);
+        $attendanceBusiness->setClase($claseBusiness);
+        $attendanceBusiness->setDate($attendanceModel->date);
+        $attendanceBusiness->setVerified($attendanceModel->verified);
+
+        return $attendanceBusiness;
     }
     public function save(AttendanceBusiness $attendanceBusiness) {
         $attendanceModel = new AttendanceModel;
