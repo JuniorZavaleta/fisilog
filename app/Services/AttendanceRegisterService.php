@@ -52,7 +52,7 @@ class AttendanceRegisterService {
     return null;
   }
   public function registerProfessor($data) {
-    $user = $this->userPersistence->getById( $data['user_id'] );
+    $user = $this->professorPersistence->findById( $data['user_id'] );
     $clase = $this->classPersistence->findById( $data ['clase_id'] );
     $attendance = $this->attendancePersistence->getAttendancesByUserAndClaseAndDate($user, $clase, date('Y-m-d'));
 
