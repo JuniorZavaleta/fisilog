@@ -37,8 +37,7 @@ class UserDaoEloquent implements UserDao {
   }
   public function findByDocument(DocumentBusiness $document) {
     $userModel = UserModel::whereHas('documents', function($query)use($document){
-      $query->where('document_type_id','=',$document->getDocumentType()->getId() )
-            ->where('code','=',$document->getCode());
+      $query->where('code','=',$document->getCode());
     })->first();
 
     return $this->createUser($userModel);;

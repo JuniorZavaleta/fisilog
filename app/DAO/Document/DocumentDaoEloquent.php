@@ -44,4 +44,8 @@ class DocumentDaoEloquent implements DocumentDao {
 
     return $documentBusiness;
   }
+  public function findByCode($code) {
+    $document = DocumentModel::where('code', $code)->get()->first();
+    return $this->createDocument($document, null,null);
+  }
 }

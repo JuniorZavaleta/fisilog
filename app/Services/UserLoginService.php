@@ -31,7 +31,10 @@ class UserLoginService {
       return false;
     $document = $this->findByUserAndDocumentType($user, $document_type);
     if ($document == null)
-      return false
-    return $data['document_code'] == $document->getCode());
+      return false;
+    return $data['document_code'] == $document->getCode();
+  }
+  public function findByDocument($document_business) {
+    return $this->userPersistence->findByDocument($document_business);
   }
 }

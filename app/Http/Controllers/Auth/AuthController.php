@@ -9,6 +9,8 @@ use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Http\Request;
 use Auth;
+use FisiLog\Services\DocumentService;
+use FisiLog\Services\UserLoginService;
 
 class AuthController extends Controller
 {
@@ -30,9 +32,12 @@ class AuthController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(UserLoginService $login_service, DocumentService $document_service)
     {
         $this->middleware('guest', ['except' => 'logout']);
+        $this->user_service = $login_service;
+        $this->document_service = $document_service;
+
     }
 
     /**
@@ -77,9 +82,13 @@ class AuthController extends Controller
                 return redirect()->intended('index');
             } 
         } else if ($request->has('document_id')) {
-            if (Auth::attempt(['document_id' => $data['document_id'], 'password' => $data['password']])) {
-                // Authentication passed...
-                return redirect()->intended('index');
+            $document = $this->document_service->findByCode($data['document_id']);
+            if (!is_null($document)) {
+                $user = $this->user_service->findByDocument($document);
+                if (Auth::attempt(['email' => $user->getEmail(), 'password' => $data['password']])) {
+                    // Authentication passed...
+                    return redirect()->intended('index');
+                }
             }
         }
         return redirect()->route('auth.login');
