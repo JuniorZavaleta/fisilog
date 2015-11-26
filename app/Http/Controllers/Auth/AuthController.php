@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Auth;
 use FisiLog\Services\DocumentService;
 use FisiLog\Services\UserLoginService;
+use FisiLog\Services\DocumentTypePersistenceService;
 
 class AuthController extends Controller
 {
@@ -32,12 +33,12 @@ class AuthController extends Controller
      *
      * @return void
      */
-    public function __construct(UserLoginService $login_service, DocumentService $document_service)
+    public function __construct(UserLoginService $login_service, DocumentService $document_service, DocumentTypePersistenceService $document_type_persistence_service)
     {
         $this->middleware('guest', ['except' => 'logout']);
         $this->user_service = $login_service;
         $this->document_service = $document_service;
-
+        $this->document_type_persistence_service = $document_type_persistence_service;
     }
 
     /**
@@ -71,7 +72,11 @@ class AuthController extends Controller
     }
 
     protected function getLogin() {
-        return view('users.login');
+        $document_types = $this->document_type_persistence_service->all();
+        $data = [
+            'document_types' => $document_types,
+        ];
+        return view('users.login', $data);
     }
 
     protected function postLogin(Request $request) {

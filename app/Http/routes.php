@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('auth.login');
 });
 Route::get('/users/register',['as'=>'user.register.index','uses'=>'UserRegisterController@index']);
 Route::post('/users/register',['as'=>'user.register.process','uses'=>'UserRegisterController@process']);

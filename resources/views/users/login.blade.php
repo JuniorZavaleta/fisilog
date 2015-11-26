@@ -62,6 +62,9 @@
             <div class="col-sm-6">
               <select name="document_type" class="form-control">
                 <option value="0" selected>Seleccione un tipo de Documento</option>
+                @foreach($document_types as $document_type)
+                  <option value="{{$document_type->getId()}}">{{$document_type->getName()}}</option>
+                @endforeach
               </select>
               </div>
             </div>
