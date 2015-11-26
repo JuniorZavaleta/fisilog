@@ -17,7 +17,7 @@ class ProfessorDaoEloquent implements ProfessorDao {
   public function findById($id) {
     $professorModel = ProfessorModel::where('user_id','=',$id)->first();
     $professorBusiness = new ProfessorBusiness;
-    $professorBusiness->setId($professorModel->id);
+    $professorBusiness->setId($id);
     $professorBusiness->setType($professorModel->type);
 
     return $professorBusiness;
