@@ -34,6 +34,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ClaseSeeder::class);
         $this->call(AttendanceSeeder::class);
         $this->call(DeviceSeeder::class);
+        $this->call(StudentXGroupSeeder::class);
         Model::reguard();
     }
 }
