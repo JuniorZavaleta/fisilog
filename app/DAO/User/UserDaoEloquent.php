@@ -61,12 +61,8 @@ class UserDaoEloquent implements UserDao {
         $userModel    = UserModel::find($id);
         if ($userModel == null)
           return null;
-        $userBusiness = new userBusiness;
+        $userBusiness = new UserBusiness;
         $userBusiness->setId($id);
-        $userBusiness->setUser($userModel->user);
-        $userBusiness->setClase($userModel->claser);
-        $userBusiness->setDate($userModel->date);
-        $userBusiness->setVerified($userModel->verified);
         return $userBusiness;
   }
 }
