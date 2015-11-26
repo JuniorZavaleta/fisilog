@@ -10,6 +10,7 @@ use FisiLog\Services\AttendanceRegisterService;
 use FisiLog\Services\ClasePersistenceService;
 use FisiLog\Services\DocumentTypePersistenceService;
 use Validator;
+use Auth;
 
 class AttendanceController extends Controller
 {
@@ -21,12 +22,15 @@ class AttendanceController extends Controller
         $this->attendance_service = $attendance_service;
         $this->clase_persistence_service = $clase_persistence_service;
         $this->document_type_persistence_service = $document_type_persistence_service;
+        $this->user = Auth::user();
     }
 
     public function index()
     {
-        $id = 2;
-        $classes = $this->clase_persistence_service->getByProfessor($id);
+        if ($this->user)
+            $classes = $this->clase_persistence_service->getByProfessor($this->user->id);
+        else
+            $classes = null;
 
         $data = [
             'classes' => $classes,
@@ -39,6 +43,15 @@ class AttendanceController extends Controller
     {
         $clase = $this->clase_persistence_service->findById($clase_id);
         $document_types = $this->document_type_persistence_service->all();
+
+        if ($this->user && $this->user->type == "Profesor") {
+            $data = [
+                'user_id' => $this->user->id,
+                'clase_id' => $clase_id,
+            ];
+            $this->attendance_service->registerProfessor( $data );
+        }
+
 
         $data = [
             'class' => $clase,
@@ -96,7 +109,7 @@ class AttendanceController extends Controller
 
         $attendance = $this->attendance_service->registerStudent($input);
 
-        if ($attendance->getUser() == null) {
+        if ($attendance == null || $attendance->getUser() == null) {
             $output = [
                 'error' => 'Este alumno no pertence a la clase',
             ];

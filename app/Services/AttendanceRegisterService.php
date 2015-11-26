@@ -13,6 +13,7 @@ class AttendanceRegisterService {
     $this->attendancePersistence = $dao->getAttendanceDAO();
     $this->groupPersistence = $dao->getGroupDAO();
     $this->studentPersistence = $dao->getStudentDAO();
+    $this->professorPersistence = $dao->getProfessorDAO();
   }
   public function index() {
 
@@ -50,7 +51,25 @@ class AttendanceRegisterService {
 
     return null;
   }
-  public function registerProfessor() {
-    
+  public function registerProfessor($data) {
+    $user = $this->professorPersistence->findById( $data['user_id'] );
+    $clase = $this->classPersistence->findById( $data ['clase_id'] );
+
+    if ( $clase != null ) {
+      $professor = $clase->getProfessor();
+      if ( $professor->getId() == $user->getId() ) {
+        $attendance = new Attendance;
+        $attendance->setUser($user);
+        $attendance->setClase($clase);
+        $attendance->setDate(date('Y-m-d'));
+        $attendance->setVerified(false);
+
+        $attendance = $this->attendancePersistence->save($attendance);
+
+        return $attendance;
+      }
+    }
+
+    return null;
   }
 }
