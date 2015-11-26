@@ -9,6 +9,7 @@ use FisiLog\Http\Controllers\Controller;
 use FisiLog\Services\AttendanceRegisterService;
 use FisiLog\Services\ClasePersistenceService;
 use FisiLog\Services\DocumentTypePersistenceService;
+use FisiLog\Services\NotificationService;
 use Validator;
 use Auth;
 
@@ -17,11 +18,13 @@ class AttendanceController extends Controller
     public function __construct(
         AttendanceRegisterService $attendance_service,
         DocumentTypePersistenceService $document_type_persistence_service,
-        ClasePersistenceService $clase_persistence_service
+        ClasePersistenceService $clase_persistence_service,
+        NotificationService $notification_service
     ) {
         $this->attendance_service = $attendance_service;
         $this->clase_persistence_service = $clase_persistence_service;
         $this->document_type_persistence_service = $document_type_persistence_service;
+        $this->notification_service = $notification_service;
         $this->user = Auth::user();
     }
 
@@ -49,7 +52,11 @@ class AttendanceController extends Controller
                 'user_id' => $this->user->id,
                 'clase_id' => $clase_id,
             ];
-            $this->attendance_service->registerProfessor( $data );
+            $attendance = $this->attendance_service->registerProfessor( $data );
+            if ($attendance != null) {
+                $attendance->setVerified(true);
+                $this->notification_service->startClase( $data );
+            }
         }
 
 

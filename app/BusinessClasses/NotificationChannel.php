@@ -1,8 +1,7 @@
 <?php
 namespace FisiLog\BusinessClasses;
-use FisiLog\Services\Notificator;
 
-class NotificationConfiguration {
+class NotificationChannel {
 	private $notificator;
 
 	public function setStrategyNotification(Notificator $strategyNotification) {

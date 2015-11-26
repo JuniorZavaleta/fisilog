@@ -1,5 +1,5 @@
 <?php
-namespace FisiLog\Services;
+namespace FisiLog\BusinessClasses;
 
 interface Notificator {
     public function notify($message, $subject, $to);
