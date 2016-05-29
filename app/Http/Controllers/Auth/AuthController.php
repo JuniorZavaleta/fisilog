@@ -1,121 +1,71 @@
 <?php
-
 namespace FisiLog\Http\Controllers\Auth;
 
-use FisiLog\Models\User;
-use Validator;
 use FisiLog\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
-use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
-use Illuminate\Http\Request;
-use Auth;
-use FisiLog\Services\DocumentService;
-use FisiLog\Services\UserLoginService;
+
 use FisiLog\Services\DocumentTypePersistenceService;
+
+use Auth;
+use FisiLog\Models\User;
+
+use FisiLog\Http\Requests\Auth\AuthenticationDocument;
+use FisiLog\Http\Requests\Auth\AuthenticationEmail;
 
 class AuthController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Registration & Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users, as well as the
-    | authentication of existing users. By default, this controller uses
-    | a simple trait to add these behaviors. Why don't you explore it?
-    |
-    */
+    use ThrottlesLogins;
 
-    use AuthenticatesAndRegistersUsers, ThrottlesLogins;
-
-    /**
-     * Create a new authentication controller instance.
-     *
-     * @return void
-     */
-    public function __construct(UserLoginService $login_service, DocumentService $document_service, DocumentTypePersistenceService $document_type_persistence_service)
+    public function __construct(DocumentTypePersistenceService $document_type_persistence_service)
     {
         $this->middleware('guest', ['except' => 'logout']);
-        $this->user_service = $login_service;
-        $this->document_service = $document_service;
         $this->document_type_persistence_service = $document_type_persistence_service;
     }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|confirmed|min:6',
-        ]);
-    }
+   protected function getLogin() {
+      $document_types = $this->document_type_persistence_service->all();
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return User
-     */
-    protected function create(array $data)
-    {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
-    }
+      $data = [
+         'document_types' => $document_types,
+      ];
 
-    protected function getLogin() {
-        $document_types = $this->document_type_persistence_service->all();
-        $data = [
-            'document_types' => $document_types,
-        ];
-        return view('users.login', $data);
-    }
+      return view('auth.login', $data);
+   }
 
-    protected function postLogin(Request $request) {
-        $data = $this->makeInput($request);
-        if ($request->has('email')) {
-            if (Auth::attempt(['email' => $data['email'], 'password' => $data['password']])) {
-                // Authentication passed...
-                return redirect()->intended('index');
-            } 
-        } else if ($request->has('document_id')) {
-            $document = $this->document_service->findByCode($data['document_id']);
-            if (!is_null($document)) {
-                $user = $this->user_service->findByDocument($document);
-                if (Auth::attempt(['email' => $user->getEmail(), 'password' => $data['password']])) {
-                    // Authentication passed...
-                    return redirect()->intended('index');
-                }
-            }
-        }
-        return redirect()->route('auth.login');
-    }
+   protected function postLogin(AuthenticationEmail $request) {
+      $email = $request->input('email');
+      $password = $request->input('password');
 
+      if (Auth::attempt([ 'email' => $email, 'password' => $password ])) {
+         return redirect()->intended('index');
+      }
 
-    protected function makeInput($request) {
-        $data = [];
-        if ($request->has('email')) {
-            $data['email'] = $request['email'];
-            $data['password'] = $request['password'];
+      return redirect()->route('auth.login');
+   }
 
-        } else if ($request->has('document_id')) {
-            $data['document_type'] = $request['document_type'];
-            $data['document_id']   = $request['document_id'];
-            $data['password']      = $request['password'];
-        }
-        return $data;
-    }
+   public function authenticationDocument(AuthenticationDocument $request)
+   {
+      $document_type = $request->input('document_type');
+      $document_id   = $request->input('document_id');
+      $password      = $request->input('password');
+
+      $user = User::whereHas('documents', function($query) use ($document_id, $document_type) {
+         $query->where('code', $document_id)
+               ->where('document_type_id', $document_type);
+      })->first();
+
+      if ( $user && Auth::attempt(['email' => $user->email, 'password' => $password]) ) {
+         return redirect()->intended('index');
+      }
+
+      $error_message = 'Invalid credentials';
+
+      return redirect('/login')->with('error_message', $error_message);
+   }
 
     public function logout() {
         Auth::logout();
+
         return redirect()->route('auth.login');
     }
 }
