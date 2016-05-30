@@ -31,17 +31,7 @@
 </head>
 
 <body>
-<?php  session('error_message') ?>
    <div class="container">
-      @if (Session::has('error_message'))
-
-        <div class="alert alert-warning" role="alert">
-          <ul>
-            {{ session('error_message') }}
-          </ul>
-        </div>
-
-      @endif
       <div class="row">
          <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
             <div class="login-panel panel panel-default">
@@ -57,33 +47,34 @@
 
                <div class="panel-body">
                   <div class="email-field" id="withEmail">
-                  {!! Form::open(array('route'=>'auth.login', 'method'=>'POST')) !!}
 
-                     <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
-                        {!! Form::text('email', null ,['class'=>'form-control','placeholder'=>'Ingrese su e-mail']) !!}
+                     <form role="form" method="POST" action="{{ route('authenticate.email') }}">
+                        {!! csrf_field() !!}
+                        <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
+                           {!! Form::text('email', null ,['class'=>'form-control','placeholder'=>'Ingrese su e-mail']) !!}
 
-                        @if ($errors->has('email'))
-                           <span class="help-block">
-                               <strong>{{ $errors->first('email') }}</strong>
-                           </span>
-                        @endif
-                     </div>
+                           @if ($errors->has('email'))
+                              <span class="help-block">
+                                  <strong>{{ $errors->first('email') }}</strong>
+                              </span>
+                           @endif
+                        </div>
 
-                     <div class="form-group {{ $errors->has('password') ? 'has-error' : '' }}">
-                        {!! Form::password('password',['class'=>'form-control','placeholder' =>'Ingrese su contraseña']) !!}
+                        <div class="form-group {{ $errors->has('password') ? 'has-error' : '' }}">
+                           {!! Form::password('password',['class'=>'form-control','placeholder' =>'Ingrese su contraseña']) !!}
 
-                        @if ($errors->has('password'))
-                           <span class="help-block">
-                               <strong>{{ $errors->first('password') }}</strong>
-                           </span>
-                        @endif
-                     </div>
+                           @if ($errors->has('password'))
+                              <span class="help-block">
+                                  <strong>{{ $errors->first('password') }}</strong>
+                              </span>
+                           @endif
+                        </div>
 
-                     <div class="form-group">
-                        <button class="btn btn-lg btn-success btn-block" name="submit" type="submit">Iniciar Sesión</button>
-                     </div>
+                        <div class="form-group">
+                           <button class="btn btn-lg btn-success btn-block" name="submit" type="submit">Iniciar Sesión</button>
+                        </div>
 
-                  {!! Form::close() !!}
+                     </form>
                   </div>
 
                   <div class="document-field" id="withDocument" hidden>

@@ -34,7 +34,7 @@ Route::group(['middleware' => ['web']], function () {
 
 
    Route::get('login', ['as' => 'auth.login' , 'uses' => 'Auth\AuthController@getLogin']);
-   Route::post('login', ['as' => 'auth.login' , 'uses' => 'Auth\AuthController@postLogin']);
+   Route::post('login', ['as' => 'authenticate.email' , 'uses' => 'Auth\AuthController@postLogin']);
    Route::post('/authenticateDocument', ['as' => 'authenticate.document' , 'uses' => 'Auth\AuthController@authenticationDocument']);
 
    Route::get('logout', ['as' => 'auth.logout' , 'uses' => 'Auth\AuthController@logout']);
