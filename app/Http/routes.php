@@ -22,10 +22,10 @@ Route::group(['middleware' => ['web', 'auth']], function () {
    Route::post('/attendance/{clase_id}/student',['as'=>'attendance.student.preprocess','uses'=>'AttendanceController@findStudent']);
    Route::post('/attendance/{clase_id}/student_verified',['as'=>'attendance.student.process','uses'=>'AttendanceController@postStudent']);
    Route::get('/attendance/professor',['as'=>'attendance.professor','uses'=>'AttendanceController@getProfessor']);
+   Route::get('index', ['as' => 'index', 'uses' => 'IndexController@index']);
 });
 
 Route::group(['middleware' => ['web']], function () {
-   Route::get('index', ['as' => 'index', 'uses' => 'IndexController@index']);
    Route::get('/', function () {
        return redirect()->route('auth.login');
    });
