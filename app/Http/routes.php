@@ -23,14 +23,15 @@ Route::group(['middleware' => ['web', 'auth']], function () {
    Route::post('/attendance/{clase_id}/student_verified',['as'=>'attendance.student.process','uses'=>'AttendanceController@postStudent']);
    Route::get('/attendance/professor',['as'=>'attendance.professor','uses'=>'AttendanceController@getProfessor']);
    Route::get('index', ['as' => 'index', 'uses' => 'IndexController@index']);
+
+   Route::get('/users/register',['as'=>'users.create','uses'=>'Backend\UserController@create']);
+   Route::post('/users/register',['as'=>'users.store','uses'=>'Backend\UserController@store']);
 });
 
 Route::group(['middleware' => ['web']], function () {
    Route::get('/', function () {
        return redirect()->route('auth.login');
    });
-   Route::get('/users/register',['as'=>'user.register.index','uses'=>'UserRegisterController@index']);
-   Route::post('/users/register',['as'=>'user.register.process','uses'=>'UserRegisterController@process']);
 
 
    Route::get('login', ['as' => 'auth.login' , 'uses' => 'Auth\AuthController@getLogin']);
