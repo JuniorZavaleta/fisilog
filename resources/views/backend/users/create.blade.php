@@ -8,6 +8,9 @@
    }
 </style>
 {!! Html::script('js/users/register/main.js') !!}
+<script type="text/javascript">
+   var user_type_selected = "{{ old('user_type') }}";
+</script>
 
 <div class="row">
    <div class="col-xs-12">
@@ -45,7 +48,7 @@
                </div>
 
                <div class="col-sm-8">
-                  <input type="text" class="form-control" name="lastname" placeholder="Ingrese sus apellidos">
+                  <input type="text" class="form-control" name="lastname" placeholder="Ingrese sus apellidos" value="{{ old('lastname') }}">
                </div>
 
             </div>
@@ -59,12 +62,12 @@
                </div>
 
                <div class="col-sm-8">
-               {!! Form::select('user_type',
-               [
-                  0 => 'Seleccione el tipo de Usuario',
-                  1 => 'Alumno',
-                  2 => 'Docente',
-               ] , 0, ['class'=>'form-control', 'id' => 'user_type']) !!}
+                  <select id="user_type" name="user_type" class="form-control">
+                     <option value="0" >Seleccione el tipo de Usuario</option>
+                     @foreach($user_types as $id => $user_type)
+                        <option value="{{$id}}" {{ old('user_type') == $id  ? 'selected' : '' }} >{{$user_type}}</option>
+                     @endforeach
+                  </select>
                </div>
 
             </div>
@@ -79,9 +82,9 @@
 
                <div class="col-sm-8">
                   <select name="document_type" class="form-control">
-                     <option value="0" selected>Seleccione un tipo de Documento</option>
+                     <option value="0" >Seleccione un tipo de Documento</option>
                   @foreach($document_types as $document_type)
-                     <option value="{{$document_type->getId()}}">{{$document_type->getName()}}</option>
+                     <option value="{{$document_type->getId()}}" {{ old('document_type') == $document_type->getId()  ? 'selected' : '' }} >{{$document_type->getName()}}</option>
                   @endforeach
                   </select>
                </div>
@@ -97,7 +100,7 @@
                </div>
 
                <div class="col-sm-8">
-                  <input type="text" class="form-control" name="document_code" placeholder="Ingrese el número de documento">
+                  <input type="text" class="form-control" name="document_code" placeholder="Ingrese el número de documento" value="{{ old('document_code') }}">
                </div>
 
             </div>
@@ -111,7 +114,7 @@
                </div>
 
                <div class="col-sm-8">
-                  <input type="text" class="form-control" name="phone" placeholder="Ingrese su telefono">
+                  <input type="text" class="form-control" name="phone" placeholder="Ingrese su telefono" value="{{ old('phone') }}">
                </div>
 
             </div>
@@ -125,7 +128,7 @@
                </div>
 
                <div class="col-sm-8">
-                  <input type="text" name="email" class="form-control" placeholder="Ingrese su e-mail">
+                  <input type="text" name="email" class="form-control" placeholder="Ingrese su e-mail" value="{{ old('email') }}">
                </div>
 
             </div>
@@ -177,7 +180,7 @@
             </div>
 
             <div class="col-sm-9">
-               <input type="text" name="student_code" class="form-control" placeholder="Ingrese el código de alumno del estudiante">
+               <input type="text" name="student_code" class="form-control" placeholder="Ingrese el código de alumno del estudiante" value="{{ old('student_code') }}">
             </div>
 
          </div>
@@ -191,7 +194,7 @@
             </div>
 
             <div class="col-sm-9">
-               <input type="text" name="year_of_entry" class="form-control" placeholder="Ingrese el año de ingreso del estudiante">
+               <input type="text" name="year_of_entry" class="form-control" placeholder="Ingrese el año de ingreso del estudiante" value="{{ old('year_of_entry') }}">
             </div>
 
          </div>
