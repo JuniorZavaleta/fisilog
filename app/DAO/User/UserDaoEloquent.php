@@ -1,68 +1,65 @@
 <?php
 namespace FisiLog\DAO\User;
+
 use FisiLog\BusinessClasses\User as UserBusiness;
-use FisiLog\BusinessClasses\Document as DocumentBusiness;
+
 use FisiLog\Models\User as UserModel;
+
+use FisiLog\DAO\NotificationChannel\NotificationChannelDaoEloquent as NotificationChannelModel;
+use FisiLog\DAO\UserType\UserTypeDaoEloquent as UserTypeModel;
+
 use Image;
 use URL;
 
 class UserDaoEloquent implements UserDao {
-  public function save(UserBusiness $userBusiness) {
-    $userModel = new UserModel;
-    $userModel->name = $userBusiness->getName();
-    $userModel->lastname = $userBusiness->getLastname();
-    $userModel->email = $userBusiness->getEmail();
-    $userModel->phone = $userBusiness->getPhone();
-    $userModel->type = $userBusiness->getType();
-    $userModel->password = $userBusiness->getPassword();
 
-    $image = $userBusiness->getPhotoUrl();
-    $filename  = time() . '.' . $image->getClientOriginalName();
-    $url = "img/users/" . $filename;
-    $path = public_path($url);
-    // resize image
-    Image::make($image->getRealPath())
-    ->save($path);
+   public function save(UserBusiness $userBusiness)
+   {
+      $userModel = UserModel::create($userBusiness->toArray());
 
-    $userModel->photo_url = $url;
-    $userModel->save();
-    $userBusiness->setId($userModel->id);
+      return $userModel->id;
+   }
 
-    return $userBusiness;
-  }
-  public function findByEmail($email) {
-    $userModel = UserModel::where('email','=',$email)->first();
+   public function findById($id)
+   {
+      $userModel = UserModel::find($id);
 
-    return $this->createUser($userModel);;
-  }
-  public function findByDocument(DocumentBusiness $document) {
-    $userModel = UserModel::whereHas('documents', function($query)use($document){
-      $query->where('code','=',$document->getCode());
-    })->first();
+      return $this->createUser($userModel);
+   }
 
-    return $this->createUser($userModel);;
-  }
-  private function createUser(UserModel $userModel) {
-    if ($userModel == null)
-      return null;
+   public function findByEmail($email)
+   {
+      $userModel = UserModel::where('email','=',$email)->first();
 
-    $userBusiness = new UserBusiness;
-    $userBusiness->setId($userModel->id);
-    $userBusiness->setPassword($userModel->password);
-    $userBusiness->setName($userModel->name);
-    $userBusiness->setLastname($userModel->lastname);
-    $userBusiness->setEmail($userModel->email);
-    $userBusiness->setPhone($userModel->phone);
-    $userBusiness->setPhotoUrl($userModel->photo_url);
+      return $this->createUser($userModel);;
+   }
 
-    return $userBusiness;
-  }
-  public function getById($id) {
-        $userModel    = UserModel::find($id);
-        if ($userModel == null)
-          return null;
-        $userBusiness = new UserBusiness;
-        $userBusiness->setId($id);
-        return $userBusiness;
-  }
+   public function findByDocument($document_code)
+   {
+      $userModel = UserModel::whereHas('documents', function($query) use ($document_code){
+         $query->where('code','=', $document_code);
+      })->first();
+
+      return $this->createUser($userModel);;
+   }
+
+   private function createUser(UserModel $userModel)
+   {
+      if ($userModel == null)
+         return null;
+
+      $userBusiness = new UserBusiness(
+         $userModel->name,
+         $userModel->lastname,
+         $userModel->email,
+         $userModel->password,
+         $userModel->phone,
+         UserTypeModel::createBusinessClass($userModel->user_type),
+         $userModel->photo_url,
+         NotificationChannelModel::createBusinessClass($userModel->notification_channel)
+      );
+
+      return $userBusiness;
+   }
+
 }

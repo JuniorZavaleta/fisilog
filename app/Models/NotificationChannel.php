@@ -3,11 +3,9 @@ namespace FisiLog\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class UserType extends Model
+class NotificationChannel extends Model
 {
-   protected $table = 'user_types';
-
-   public $timestamps = false;
+   protected $table = 'notification_channels';
 
    protected $fillable = ['name'];
 
