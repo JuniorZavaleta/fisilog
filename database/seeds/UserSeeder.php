@@ -6,27 +6,28 @@ class UserSeeder extends Seeder
 {
    public function run()
    {
+      DB::table('users')->truncate();
       DB::table('users')->insert([
          [
-            'id' => 1, 
-            'name' => 'junior', 
+            'id' => 1,
+            'name' => 'junior',
             'lastname' => 'claudio',
             'email' => 'juniorclaudiozavaleta@gmail.com',
             'phone' => '76726604',
             'password' => Hash::make('123456'),
             'notification_channel_id' => 1,
-            'type' => 'Estudiante',
+            'user_type_id' => 1,
             'photo_url' => '/',
          ],
          [
-            'id' => 2, 
+            'id' => 2,
             'name' => 'prueba profesor',
             'lastname' => 'prueba profesor',
             'email' => 'test@email.com',
             'phone' => '12345678',
             'password' => Hash::make('123456'),
             'notification_channel_id' => 2,
-            'type' => 'Profesor',
+            'user_type_id' => 2,
             'photo_url' => '/',
          ]
       ]);
