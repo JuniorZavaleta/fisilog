@@ -5,9 +5,25 @@ use FisiLog\BusinessClasses\User;
 use FisiLog\BusinessClasses\School;
 
 class Student extends User {
+
+   /**
+    * @var School
+    */
    private $school;
+
+   /**
+    * @var integer
+    */
    private $yearOfEntry;
+
+   /**
+    * @var string
+    */
    private $code;
+
+   /**
+    * @var Collection of Group
+    */
    private $groups;
 
    /**
@@ -38,7 +54,8 @@ class Student extends User {
     * @param School $school
     * @return type
     */
-   public function setSchool(School $school) {
+   public function setSchool(School $school)
+   {
       $this->school = $school;
    }
 

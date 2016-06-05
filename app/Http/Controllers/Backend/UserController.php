@@ -1,25 +1,21 @@
 <?php
-
 namespace FisiLog\Http\Controllers\Backend;
 
-use Illuminate\Http\Request;
-
-use FisiLog\Http\Requests;
 use FisiLog\Http\Controllers\Controller;
 
 use FisiLog\Dao\DaoEloquentFactory;
 
 use FisiLog\Http\Requests\Backend\User\StoreRequest;
-use FisiLog\Services\UserRegisterService;
 
 class UserController extends Controller
 {
-   public function __construct(DaoEloquentFactory $dao, UserRegisterService $user_register_service )
+   public function __construct(DaoEloquentFactory $dao)
    {
       $this->document_type_persistence       = $dao->getDocumentTypeDAO();
       $this->school_persistence              = $dao->getSchoolDAO();
       $this->academic_dep_persistence        = $dao->getAcademicDepartmentDAO();
-      $this->user_register_service           = $user_register_service;
+      $this->notification_channel_persistence = $dao->getNotificationChannelDAO();
+      $this->user_type_persistence           = $dao->getUserTypeDAO();
    }
 
    public function create()
@@ -28,7 +24,7 @@ class UserController extends Controller
       $schools              = $this->school_persistence->getAll();
       $academic_departments = $this->academic_dep_persistence->getAll();
       $professor_types      = config('enums.professor_types');
-      $user_types           = config('enums.user_types');
+      $user_types           = $this->user_type_persistence->getAll();
 
       $data = [
          'document_types'       => $document_types,
@@ -43,6 +39,6 @@ class UserController extends Controller
 
    public function store(StoreRequest $request)
    {
-      $this->user_register_service->registerUser($request);
+
    }
 }
