@@ -1,27 +1,56 @@
 <?php
 namespace FisiLog\DAO\School;
+
 use FisiLog\BusinessClasses\School as SchoolBusiness;
 use FisiLog\Models\School as SchoolModel;
 
 class SchoolDaoEloquent implements SchoolDao {
-  public function findById($id) {
-    $schoolModel = SchoolModel::find($id);
-    $schoolBusiness = new SchoolBusiness;
-    $schoolBusiness->setId($id);
-    $schoolBusiness->setName($schoolModel->name);
 
-    return $schoolBusiness;
-  }
-  public function getAll() {
-    $schoolBusiness = [];
-    $schoolModel = SchoolModel::all();
-    foreach ($schoolModel as $value) {
-      $newSchoolBusiness = new SchoolBusiness;
-      $newSchoolBusiness->setId($value->id);
-      $newSchoolBusiness->setName($value->name);
+   /**
+    * Find a school with the id
+    * @param integer $id
+    * @return SchoolBusiness
+    */
+   public function findById($id)
+   {
+      $school_model = SchoolModel::find($id);
 
-      $schoolBusiness[] = $newSchoolBusiness;
-    }
-    return $schoolBusiness;
-  }
+      return static::createBusinessClass($school_model);
+   }
+
+   /**
+    * Get all the schools
+    * @return Collection of SchoolBusiness
+    */
+   public function getAll()
+   {
+      $schools_model = SchoolModel::all();
+
+      $schoolBusiness = [];
+
+      foreach ($schools_model as $school_model)
+         $schoolBusiness[] = static::createBusinessClass($school_model);
+
+      return $schoolBusiness;
+   }
+
+    /**
+    * Create an object SchoolBusiness
+    * @param SchoolModel $schoolModel
+    * @return SchoolBusiness
+    */
+   public static function createBusinessClass(SchoolModel $school_model)
+   {
+      if ($school_model == null)
+         return null;
+
+      $student = new SchoolBusiness(
+         $school_model->facultad_id,
+         $school_model->name,
+         $school_model->code
+      );
+
+      return $student;
+   }
+
 }

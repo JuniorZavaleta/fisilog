@@ -2,14 +2,10 @@
 namespace FisiLog\DAO\User;
 
 use FisiLog\BusinessClasses\User as UserBusiness;
-
 use FisiLog\Models\User as UserModel;
 
 use FisiLog\DAO\NotificationChannel\NotificationChannelDaoEloquent as NotificationChannelModel;
 use FisiLog\DAO\UserType\UserTypeDaoEloquent as UserTypeModel;
-
-use Image;
-use URL;
 
 class UserDaoEloquent implements UserDao {
 
@@ -24,14 +20,14 @@ class UserDaoEloquent implements UserDao {
    {
       $userModel = UserModel::find($id);
 
-      return $this->createUser($userModel);
+      return static::createBusinessClass($userModel);
    }
 
    public function findByEmail($email)
    {
       $userModel = UserModel::where('email','=',$email)->first();
 
-      return $this->createUser($userModel);;
+      return static::createBusinessClass($userModel);;
    }
 
    public function findByDocument($document_code)
@@ -40,10 +36,10 @@ class UserDaoEloquent implements UserDao {
          $query->where('code','=', $document_code);
       })->first();
 
-      return $this->createUser($userModel);;
+      return static::createBusinessClass($userModel);;
    }
 
-   private function createUser(UserModel $userModel)
+   public static function createBusinessClass(UserModel $userModel)
    {
       if ($userModel == null)
          return null;
