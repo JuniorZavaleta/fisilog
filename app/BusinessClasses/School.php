@@ -39,6 +39,7 @@ class School implements Arrayable {
       $this->name = $name;
       $this->code = $code;
       $this->facultad = $facultad;
+      $this->id = $id;
       //$this->setFacultad($facultad);
    }
 

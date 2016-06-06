@@ -18,7 +18,7 @@ class StudentDaoEloquent implements StudentDao {
    {
       StudentModel::create($student_business->toArray());
 
-      return $studentBusiness;
+      return $student_business;
    }
 
    /**

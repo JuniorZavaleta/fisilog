@@ -15,6 +15,10 @@ use FisiLog\Dao\DaoEloquentFactory;
 
 use FisiLog\Http\Requests\Backend\User\StoreRequest;
 
+use FisiLog\BusinessClasses\User as UserClass;
+use FisiLog\BusinessClasses\NotificationChannel as NotificationChannel;
+use FisiLog\BusinessClasses\Student as StudentClass;
+
 class UserController extends Controller
 {
    public function __construct(DaoEloquentFactory $dao)
@@ -24,6 +28,11 @@ class UserController extends Controller
       $this->academic_dep_persistence        = $dao->getAcademicDepartmentDAO();
       $this->notification_channel_persistence = $dao->getNotificationChannelDAO();
       $this->user_type_persistence           = $dao->getUserTypeDAO();
+
+      $this->user_persistence                = $dao->getUserDAO();
+      $this->student_persistence             = $dao->getStudentDAO();
+
+      $this->notification_by_email_id        = 2;
    }
 
    public function create()
@@ -47,47 +56,37 @@ class UserController extends Controller
 
    public function store(StoreRequest $request)
    {
-      $user = new User;
-      $user_types = config('enums.user_types');
+      extract($request->all());
 
-      $password       = $request->input('password');
-      $user_type      = $request->input('user_type');
-      $school_id      = $request->input('school_id');
-      $document_type  = $request->input('document_type');
-      $professor_type = $request->input('professor_type');
+      $user_type_id = $request->input('user_type');
+      $user_type = $this->user_type_persistence->findById($user_type_id);
 
-      if( $user_types[$user_type] == "Estudiante") {
-         $student = new Student;
-      } elseif( $user_types[$user_type] == "Profesor" ) {
-         $professor = new Professor;
-      }
+      $photo_url = $this->urlToString($request->file('photo'));
 
-      $user->name                    = $request->input('name');
-      $user->lastname                = $request->input('lastname');
-      $user->email                   = $request->input('email');
-      $user->password                = bcrypt($password);
-      $user->phone                   = $request->input('phone');
-      $user->type                    = $user_types[$user_type];
-      $user->photo_url               = $this->urlToString($request->file('photo'));
-      $user->notification_channel_id = 2;
-      $user->save();
+      $notification_channel = $this->notification_channel_persistence->findById($this->notification_by_email_id);
+
+      $user = new UserClass($name, $lastname, $email, $password, $phone, $user_type, $photo_url, $notification_channel);
+
+      $this->user_persistence->save($user);
 
       $document = new Document;
-      $document->user_id          = $user->id;
+      $document->user_id          = $user->getId();
       $document->document_type_id = $document_type;
       $document->code             = $request->input('document_code');
 
       $document->save();
 
-      if ( $user_type == 1 ) {
-         $student->user_id       = $user->id;
-         $student->school_id     = $school_id;
-         $student->code          = $request->input('student_code');
-         $student->year_of_entry = $request->input('year_of_entry');
+      if ( $user->isStudent() ) {
 
-         $student->save();
-      } elseif( $user_type == 2 ) {
-         $professor->user_id                = $user->id;
+         $school = $this->school_persistence->findById($school_id);
+
+         $student = new StudentClass($user, $school, $year_of_entry, $student_code);
+
+         $this->student_persistence->save($student);
+
+      } elseif( $user->isProfessor() ) {
+
+         $professor->user_id                = $user->getId();
          $professor_types                   = config('enums.professor_types');
          $professor->academic_department_id = $request->input('academic_department_id');
          $professor->type                   = $professor_types[$professor_type];
@@ -96,9 +95,11 @@ class UserController extends Controller
       }
    }
 
-   public function urlToString($photo_url){
+   public function urlToString($photo_url)
+   {
       $filename  = time() . '.' . $photo_url->getClientOriginalName();
       $url = "img/users/" . $filename;
+
       return $url;
    }
 }

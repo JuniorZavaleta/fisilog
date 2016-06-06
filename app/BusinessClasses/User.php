@@ -68,6 +68,9 @@ class User implements Arrayable {
     */
    protected $notification_channel;
 
+   const STUDENT = 1;
+   const PROFESSOR = 2;
+
    /**
     * Description
     * @param string $name
@@ -80,7 +83,7 @@ class User implements Arrayable {
     * @param NotificationChannel $notification_channel
     * @return
     */
-   public function __construct($name, $last_name, $email, $password, $phone, $user_type, $photo_url, $notification_channel)
+   public function __construct($name, $last_name, $email, $password, $phone, $user_type, $photo_url, $notification_channel, $id = null)
    {
       $this->name = $name;
       $this->last_name = $last_name;
@@ -90,6 +93,12 @@ class User implements Arrayable {
       $this->setUserType($user_type);
       $this->photo_url = $photo_url;
       $this->setNotificationChannel($notification_channel);
+      $this->id = $id;
+   }
+
+   public function getId()
+   {
+      return $this->id;
    }
 
    public function getName()
@@ -132,6 +141,11 @@ class User implements Arrayable {
       return $this->notification_channel;
    }
 
+   public function setId($id)
+   {
+      $this->id = $id;
+   }
+
    public function setPhotoUrl($photo_url)
    {
       if (! is_string($photo_url)) {
@@ -166,7 +180,7 @@ class User implements Arrayable {
       if ($this instanceof Student )
          return true;
 
-      return $this->getUserTypeName() == 'student';
+      return $this->user_type->getId() == self::STUDENT;
    }
 
    /**
@@ -174,12 +188,12 @@ class User implements Arrayable {
     * @param FisiLog/BusinessClasses/User $user
     * @return bool
     */
-   public function isTeacher()
+   public function isProfessor()
    {
-      if ($this instanceof Teacher )
+      if ($this instanceof Professor )
          return true;
 
-      return $this->getUserTypeName() == 'teacher';
+      return $this->user_type->getId() == self::PROFESSOR;
    }
 
    /**
@@ -199,6 +213,7 @@ class User implements Arrayable {
    public function toArray()
    {
       return [
+         'id' => $this->id,
          'name' => $this->name,
          'last_name' => $this->last_name,
          'email' => $this->email,

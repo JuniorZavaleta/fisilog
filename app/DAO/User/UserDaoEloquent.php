@@ -9,53 +9,52 @@ use FisiLog\DAO\UserType\UserTypeDaoEloquent as UserTypeModel;
 
 class UserDaoEloquent implements UserDao {
 
-   public function save(UserBusiness $userBusiness)
+   public function save(UserBusiness &$user_business)
    {
-      $userModel = UserModel::create($userBusiness->toArray());
-
-      return $userModel->id;
+      $user_model = UserModel::create($user_business->toArray());
+      $user_business->setId($user_model->id);
    }
 
    public function findById($id)
    {
-      $userModel = UserModel::find($id);
+      $user_model = UserModel::find($id);
 
-      return static::createBusinessClass($userModel);
+      return static::createBusinessClass($user_model);
    }
 
    public function findByEmail($email)
    {
-      $userModel = UserModel::where('email','=',$email)->first();
+      $user_model = UserModel::where('email','=',$email)->first();
 
-      return static::createBusinessClass($userModel);;
+      return static::createBusinessClass($user_model);;
    }
 
    public function findByDocument($document_code)
    {
-      $userModel = UserModel::whereHas('documents', function($query) use ($document_code){
+      $user_model = UserModel::whereHas('documents', function($query) use ($document_code){
          $query->where('code','=', $document_code);
       })->first();
 
-      return static::createBusinessClass($userModel);;
+      return static::createBusinessClass($user_model);;
    }
 
-   public static function createBusinessClass(UserModel $userModel)
+   public static function createBusinessClass(UserModel $user_model)
    {
-      if ($userModel == null)
+      if ($user_model == null)
          return null;
 
-      $userBusiness = new UserBusiness(
-         $userModel->name,
-         $userModel->lastname,
-         $userModel->email,
-         $userModel->password,
-         $userModel->phone,
-         UserTypeModel::createBusinessClass($userModel->user_type),
-         $userModel->photo_url,
-         NotificationChannelModel::createBusinessClass($userModel->notification_channel)
+      $user_business = new UserBusiness(
+         $user_model->name,
+         $user_model->lastname,
+         $user_model->email,
+         $user_model->password,
+         $user_model->phone,
+         UserTypeModel::createBusinessClass($user_model->user_type),
+         $user_model->photo_url,
+         NotificationChannelModel::createBusinessClass($user_model->notification_channel)
       );
 
-      return $userBusiness;
+      return $user_business;
    }
 
 }

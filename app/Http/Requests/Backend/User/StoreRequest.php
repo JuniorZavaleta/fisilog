@@ -21,6 +21,7 @@ class StoreRequest extends Request
          'document_code' => 'required',
          'phone'         => 'required|numeric',
          'user_type'     => 'required|in:1,2',
+         'password'      => 'required',
       ];
 
       $user_type = $this->request->get('user_type');

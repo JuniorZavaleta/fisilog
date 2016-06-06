@@ -10,7 +10,7 @@ class Student extends Model
 {
    protected $table = 'students';
 
-   protected $fillable = ['user_id', 'school_id', 'code', 'year_of_entry'];
+   protected $fillable = ['id', 'school_id', 'code', 'year_of_entry'];
 
    public $timestamps = false;
 

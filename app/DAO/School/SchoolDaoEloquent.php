@@ -45,9 +45,10 @@ class SchoolDaoEloquent implements SchoolDao {
          return null;
 
       $student = new SchoolBusiness(
-         $school_model->facultad_id,
          $school_model->name,
-         $school_model->code
+         $school_model->code,
+         $school_model->facultad_id,
+         $school_model->id
       );
 
       return $student;

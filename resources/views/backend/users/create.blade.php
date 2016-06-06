@@ -64,8 +64,8 @@
                <div class="col-sm-8">
                   <select id="user_type" name="user_type" class="form-control">
                      <option value="0" >Seleccione el tipo de Usuario</option>
-                     @foreach($user_types as $id => $user_type)
-                        <option value="{{$id}}" {{ old('user_type') == $id  ? 'selected' : '' }} >{{$user_type}}</option>
+                     @foreach($user_types as $user_type)
+                        <option value="{{ $user_type->getId() }}" {{ old('user_type') == $user_type->getId() ? 'selected' : '' }} >{{ $user_type->getRealName() }}</option>
                      @endforeach
                   </select>
                </div>
@@ -133,6 +133,20 @@
 
             </div>
             <!-- End email -->
+
+            <!-- Start password -->
+            <div class="form-group">
+
+               <div class="col-sm-4">
+                 <label class="control-label">Password</label>
+               </div>
+
+               <div class="col-sm-8">
+                  <input type="password" name="password" class="form-control" placeholder="Ingrese su password" value="">
+               </div>
+
+            </div>
+            <!-- End password -->
          </div>
       </div>
       <!-- End primera columna -->

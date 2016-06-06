@@ -27,6 +27,7 @@ class Student extends User implements Arrayable {
 
    public function __construct(User $user, $school, $yearOfEntry, $code)
    {
+      $this->id = $user->getId();
       $this->name = $user->getName();
       $this->last_name = $user->getLastName();
       $this->email = $user->getEmail();
@@ -50,7 +51,6 @@ class Student extends User implements Arrayable {
       $this->school = $school;
    }
 
-
    /**
      * Get the instance as an array.
      *
@@ -59,6 +59,7 @@ class Student extends User implements Arrayable {
    public function toArray()
    {
       return [
+         'id' => $this->id,
          'name' => $this->name,
          'last_name' => $this->last_name,
          'email' => $this->email,
@@ -69,6 +70,7 @@ class Student extends User implements Arrayable {
          'photo_url' => $this->photo_url,
          'user_type_id' => $this->user_type->getId(),
          'user_type' => $this->user_type->toArray(),
+         'school_id' => $this->school->getId(),
          'school' => $this->school->toArray(),
          'code' => $this->code,
          'year_of_entry' => $this->yearOfEntry,

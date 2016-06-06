@@ -8,7 +8,7 @@ class StudentSeeder extends Seeder
    {
       DB::table('students')->truncate();
       DB::table('students')->insert([
-         ['id'=>1, 'user_id'=>1, 'school_id'=>61, 'code'=>'12200187', 'year_of_entry'=>2012],
+         ['id'=>1, 'school_id'=>61, 'code'=>'12200187', 'year_of_entry'=>2012],
       ]);
    }
 }
