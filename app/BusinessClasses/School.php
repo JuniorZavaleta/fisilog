@@ -1,9 +1,11 @@
 <?php
 namespace FisiLog\BusinessClasses;
 
+use Illuminate\Contracts\Support\Arrayable;
+
 use FisiLog\BusinessClasses\Facultad;
 
-class School {
+class School implements Arrayable {
    /**
     * @var integer
     */
@@ -32,11 +34,12 @@ class School {
     * @param integer $id
     * @return
     */
-   public function __construct($name, $code, $facultad, $id == null)
+   public function __construct($name, $code, $facultad, $id = null)
    {
       $this->name = $name;
       $this->code = $code;
-      $this->setFacultad($facultad);
+      $this->facultad = $facultad;
+      //$this->setFacultad($facultad);
    }
 
    public function getId()
@@ -62,5 +65,19 @@ class School {
    public function getCode()
    {
       return $this->code;
+   }
+
+   /**
+     * Get the instance as an array.
+     *
+     * @return array
+     */
+   public function toArray()
+   {
+      return [
+         'name' => $this->name,
+         'code' => $this->code,
+         'facultad' => $this->facultad,
+      ];
    }
 }

@@ -36,6 +36,7 @@ class NotificationChannel implements Arrayable {
      */
    public function toArray() {
       return [
+         'id' => $this->id,
          'name' => $this->name,
       ];
    }

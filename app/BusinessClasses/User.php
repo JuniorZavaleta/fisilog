@@ -92,7 +92,48 @@ class User implements Arrayable {
       $this->setNotificationChannel($notification_channel);
    }
 
-   public function setPhotoUrl($photo_url) {
+   public function getName()
+   {
+      return $this->name;
+   }
+
+   public function getLastName()
+   {
+      return $this->last_name;
+   }
+
+   public function getEmail()
+   {
+      return $this->email;
+   }
+
+   public function getPassword()
+   {
+      return $this->password;
+   }
+
+   public function getPhone()
+   {
+      return $this->phone;
+   }
+
+   public function getUserType()
+   {
+      return $this->user_type;
+   }
+
+   public function getPhotoUrl()
+   {
+      return $this->photo_url;
+   }
+
+   public function getNotificationChannel()
+   {
+      return $this->notification_channel;
+   }
+
+   public function setPhotoUrl($photo_url)
+   {
       if (! is_string($photo_url)) {
          $filename  = time() . '.' . $photo_url->getClientOriginalName();
          $url = "img/users/" . $filename;
@@ -105,11 +146,13 @@ class User implements Arrayable {
       }
    }
 
-   public function setUserType(UserType $user_type) {
+   public function setUserType(UserType $user_type)
+   {
       $this->user_type = $user_type;
    }
 
-   public function setNotificationChannel(NotificationChannel $notification_channel) {
+   public function setNotificationChannel(NotificationChannel $notification_channel)
+   {
       $this->notification_channel = $notification_channel;
    }
 
@@ -153,16 +196,17 @@ class User implements Arrayable {
      *
      * @return array
      */
-   public function toArray() {
+   public function toArray()
+   {
       return [
          'name' => $this->name,
-         'lastname' => $this->last_name,
+         'last_name' => $this->last_name,
          'email' => $this->email,
          'password' => $this->password,
          'phone' => $this->phone,
-         'notification_channel_id' => $this->notification_channel->getId(),
+         'notification_channel' => $this->notification_channel->toArray(),
          'photo_url' => $this->photo_url,
-         'user_type_id' => $this->user_type->getId(),
+         'user_type' => $this->user_type->toArray(),
       ];
    }
 }

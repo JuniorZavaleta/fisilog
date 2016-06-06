@@ -52,6 +52,7 @@ class UserType implements Arrayable {
      */
    public function toArray() {
       return [
+         'id' => $this->id,
          'name' => $this->name,
       ];
    }

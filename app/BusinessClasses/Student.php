@@ -1,10 +1,9 @@
 <?php
 namespace FisiLog\BusinessClasses;
 
-use FisiLog\BusinessClasses\User;
-use FisiLog\BusinessClasses\School;
+use Illuminate\Contracts\Support\Arrayable;
 
-class Student extends User {
+class Student extends User implements Arrayable {
 
    /**
     * @var School
@@ -26,24 +25,16 @@ class Student extends User {
     */
    private $groups;
 
-   /**
-    * Description
-    * @param string $name
-    * @param string $last_name
-    * @param string $email
-    * @param string $password
-    * @param string $phone
-    * @param UserType $user_type
-    * @param string $photo_url
-    * @param NotificationChannel $notification_channel
-    * @param School $school
-    * @param integer $yearOfEntry
-    * @param integer $code
-    * @return type
-    */
-   public function __construct($name, $last_name, $email, $password, $phone, $user_type, $photo_url, $notification_channel, $school, $yearOfEntry, $code)
+   public function __construct(User $user, $school, $yearOfEntry, $code)
    {
-      parent::__construct($name, $last_name, $email, $password, $phone, $user_type, $photo_url, $notification_channel);
+      $this->name = $user->getName();
+      $this->last_name = $user->getLastName();
+      $this->email = $user->getEmail();
+      $this->password = $user->getPassword();
+      $this->phone = $user->getPhone();
+      $this->user_type = $user->getUserType();
+      $this->photo_url = $user->getPhotoUrl();
+      $this->notification_channel = $user->getNotificationChannel();
       $this->setSchool($school);
       $this->yearOfEntry = $yearOfEntry;
       $this->code = $code;
@@ -59,4 +50,26 @@ class Student extends User {
       $this->school = $school;
    }
 
+
+   /**
+     * Get the instance as an array.
+     *
+     * @return array
+     */
+   public function toArray()
+   {
+      return [
+         'name' => $this->name,
+         'last_name' => $this->last_name,
+         'email' => $this->email,
+         'password' => $this->password,
+         'phone' => $this->phone,
+         'notification_channel' => $this->notification_channel->toArray(),
+         'photo_url' => $this->photo_url,
+         'user_type' => $this->user_type->toArray(),
+         'school' => $this->school->toArray(),
+         'code' => $this->code,
+         'year_of_entry' => $this->yearOfEntry,
+      ];
+   }
 }
