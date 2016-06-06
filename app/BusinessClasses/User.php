@@ -204,8 +204,10 @@ class User implements Arrayable {
          'email' => $this->email,
          'password' => $this->password,
          'phone' => $this->phone,
+         'notification_channel_id' => $this->notification_channel->getId(),
          'notification_channel' => $this->notification_channel->toArray(),
          'photo_url' => $this->photo_url,
+         'user_type_id' => $this->user_type->getId(),
          'user_type' => $this->user_type->toArray(),
       ];
    }
