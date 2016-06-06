@@ -1,27 +1,40 @@
 <?php
 namespace FisiLog\DAO\AcademicDepartment;
+
 use FisiLog\BusinessClasses\AcademicDepartment as AcademicDepartmentBusiness;
 use FisiLog\Models\AcademicDepartment as AcademicDepartmentModel;
 
 class AcademicDepartmentDaoEloquent implements AcademicDepartmentDao {
-  public function findById($id) {
-    $academicDepartmentModel = AcademicDepartmentModel::find($id);
-    $academicDepartmentBusiness = new AcademicDepartmentBusiness;
-    $academicDepartmentBusiness->setId($id);
-    $academicDepartmentBusiness->setName($academicDepartmentModel->name);
 
-    return $academicDepartmentBusiness;
-  }
-  public function getAll() {
-    $academicDepartmentBusiness = [];
-    $academicDepartmentModel = AcademicDepartmentModel::all();
-    foreach ($academicDepartmentModel as $value) {
-      $newAcademicDepartmentBusiness = new AcademicDepartmentBusiness;
-      $newAcademicDepartmentBusiness->setId($value->id);
-      $newAcademicDepartmentBusiness->setName($value->name);
+   public function findById($id)
+   {
+      $academic_department_model = AcademicDepartmentModel::find($id);
 
-      $academicDepartmentBusiness[] = $newAcademicDepartmentBusiness;
-    }
-    return $academicDepartmentBusiness;
+      return static::createBusinessClass($academic_department_model);
+   }
+
+   public function getAll()
+   {
+      $academic_departments_model = AcademicDepartmentModel::all();
+      $academic_departments_business = [];
+
+      foreach ($academic_departments_model as $academic_department_model)
+         $academic_departments_business[] = static::createBusinessClass($academic_department_model);
+
+      return $academic_departments_business;
   }
+
+   public static function createBusinessClass(AcademicDepartmentModel $academic_department_model)
+   {
+      if ($academic_department_model == null)
+         return null;
+
+      $academic_department_business = new AcademicDepartmentBusiness(
+         $academic_department_model->id,
+         $academic_department_model->name
+      );
+
+      return $academic_department_business;
+   }
+
 }

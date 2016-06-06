@@ -28,7 +28,7 @@ class StudentDaoEloquent implements StudentDao {
     */
    public function findByUserId($user_id)
    {
-      $student_model = StudentModel::where('user_id', '=', $user_id)
+      $student_model = StudentModel::where('id', '=', $user_id)
       ->with('user', 'user.user_type', 'user.notification_channel', 'school')
       ->first();
 

@@ -21,30 +21,30 @@ class UserTypeDaoEloquent implements UserTypeDao {
       return $user_types;
    }
 
-   public function save(UserTypeBusiness $userType)
+   public function save(UserTypeBusiness $user_type)
    {
-      $userTypeModel = UserTypeModel::create($userType->toArray());
+      $user_type_model = UserTypeModel::create($user_type->toArray());
 
-      return $userTypeModel->id;
+      return $user_type_model->id;
    }
 
    public function findById($id)
    {
-      $userTypeModel = UserTypeModel::find($id);
+      $user_type_model = UserTypeModel::find($id);
 
-      return static::createBusinessClass($userTypeModel);
+      return static::createBusinessClass($user_type_model);
    }
 
-   public static function createBusinessClass(UserTypeModel $userTypeModel)
+   public static function createBusinessClass(UserTypeModel $user_type_model)
    {
-      if ($userTypeModel == null)
+      if ($user_type_model == null)
          return null;
 
-      $userType = new UserTypeBusiness(
-         $userTypeModel->id,
-         $userTypeModel->name
+      $user_type = new UserTypeBusiness(
+         $user_type_model->id,
+         $user_type_model->name
       );
 
-      return $userType;
+      return $user_type;
    }
 }
