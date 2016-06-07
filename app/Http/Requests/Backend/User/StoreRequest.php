@@ -14,14 +14,15 @@ class StoreRequest extends Request
    public function rules()
    {
       $rules = [
-         'name'          => 'required|alpha',
-         'lastname'      => 'required|string',
+         'name'          => 'required|regex:/^[\pL\s]+$/u',
+         'lastname'      => 'required|regex:/^[\pL\s]+$/u',
          'email'         => 'required|email',
          'document_type' => 'required|exists:document_types,id',
          'document_code' => 'required',
          'phone'         => 'required|numeric',
          'user_type'     => 'required|in:1,2',
          'password'      => 'required',
+         'photo'         => 'required|image|mimes:jpg',
       ];
 
       $user_type = $this->request->get('user_type');

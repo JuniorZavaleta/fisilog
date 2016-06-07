@@ -28,7 +28,7 @@ class ProfessorDaoEloquent implements ProfessorDao {
       $professor = new ProfessorBusiness(
          $professor_model->academic_department_id,
          $professor_model->type,
-         $professor_model->id,
+         $professor_model->id
       );
 
       return $professor;

@@ -3,9 +3,6 @@ namespace FisiLog\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
 
-use FisiLog\Models\User;
-use FisiLog\Models\Student;
-use FisiLog\Models\Professor;
 use FisiLog\Models\Document;
 
 use FisiLog\Http\Requests;
@@ -15,9 +12,10 @@ use FisiLog\Dao\DaoEloquentFactory;
 
 use FisiLog\Http\Requests\Backend\User\StoreRequest;
 
-use FisiLog\BusinessClasses\User as UserClass;
-use FisiLog\BusinessClasses\NotificationChannel as NotificationChannel;
-use FisiLog\BusinessClasses\Student as StudentClass;
+use FisiLog\BusinessClasses\User;
+use FisiLog\BusinessClasses\Student;
+use FisiLog\BusinessClasses\Professor;
+
 
 class UserController extends Controller
 {
@@ -31,6 +29,7 @@ class UserController extends Controller
 
       $this->user_persistence                = $dao->getUserDAO();
       $this->student_persistence             = $dao->getStudentDAO();
+      $this->professor_persistence           = $dao->getProfessorDAO();
 
       $this->notification_by_email_id        = 2;
    }
@@ -65,7 +64,7 @@ class UserController extends Controller
 
       $notification_channel = $this->notification_channel_persistence->findById($this->notification_by_email_id);
 
-      $user = new UserClass($name, $lastname, $email, $password, $phone, $user_type, $photo_url, $notification_channel);
+      $user = new User($name, $lastname, $email, $password, $phone, $user_type, $photo_url, $notification_channel);
 
       $this->user_persistence->save($user);
 
@@ -80,19 +79,20 @@ class UserController extends Controller
 
          $school = $this->school_persistence->findById($school_id);
 
-         $student = new StudentClass($user, $school, $year_of_entry, $student_code);
+         $student = new Student($user, $school, $year_of_entry, $student_code);
 
          $this->student_persistence->save($student);
 
       } elseif( $user->isProfessor() ) {
 
-         $professor->user_id                = $user->getId();
-         $professor_types                   = config('enums.professor_types');
-         $professor->academic_department_id = $request->input('academic_department_id');
-         $professor->type                   = $professor_types[$professor_type];
+         $academic_department = $academic_dep_persistence->findById($academic_department_id);
 
-         $professor->save();
+         $professor = new Professor($user, $academic_department, $professor_type);
+
+         $this->professor_persistence->save($professor);
       }
+
+      return redirect()->route('index')->with('message', 'user created');
    }
 
    public function urlToString($photo_url)
