@@ -34,14 +34,14 @@ class Professor extends User implements Arrayable {
       $this->setProfessorType($type);
    }
 
-   public function setAcademicDepartment(AcademicDepartment $academicDepartment)
+   public function setAcademicDepartment(AcademicDepartment $academic_department)
    {
-      $this->academicDepartment = $academicDepartment;
+      $this->academic_department = $academic_department;
    }
 
    public function getAcademicDepartment()
    {
-      return $this->academicDepartment;
+      return $this->academic_department;
    }
 
    public function setProfessorType($professor_type)
@@ -73,7 +73,6 @@ class Professor extends User implements Arrayable {
          'photo_url' => $this->photo_url,
          'user_type_id' => $this->user_type->getId(),
          'user_type' => $this->user_type->toArray(),
-         'school_id' => $this->academic_department->getId(),
          'academic_department_id' => $this->academic_department->getId(),
          'academic_department' => $this->academic_department->toArray(),
          'professor_type' => $this->professor_type,

@@ -8,7 +8,7 @@ class ProfessorDaoEloquent implements ProfessorDao {
 
    public function save(ProfessorBusiness $professor_business)
    {
-      ProfessorModel::create($professor_business);
+      ProfessorModel::create($professor_business->toArray());
    }
 
    public function findById($id)

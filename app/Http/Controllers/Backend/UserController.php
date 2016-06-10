@@ -85,7 +85,7 @@ class UserController extends Controller
 
       } elseif( $user->isProfessor() ) {
 
-         $academic_department = $academic_dep_persistence->findById($academic_department_id);
+         $academic_department = $this->academic_dep_persistence->findById($academic_department_id);
 
          $professor = new Professor($user, $academic_department, $professor_type);
 

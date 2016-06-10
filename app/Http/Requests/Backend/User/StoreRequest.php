@@ -22,7 +22,7 @@ class StoreRequest extends Request
          'phone'         => 'required|numeric',
          'user_type'     => 'required|in:1,2',
          'password'      => 'required',
-         'photo'         => 'required|image|mimes:jpg',
+         'photo'         => 'required|image',
       ];
 
       $user_type = $this->request->get('user_type');
