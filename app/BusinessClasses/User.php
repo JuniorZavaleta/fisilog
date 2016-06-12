@@ -206,6 +206,15 @@ class User implements Arrayable {
    }
 
    /**
+    * Get the full name of the user
+    * @return string
+    */
+   public function getFullName()
+   {
+      return $this->name . " " . $this->last_name;
+   }
+
+   /**
      * Get the instance as an array.
      *
      * @return array

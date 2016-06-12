@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Document extends Model
 {
    protected $table = 'documents';
+   protected $fillable = ['user_id', 'document_type_id', 'code'];
 
    public $timestamps = false;
 

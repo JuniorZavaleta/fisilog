@@ -21,7 +21,7 @@
       <tbody>
          @foreach($documents as $document)
          <tr>
-            <td></td>
+            <td>{{ $document->getDocumentTypeName() }}</td>
             <td>{{ $document->getCode() }}</td>
             <td>
 
