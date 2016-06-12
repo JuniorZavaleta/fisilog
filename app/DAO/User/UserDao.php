@@ -8,4 +8,5 @@ interface UserDao {
    public function findById($id);
    public function findByEmail($email);
    public function findByDocument($document_code);
+   public function paginate($per_page, $page);
 }

@@ -10,22 +10,20 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-Route::group(['middleware' => ['web', 'auth']], function () {
-   Route::get('users/{id}/edit/register_document', ['as' => 'user.register.document', 'uses' => 'DocumentController@index']);
-   Route::post('users/{id}/edit/register_document', ['as' => 'user.register.document', 'uses' => 'DocumentController@process']);
-
-   Route::get('/verify_attendance/index',['as'=>'verify_attendance.professor', 'uses'=>'VerifyAttendanceController@index']);
-   Route::get('/verify_attendance/professor',['as'=>'verify_attendance.professor', 'uses'=>'VerifyAttendanceController@getProfessor']);
-
-   Route::get('/attendance/index',['as'=>'attendance.index','uses'=>'AttendanceController@index']);
-   Route::get('/attendance/{clase_id}/student',['as'=>'attendance.student.index','uses'=>'AttendanceController@getStudent']);
-   Route::post('/attendance/{clase_id}/student',['as'=>'attendance.student.preprocess','uses'=>'AttendanceController@findStudent']);
-   Route::post('/attendance/{clase_id}/student_verified',['as'=>'attendance.student.process','uses'=>'AttendanceController@postStudent']);
-   Route::get('/attendance/professor',['as'=>'attendance.professor','uses'=>'AttendanceController@getProfessor']);
+Route::group(['middleware' => ['web', 'auth'], 'namespace' => 'Backend'], function () {
    Route::get('index', ['as' => 'index', 'uses' => 'IndexController@index']);
 
-   Route::get('/users/register',['as'=>'users.create','uses'=>'Backend\UserController@create']);
-   Route::post('/users/register',['as'=>'users.store','uses'=>'Backend\UserController@store']);
+   Route::group(['prefix' => 'users', 'as' => 'users.'], function(){
+      Route::get('/', ['as' => 'index', 'uses' => 'UserController@index']);
+      Route::get('/register', ['as' => 'create', 'uses' => 'UserController@create']);
+      Route::post('/register', ['as' => 'store', 'uses' => 'UserController@store']);
+
+      Route::group(['prefix' => 'documents', 'as' => 'documents.'], function(){
+         Route::get('/', ['as' => 'index', 'uses' => 'DocumentController@index']);
+      });
+   });
+
+
 });
 
 Route::group(['middleware' => ['web']], function () {

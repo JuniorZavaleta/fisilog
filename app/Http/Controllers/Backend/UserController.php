@@ -16,7 +16,6 @@ use FisiLog\BusinessClasses\User;
 use FisiLog\BusinessClasses\Student;
 use FisiLog\BusinessClasses\Professor;
 
-
 class UserController extends Controller
 {
    public function __construct(DaoEloquentFactory $dao)
@@ -32,6 +31,17 @@ class UserController extends Controller
       $this->professor_persistence           = $dao->getProfessorDAO();
 
       $this->notification_by_email_id        = 2;
+   }
+
+   public function index()
+   {
+      $users = $this->user_persistence->paginate();
+
+      $data = [
+         'users' => $users,
+      ];
+
+      return view('backend.users.index', $data);
    }
 
    public function create()

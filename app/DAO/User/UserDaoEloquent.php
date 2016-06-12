@@ -15,6 +15,18 @@ class UserDaoEloquent implements UserDao {
       $user_business->setId($user_model->id);
    }
 
+   public function paginate($per_page = 10, $page = 1)
+   {
+      $users_model = UserModel::paginate($per_page);
+
+      $users_business = [];
+
+      foreach ($users_model as $user_model)
+         $users_business[] = static::createBusinessClass($user_model);
+
+      return $users_business;
+   }
+
    public function findById($id)
    {
       $user_model = UserModel::find($id);
