@@ -7,14 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Document extends Model
 {
-    protected $table = 'documents';
-    public $timestamps = false;
+   protected $table = 'documents';
 
-    public function user(){
-        return $this->belongsTo(User::class);
-    }
+   public $timestamps = false;
 
-    public function documentType(){
-        return $this->belongsTo(DocumentType::class);
-    }
+   public function user()
+   {
+      return $this->belongsTo(User::class);
+   }
+
+   public function document_type()
+   {
+      return $this->belongsTo(DocumentType::class);
+   }
 }

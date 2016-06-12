@@ -17,6 +17,7 @@
          <th>Nombres</th>
          <th>Apellidos</th>
          <th>Email</th>
+         <th>Acciones</th>
       </thead>
       <tbody>
          @foreach($users as $user)
@@ -24,6 +25,9 @@
             <td>{{ $user->getName() }}</td>
             <td>{{ $user->getLastname() }}</td>
             <td>{{ $user->getEmail() }}</td>
+            <td>
+               <a href="{{ route('users.documents.index', ['user' => $user->getId() ]) }}" title="Documentos"><i class="fa fa-list-alt fa-fw"></i></a>
+            </td>
          </tr>
          @endforeach
       </tbody>
