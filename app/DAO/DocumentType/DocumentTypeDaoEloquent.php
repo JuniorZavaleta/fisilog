@@ -18,7 +18,7 @@ class DocumentTypeDaoEloquent implements DocumentTypeDao {
       $document_types_business = [];
       $document_types_model = DocumentTypeModel::all();
 
-      foreach ($document_types_model as $document_type_model) {
+      foreach ($document_types_model as $document_type_model)
          $document_types_business[] = static::createBusinessClass($document_type_model);
 
       return $document_types_business;
