@@ -32,7 +32,7 @@
             <td>{{ $eap->getFacultadName() }}</td>
             <td>{{ $eap->getCode() }}</td>
             <td>
-
+               <a href="{{ route('eaps.edit', ['eap' => $eap->getId() ]) }}" title="Editar"><i class="fa fa-pencil-square-o"></i></a>
             </td>
          </tr>
          @endforeach

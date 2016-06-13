@@ -55,4 +55,17 @@ class EapController extends Controller
       return redirect()->route('eaps.index')->with('message', 'EAP registrada existosamente.');
    }
 
+   public function edit($eap)
+   {
+      $eap = $this->school_persistence->createBusinessClass($eap);
+      $facultades = $this->facultad_persistence->getAll();
+
+      $data = [
+         'eap' => $eap,
+         'facultades' => $facultades,
+      ];
+
+      return view('backend.eaps.edit', $data);
+   }
+
 }

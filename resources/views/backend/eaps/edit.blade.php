@@ -11,7 +11,7 @@
 @include('backend.show_errors')
 
 <div class="row">
-   <form class="form-horizontal" action="{{ route('eaps.store') }}" method="POST">
+   <form class="form-horizontal" action="{{ route('eaps.update') }}" method="POST">
       {!! csrf_field() !!}
 
       <div class="form-container">
@@ -24,7 +24,7 @@
             </div>
 
             <div class="col-xs-6 col-sm-8 col-lg-6">
-               <input type="text" class="form-control" name="name" placeholder="Ingrese el nombre de la eap" value="{{ old('name') }}">
+               <input type="text" class="form-control" name="name" value="{{ $eap->getName() }}">
             </div>
          </div>
          <!-- End nombre -->
@@ -37,7 +37,7 @@
             </div>
 
             <div class="col-xs-6 col-sm-8 col-lg-6">
-               <input type="text" class="form-control" name="code" placeholder="Ingrese el código de la eap" value="{{ old('code') }}">
+               <input type="text" class="form-control" name="code" value="{{ $eap->getCode() }}">
             </div>
          </div>
          <!-- End code -->
@@ -53,7 +53,7 @@
                <select class="form-control" name="facultad_id">
                   <option value="">Seleccione una facultad</option>
                @foreach($facultades as $facultad)
-                  <option value="{{ $facultad->getId() }}" {{ old('facultad_id') == $facultad->getId() ? 'selected' : '' }}>{{ $facultad->getName() }}</option>
+                  <option value="{{ $facultad->getId() }}" {{ $eap->getFacultadId() == $facultad->getId() ? 'selected' : '' }}>{{ $facultad->getName() }}</option>
                @endforeach
                </select>
             </div>
@@ -65,7 +65,7 @@
          <div class="form-group">
 
             <div class="col-xs-6 col-xs-offset-1">
-               <button class="btn btn-primary" name="registerButton" type="submit" value="register">Registrar</button>
+               <button class="btn btn-primary" name="registerButton" type="submit" value="register">Actualizar</button>
             </div>
 
          </div>

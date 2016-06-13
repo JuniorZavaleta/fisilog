@@ -78,6 +78,11 @@ class School implements Arrayable {
       return $this->facultad->getName();
    }
 
+   public function getFacultadId()
+   {
+      return $this->facultad->getId();
+   }
+
    /**
      * Get the instance as an array.
      *
@@ -88,7 +93,7 @@ class School implements Arrayable {
       return [
          'name' => $this->name,
          'code' => $this->code,
-         'facultad_id' => $this->facultad->getId(),
+         'facultad_id' => $this->getFacultadId(),
          'facultad' => $this->facultad,
       ];
    }
