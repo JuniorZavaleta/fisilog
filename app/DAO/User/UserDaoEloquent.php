@@ -41,10 +41,11 @@ class UserDaoEloquent implements UserDao {
       return static::createBusinessClass($user_model);;
    }
 
-   public function findByDocument($document_code)
+   public function findByDocument($document_code, $document_type_id)
    {
-      $user_model = UserModel::whereHas('documents', function($query) use ($document_code){
-         $query->where('code','=', $document_code);
+      $user_model = UserModel::whereHas('documents', function($query) use ($document_code, $document_type_id){
+         $query->where('code','=', $document_code)
+               ->where('document_type_id', $document_type_id);
       })->first();
 
       return static::createBusinessClass($user_model);;

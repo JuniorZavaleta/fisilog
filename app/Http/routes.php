@@ -11,6 +11,7 @@
 |
 */
 Route::group(['middleware' => ['web', 'auth'], 'namespace' => 'Backend'], function () {
+
    Route::get('index', ['as' => 'index', 'uses' => 'IndexController@index']);
 
    Route::group(['prefix' => 'users', 'as' => 'users.'], function(){
@@ -25,19 +26,19 @@ Route::group(['middleware' => ['web', 'auth'], 'namespace' => 'Backend'], functi
       });
    });
 
-
 });
 
 Route::group(['middleware' => ['web']], function () {
+
    Route::get('/', function () {
        return redirect()->route('auth.login');
    });
-
 
    Route::get('login', ['as' => 'auth.login' , 'uses' => 'Auth\AuthController@getLogin']);
    Route::post('login', ['as' => 'authenticate.email' , 'uses' => 'Auth\AuthController@postLogin']);
    Route::post('/authenticateDocument', ['as' => 'authenticate.document' , 'uses' => 'Auth\AuthController@authenticationDocument']);
 
    Route::get('logout', ['as' => 'auth.logout' , 'uses' => 'Auth\AuthController@logout']);
+
 });
 

@@ -86,17 +86,13 @@ class UserController extends Controller
 
          $school = $this->school_persistence->findById($school_id);
 
-         $student = new Student($user, $school, $year_of_entry, $student_code);
-
-         $this->student_persistence->save($student);
+         $this->student_persistence->save(new Student($user, $school, $year_of_entry, $student_code));
 
       } elseif( $user->isProfessor() ) {
 
          $academic_department = $this->academic_dep_persistence->findById($academic_department_id);
 
-         $professor = new Professor($user, $academic_department, $professor_type);
-
-         $this->professor_persistence->save($professor);
+         $this->professor_persistence->save(new Professor($user, $academic_department, $professor_type));
 
       }
 
