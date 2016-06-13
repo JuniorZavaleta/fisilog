@@ -16,8 +16,8 @@ Route::group(['middleware' => ['web', 'auth'], 'namespace' => 'Backend'], functi
 
    Route::group(['prefix' => 'users', 'as' => 'users.'], function() {
       Route::get('/', ['as' => 'index', 'uses' => 'UserController@index']);
-      Route::get('/register', ['as' => 'create', 'uses' => 'UserController@create']);
-      Route::post('/register', ['as' => 'store', 'uses' => 'UserController@store']);
+      Route::get('/new', ['as' => 'create', 'uses' => 'UserController@create']);
+      Route::post('/new', ['as' => 'store', 'uses' => 'UserController@store']);
 
       Route::group(['prefix' => '{user}'], function(){
          Route::group(['prefix' => 'documents', 'as' => 'documents.'], function(){
@@ -28,6 +28,13 @@ Route::group(['middleware' => ['web', 'auth'], 'namespace' => 'Backend'], functi
 
    Route::group(['prefix' => 'facultades', 'as' => 'facultades.'], function() {
       Route::get('/', ['as' => 'index', 'uses' => 'FacultadController@index']);
+      Route::get('/new', ['as' => 'create', 'uses' => 'FacultadController@create']);
+      Route::post('/new', ['as' => 'store', 'uses' => 'FacultadController@store']);
+
+      Route::group(['prefix' => '{facultad}'], function(){
+         Route::get('/edit', ['as' => 'edit', 'uses' => 'FacultadController@edit']);
+         Route::post('/edit', ['as' => 'update', 'uses' => 'FacultadController@update']);
+      });
    });
 
 });

@@ -38,4 +38,17 @@ class FacultadDaoEloquent implements FacultadDao {
       return $facultad_business;
    }
 
+   public function save(FacultadBusiness &$facultad_business)
+   {
+      $facultad_model = FacultadModel::create($facultad_business->toArray());
+      $facultad_business->setId($facultad_model->id);
+   }
+
+   public function update(FacultadBusiness $facultad_business)
+   {
+      $facultad_model = FacultadModel::find($facultad_business->getId());
+      $facultad_model->fill($facultad_business->toArray());
+      $facultad_model->save();
+   }
+
 }
