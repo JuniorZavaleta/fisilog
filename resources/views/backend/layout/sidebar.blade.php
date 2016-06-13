@@ -10,6 +10,9 @@
             <li>
                <a href="{{ route('facultades.index') }}"><i class="fa fa-building-o fa-fw"></i>Facultades</a>
             </li>
+            <li>
+               <a href="{{ route('eaps.index') }}"><i class="fa fa-graduation-cap fa-fw"></i>EAPs</a>
+            </li>
         </ul>
     </div>
     <!-- /.sidebar-collapse -->

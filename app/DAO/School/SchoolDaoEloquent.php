@@ -4,6 +4,8 @@ namespace FisiLog\DAO\School;
 use FisiLog\BusinessClasses\School as SchoolBusiness;
 use FisiLog\Models\School as SchoolModel;
 
+use FisiLog\DAO\Facultad\FacultadDaoEloquent as FacultadModel;
+
 class SchoolDaoEloquent implements SchoolDao {
 
    /**
@@ -47,7 +49,7 @@ class SchoolDaoEloquent implements SchoolDao {
       $student = new SchoolBusiness(
          $school_model->name,
          $school_model->code,
-         $school_model->facultad_id,
+         FacultadModel::createBusinessClass($school_model->facultad),
          $school_model->id
       );
 

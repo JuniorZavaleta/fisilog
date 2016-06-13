@@ -8,8 +8,6 @@
    </div>
 </div>
 
-@include('backend.show_errors')
-
 <div class="row">
 
    <table class="table">
