@@ -13,6 +13,7 @@ use FisiLog\DAO\Clase\ClaseDaoEloquent;
 use FisiLog\DAO\Group\GroupDaoEloquent;
 use FisiLog\DAO\NotificationChannel\NotificationChannelDaoEloquent;
 use FisiLog\DAO\UserType\UserTypeDaoEloquent;
+use FisiLog\DAO\Facultad\FacultadDaoEloquent;
 
 class DaoEloquentFactory {
 
@@ -74,5 +75,10 @@ class DaoEloquentFactory {
    public static function getUserTypeDAO()
    {
       return new UserTypeDaoEloquent;
+   }
+
+   public static function getFacultadDAO()
+   {
+      return new FacultadDaoEloquent;
    }
 }

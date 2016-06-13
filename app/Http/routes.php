@@ -14,7 +14,7 @@ Route::group(['middleware' => ['web', 'auth'], 'namespace' => 'Backend'], functi
 
    Route::get('index', ['as' => 'index', 'uses' => 'IndexController@index']);
 
-   Route::group(['prefix' => 'users', 'as' => 'users.'], function(){
+   Route::group(['prefix' => 'users', 'as' => 'users.'], function() {
       Route::get('/', ['as' => 'index', 'uses' => 'UserController@index']);
       Route::get('/register', ['as' => 'create', 'uses' => 'UserController@create']);
       Route::post('/register', ['as' => 'store', 'uses' => 'UserController@store']);
@@ -24,6 +24,10 @@ Route::group(['middleware' => ['web', 'auth'], 'namespace' => 'Backend'], functi
             Route::get('/', ['as' => 'index', 'uses' => 'DocumentController@index']);
          });
       });
+   });
+
+   Route::group(['prefix' => 'facultades', 'as' => 'facultades.'], function() {
+      Route::get('/', ['as' => 'index', 'uses' => 'FacultadController@index']);
    });
 
 });

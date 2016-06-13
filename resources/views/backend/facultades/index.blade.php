@@ -4,7 +4,7 @@
 
 <div class="row">
    <div class="col-xs-12">
-      <h2>Lista de Documentos de {{ $user->getFullName() }}</h2>
+      <h2>Lista de Facultades</h2>
    </div>
 </div>
 
@@ -12,15 +12,15 @@
 
    <table class="table">
       <thead>
-         <th>Tipo de Documento</th>
-         <th>Nº de Documento</th>
+         <th>Nombre</th>
+         <th>Código</th>
          <th>Acciones</th>
       </thead>
       <tbody>
-         @foreach($documents as $document)
+         @foreach($facultades as $facultad)
          <tr>
-            <td>{{ $document->getDocumentTypeName() }}</td>
-            <td>{{ $document->getCode() }}</td>
+            <td>{{ $facultad->getName() }}</td>
+            <td>{{ $facultad->getCode() }}</td>
             <td>
 
             </td>
