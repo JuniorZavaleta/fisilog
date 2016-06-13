@@ -43,6 +43,11 @@ class School implements Arrayable {
       $this->setFacultad($facultad);
    }
 
+   public function setId($id)
+   {
+      $this->id = $id;
+   }
+
    public function getId()
    {
       return $this->id;
@@ -83,6 +88,7 @@ class School implements Arrayable {
       return [
          'name' => $this->name,
          'code' => $this->code,
+         'facultad_id' => $this->facultad->getId(),
          'facultad' => $this->facultad,
       ];
    }

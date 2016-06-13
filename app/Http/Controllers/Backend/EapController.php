@@ -5,6 +5,12 @@ use FisiLog\Http\Controllers\Controller;
 
 use FisiLog\Dao\DaoEloquentFactory;
 
+use FisiLog\Http\Requests\Backend\Eap\StoreRequest;
+
+use FisiLog\BusinessClasses\School;
+
+use FisiLog\DAO\Facultad\FacultadDaoEloquent;
+
 class EapController extends Controller
 {
 
@@ -34,6 +40,19 @@ class EapController extends Controller
       ];
 
       return view('backend.eaps.new', $data);
+   }
+
+   public function store(StoreRequest $request)
+   {
+      extract($request->all());
+
+      $facultad = $this->facultad_persistence->findById($facultad_id);
+
+      $eap = new School($name, $code, $facultad);
+
+      $this->school_persistence->save($eap);
+
+      return redirect()->route('eaps.index')->with('message', 'EAP registrada existosamente.');
    }
 
 }
