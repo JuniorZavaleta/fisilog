@@ -1,6 +1,10 @@
 <?php
 namespace FisiLog\DAO\Document;
-use FisiLog\BusinessClasses\Document as DocumentBusiness;
+
+use FisiLog\BusinessClasses\Document;
+
 interface DocumentDao {
-	public function save(DocumentBusiness $documentBusiness);
+   public function save(Document &$document);
+   public function getByUserId($user_id);
+   public function findById($id);
 }

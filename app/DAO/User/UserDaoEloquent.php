@@ -15,6 +15,18 @@ class UserDaoEloquent implements UserDao {
       $user_business->setId($user_model->id);
    }
 
+   public function paginate($per_page = 10, $page = 1)
+   {
+      $users_model = UserModel::paginate($per_page);
+
+      $users_business = [];
+
+      foreach ($users_model as $user_model)
+         $users_business[] = static::createBusinessClass($user_model);
+
+      return $users_business;
+   }
+
    public function findById($id)
    {
       $user_model = UserModel::find($id);
@@ -29,10 +41,11 @@ class UserDaoEloquent implements UserDao {
       return static::createBusinessClass($user_model);;
    }
 
-   public function findByDocument($document_code)
+   public function findByDocument($document_code, $document_type_id)
    {
-      $user_model = UserModel::whereHas('documents', function($query) use ($document_code){
-         $query->where('code','=', $document_code);
+      $user_model = UserModel::whereHas('documents', function($query) use ($document_code, $document_type_id){
+         $query->where('code','=', $document_code)
+               ->where('document_type_id', $document_type_id);
       })->first();
 
       return static::createBusinessClass($user_model);;
@@ -51,7 +64,8 @@ class UserDaoEloquent implements UserDao {
          $user_model->phone,
          UserTypeModel::createBusinessClass($user_model->user_type),
          $user_model->photo_url,
-         NotificationChannelModel::createBusinessClass($user_model->notification_channel)
+         NotificationChannelModel::createBusinessClass($user_model->notification_channel),
+         $user_model->id
       );
 
       return $user_business;
