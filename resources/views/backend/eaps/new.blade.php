@@ -4,14 +4,14 @@
 
 <div class="row">
    <div class="col-xs-12">
-      <h2>Registrar Facultad</h2>
+      <h2>Registrar EAP</h2>
    </div>
 </div>
 
 @include('backend.show_errors')
 
 <div class="row">
-   <form class="form-horizontal" action="{{ route('facultades.store') }}" method="POST">
+   <form class="form-horizontal" action="{{ route('eaps.store') }}" method="POST">
       {!! csrf_field() !!}
 
       <div class="form-container">
@@ -24,7 +24,7 @@
             </div>
 
             <div class="col-xs-6 col-sm-4">
-               <input type="text" class="form-control" name="name" placeholder="Ingrese el nombre de la facultad" value="{{ old('name') }}">
+               <input type="text" class="form-control" name="name" placeholder="Ingrese el nombre de la eap" value="{{ old('name') }}">
             </div>
          </div>
          <!-- End nombre -->
@@ -37,10 +37,29 @@
             </div>
 
             <div class="col-xs-6 col-sm-4">
-               <input type="text" class="form-control" name="code" placeholder="Ingrese el código de la facultad" value="{{ old('code') }}">
+               <input type="text" class="form-control" name="code" placeholder="Ingrese el código de la eap" value="{{ old('code') }}">
             </div>
          </div>
          <!-- End code -->
+
+         <!-- Start facultad -->
+         <div class="form-group">
+
+            <div class="col-xs-3 col-xs-offset-1 col-sm-2">
+               <label class="control-label">Facultad</label>
+            </div>
+
+            <div class="col-xs-6 col-sm-4">
+               <select class="form-control" name="facultad_id">
+                  <option value="">Seleccione una facultad</option>
+               @foreach($facultades as $facultad)
+                  <option value="{{ $facultad->getId() }}">{{ $facultad->getName() }}</option>
+               @endforeach
+               </select>
+            </div>
+
+         </div>
+         <!-- End facultad -->
 
          <!-- Start registrar -->
          <div class="form-group">

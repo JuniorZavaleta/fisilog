@@ -39,6 +39,8 @@ Route::group(['middleware' => ['web', 'auth'], 'namespace' => 'Backend'], functi
 
    Route::group(['prefix' => 'eaps', 'as' => 'eaps.'], function() {
       Route::get('/', ['as' => 'index', 'uses' => 'EapController@index']);
+      Route::get('/new', ['as' => 'create', 'uses' => 'EapController@create']);
+      Route::post('/new', ['as' => 'store', 'uses' => 'EapController@store']);
    });
 
 });

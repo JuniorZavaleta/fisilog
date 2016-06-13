@@ -35,7 +35,7 @@
 
 <div class="row">
    <div class="form-group">
-      <a href="{{ route('users.create') }}" class="btn btn-success">Registrar nueva eap</a>
+      <a href="{{ route('eaps.create') }}" class="btn btn-success">Registrar nueva eap</a>
    </div>
 </div>
 

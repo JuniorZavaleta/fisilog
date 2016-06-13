@@ -11,6 +11,7 @@ class EapController extends Controller
    public function __construct(DaoEloquentFactory $dao)
    {
       $this->school_persistence = $dao->getSchoolDAO();
+      $this->facultad_persistence = $dao->getFacultadDAO();
    }
 
    public function index()
@@ -23,4 +24,16 @@ class EapController extends Controller
 
       return view('backend.eaps.index', $data);
    }
+
+   public function create()
+   {
+      $facultades = $this->facultad_persistence->getAll();
+
+      $data = [
+         'facultades' => $facultades,
+      ];
+
+      return view('backend.eaps.new', $data);
+   }
+
 }
