@@ -7,6 +7,9 @@
             <li>
                <a href="{{ route('users.index') }}"><i class="fa fa-user fa-fw"></i>Usuarios</a>
             </li>
+            <li>
+               <a href="{{ route('facultades.index') }}"><i class="fa fa-building-o fa-fw"></i>Facultades</a>
+            </li>
         </ul>
     </div>
     <!-- /.sidebar-collapse -->
