@@ -3,9 +3,6 @@ namespace FisiLog\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
 
-use FisiLog\Models\Document;
-
-use FisiLog\Http\Requests;
 use FisiLog\Http\Controllers\Controller;
 
 use FisiLog\Dao\DaoEloquentFactory;
@@ -20,6 +17,7 @@ class UserController extends Controller
 {
    public function __construct(DaoEloquentFactory $dao)
    {
+      $this->document_persistence            = $dao->getDocumentDAO();
       $this->document_type_persistence       = $dao->getDocumentTypeDAO();
       $this->school_persistence              = $dao->getSchoolDAO();
       $this->academic_dep_persistence        = $dao->getAcademicDepartmentDAO();
@@ -70,7 +68,7 @@ class UserController extends Controller
       $user_type_id = $request->input('user_type');
       $user_type = $this->user_type_persistence->findById($user_type_id);
 
-      $photo_url = $this->urlToString($request->file('photo'));
+      $photo_url = $this->urlToString($photo);
 
       $notification_channel = $this->notification_channel_persistence->findById($this->notification_by_email_id);
 
@@ -78,12 +76,11 @@ class UserController extends Controller
 
       $this->user_persistence->save($user);
 
-      $document = new Document;
-      $document->user_id          = $user->getId();
-      $document->document_type_id = $document_type;
-      $document->code             = $request->input('document_code');
+      $document_type = $this->document_type_persistence->findById($document_type);
 
-      $document->save();
+      $document = new Document($user, $document_type, $document_code);
+
+      $this->document_persistence->save($document);
 
       if ( $user->isStudent() ) {
 
@@ -100,14 +97,15 @@ class UserController extends Controller
          $professor = new Professor($user, $academic_department, $professor_type);
 
          $this->professor_persistence->save($professor);
+
       }
 
       return redirect()->route('index')->with('message', 'user created');
    }
 
-   public function urlToString($photo_url)
+   public function urlToString($photo)
    {
-      $filename  = time() . '.' . $photo_url->getClientOriginalName();
+      $filename  = time() . '.' . $photo->getClientOriginalName();
       $url = "img/users/" . $filename;
 
       return $url;
