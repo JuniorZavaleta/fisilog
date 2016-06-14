@@ -17,7 +17,7 @@ class AcademicPlan implements Arrayable {
 
    private $name;
 
-   public function __construct($name, $school, $year_of_publication = date('Y'), $is_active = false, $id = null)
+   public function __construct($name, $school, $year_of_publication, $is_active = false, $id = null)
    {
       $this->name = $name;
       $this->school = $school;
