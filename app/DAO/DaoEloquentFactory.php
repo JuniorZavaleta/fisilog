@@ -15,6 +15,7 @@ use FisiLog\DAO\NotificationChannel\NotificationChannelDaoEloquent;
 use FisiLog\DAO\UserType\UserTypeDaoEloquent;
 use FisiLog\DAO\Facultad\FacultadDaoEloquent;
 use FisiLog\DAO\AcademicPlan\AcademicPlanDaoEloquent;
+use FisiLog\DAO\ClassRoom\ClassRoomDaoEloquent;
 
 class DaoEloquentFactory {
 
@@ -86,5 +87,10 @@ class DaoEloquentFactory {
    public static function getAcademicPlanDAO()
    {
       return new AcademicPlanDaoEloquent;
+   }
+
+   public static function getClassRoommDAO()
+   {
+      return new ClassRoomDaoEloquent;
    }
 }

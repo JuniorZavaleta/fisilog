@@ -22,7 +22,8 @@
             <td>{{ $facultad->getName() }}</td>
             <td>{{ $facultad->getCode() }}</td>
             <td>
-               <a href="{{ route('facultades.edit', ['facultad' => $facultad->getId() ]) }}" title="Editar"><i class="fa fa-pencil-square-o"></i></a>
+               <a href="{{ route('facultades.edit', ['facultad' => $facultad->getId() ]) }}" title="Editar"><i class="fa fa-pencil-square-o fa-fw"></i></a>
+               <a href="{{ route('facultades.classrooms.index', ['facultad' => $facultad->getId() ]) }}" title="Salones"><i class="fa fa-cubes fa-fw"></i></a>
             </td>
          </tr>
          @endforeach
