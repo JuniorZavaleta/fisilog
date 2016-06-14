@@ -24,7 +24,7 @@
             </div>
 
             <div class="col-xs-6 col-sm-4">
-                  <input type="text" class="form-control" name="name" placeholder="Ingrese el nombre de la facultad" value="{{ old('name') }}">
+               <input type="text" class="form-control" name="name" placeholder="Ingrese el nombre de la facultad" value="{{ old('name') }}">
             </div>
          </div>
          <!-- End nombre -->
@@ -37,7 +37,7 @@
             </div>
 
             <div class="col-xs-6 col-sm-4">
-                  <input type="text" class="form-control" name="code" placeholder="Ingrese el código de la facultad" value="{{ old('code') }}">
+               <input type="text" class="form-control" name="code" placeholder="Ingrese el código de la facultad" value="{{ old('code') }}">
             </div>
          </div>
          <!-- End code -->

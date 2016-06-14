@@ -40,12 +40,22 @@ class School implements Arrayable {
       $this->code = $code;
       $this->facultad = $facultad;
       $this->id = $id;
-      //$this->setFacultad($facultad);
+      $this->setFacultad($facultad);
+   }
+
+   public function setId($id)
+   {
+      $this->id = $id;
    }
 
    public function getId()
    {
       return $this->id;
+   }
+
+   public function setName($name)
+   {
+      $this->name = $name;
    }
 
    public function getName()
@@ -63,9 +73,24 @@ class School implements Arrayable {
       return $this->facultad;
    }
 
+   public function setCode($code)
+   {
+      $this->code = $code;
+   }
+
    public function getCode()
    {
       return $this->code;
+   }
+
+   public function getFacultadName()
+   {
+      return $this->facultad->getName();
+   }
+
+   public function getFacultadId()
+   {
+      return $this->facultad->getId();
    }
 
    /**
@@ -78,6 +103,7 @@ class School implements Arrayable {
       return [
          'name' => $this->name,
          'code' => $this->code,
+         'facultad_id' => $this->getFacultadId(),
          'facultad' => $this->facultad,
       ];
    }

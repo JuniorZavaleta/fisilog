@@ -4,6 +4,8 @@ namespace FisiLog\DAO\School;
 use FisiLog\BusinessClasses\School as SchoolBusiness;
 use FisiLog\Models\School as SchoolModel;
 
+use FisiLog\DAO\Facultad\FacultadDaoEloquent as FacultadModel;
+
 class SchoolDaoEloquent implements SchoolDao {
 
    /**
@@ -26,12 +28,12 @@ class SchoolDaoEloquent implements SchoolDao {
    {
       $schools_model = SchoolModel::all();
 
-      $schoolBusiness = [];
+      $schools_business = [];
 
       foreach ($schools_model as $school_model)
-         $schoolBusiness[] = static::createBusinessClass($school_model);
+         $schools_business[] = static::createBusinessClass($school_model);
 
-      return $schoolBusiness;
+      return $schools_business;
    }
 
     /**
@@ -44,14 +46,27 @@ class SchoolDaoEloquent implements SchoolDao {
       if ($school_model == null)
          return null;
 
-      $student = new SchoolBusiness(
+      $school_business = new SchoolBusiness(
          $school_model->name,
          $school_model->code,
-         $school_model->facultad_id,
+         FacultadModel::createBusinessClass($school_model->facultad),
          $school_model->id
       );
 
-      return $student;
+      return $school_business;
+   }
+
+   public function save(SchoolBusiness &$school_business)
+   {
+      $school_model = SchoolModel::create($school_business->toArray());
+      $school_business->setId($school_model->id);
+   }
+
+   public function update(SchoolBusiness $school_business)
+   {
+      $school_model = SchoolModel::find($school_business->getId());
+      $school_model->fill($school_business->toArray());
+      $school_model->save();
    }
 
 }

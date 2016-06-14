@@ -42,5 +42,6 @@ class RouteServiceProvider extends ServiceProvider
 
       $router->model('user', 'FisiLog\Models\User');
       $router->model('facultad', 'FisiLog\Models\Facultad');
+      $router->model('eap', 'FisiLog\Models\School');
    }
 }
