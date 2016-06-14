@@ -8,4 +8,5 @@ interface ClassRoomDao {
    public function findById($id);
    public function getAll();
    public function update(ClassRoom $class_room);
+   public function getByFacultadId($facultad_id);
 }

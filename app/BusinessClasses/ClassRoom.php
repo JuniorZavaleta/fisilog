@@ -11,7 +11,7 @@ class ClassRoom {
 
    private $facultad;
 
-   public function __construct($name, $facultad, $id)
+   public function __construct($name, $facultad, $id = null)
    {
       $this->name = $name;
       $this->setFacultad($facultad);
