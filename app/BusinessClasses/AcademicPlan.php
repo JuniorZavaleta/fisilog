@@ -31,6 +31,11 @@ class AcademicPlan implements Arrayable {
       $this->id = $id;
    }
 
+   public function getId()
+   {
+      return $this->id;
+   }
+
    public function setName($name)
    {
       $this->name = $name;

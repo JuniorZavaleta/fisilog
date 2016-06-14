@@ -8,4 +8,5 @@ interface CourseDao {
    public function findById($id);
    public function getAll();
    public function update(Course $course);
+   public function getByAcademicPlanId($academic_plan_id);
 }

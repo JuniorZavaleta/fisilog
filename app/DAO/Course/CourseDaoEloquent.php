@@ -54,4 +54,15 @@ class CourseDaoEloquent implements CourseDao {
       $course_model->save();
    }
 
+   public function getByAcademicPlanId($academic_plan_id)
+   {
+      $courses_model = CourseModel::where('academic_plan_id', '=', $academic_plan_id)->get();
+      $courses_business = [];
+
+      foreach ($courses_model as $course_model)
+         $courses_business[] = static::createBusinessClass($course_model);
+
+      return $courses_business;
+   }
+
 }

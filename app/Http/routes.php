@@ -47,14 +47,20 @@ Route::group(['middleware' => ['web', 'auth'], 'namespace' => 'Backend'], functi
       Route::post('/new', ['as' => 'store', 'uses' => 'EapController@store']);
 
       Route::group(['prefix' => '{eap}'], function(){
+         Route::get('/edit', ['as' => 'edit', 'uses' => 'EapController@edit']);
+         Route::post('/edit', ['as' => 'update', 'uses' => 'EapController@update']);
+
          Route::group(['prefix' => 'academic_plans', 'as' => 'academic_plans.'], function() {
             Route::get('/', ['as' => 'index', 'uses' => 'AcademicPlanController@index']);
             Route::get('/new', ['as' => 'create', 'uses' => 'AcademicPlanController@create']);
             Route::post('/new', ['as' => 'store', 'uses' => 'AcademicPlanController@store']);
-         });
 
-         Route::get('/edit', ['as' => 'edit', 'uses' => 'EapController@edit']);
-         Route::post('/edit', ['as' => 'update', 'uses' => 'EapController@update']);
+            Route::group(['prefix' => '{academic_plan}'], function(){
+               Route::group(['prefix' => 'courses', 'as' => 'courses.'], function() {
+                  Route::get('/', ['as' => 'index', 'uses' => 'CourseController@index']);
+               });
+            });
+         });
       });
    });
 
