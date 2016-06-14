@@ -43,7 +43,7 @@
 
 <div class="row">
    <div class="form-group">
-
+   <a href="{{ route('eaps.academic_plans.create', ['eap' => $eap->getId() ]) }}" class="btn btn-success">Registrar nuevo plan academico</a>
    </div>
 </div>
 
