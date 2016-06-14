@@ -32,7 +32,8 @@
             <td>{{ $eap->getFacultadName() }}</td>
             <td>{{ $eap->getCode() }}</td>
             <td>
-               <a href="{{ route('eaps.edit', ['eap' => $eap->getId() ]) }}" title="Editar"><i class="fa fa-pencil-square-o"></i></a>
+               <a href="{{ route('eaps.edit', ['eap' => $eap->getId() ]) }}" title="Editar"><i class="fa fa-pencil-square-o fa-fw"></i></a>
+               <a href="{{ route('eaps.academic_plans.index', ['eap' => $eap->getId() ]) }}" title="Planes Académicos"><i class="fa fa-bars fa-fw"></i></a>
             </td>
          </tr>
          @endforeach
