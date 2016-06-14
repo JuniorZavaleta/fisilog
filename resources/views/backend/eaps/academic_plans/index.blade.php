@@ -4,7 +4,7 @@
 
 <div class="row">
    <div class="col-xs-12">
-      <h2>Lista de Planes Academicos de {{ $eap->getName() }}</h2>
+      <h2>Lista de Planes de Estudios de {{ $eap->getName() }}</h2>
    </div>
 </div>
 
@@ -43,7 +43,7 @@
 
 <div class="row">
    <div class="form-group">
-   <a href="{{ route('eaps.academic_plans.create', ['eap' => $eap->getId() ]) }}" class="btn btn-success">Registrar nuevo plan academico</a>
+      <a href="{{ route('eaps.academic_plans.create', ['eap' => $eap->getId() ]) }}" class="btn btn-success">Registrar nuevo plan de estudios</a>
    </div>
 </div>
 

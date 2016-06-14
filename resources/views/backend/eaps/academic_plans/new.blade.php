@@ -4,7 +4,7 @@
 
 <div class="row">
    <div class="col-xs-12">
-      <h2>Registrar Plan Académico para {{ $eap->getName() }}</h2>
+      <h2>Registrar Plan de Estudios para {{ $eap->getName() }}</h2>
    </div>
 </div>
 
