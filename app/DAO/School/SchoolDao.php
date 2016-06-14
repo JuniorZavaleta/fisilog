@@ -7,4 +7,5 @@ interface SchoolDao {
    public function findById($id);
    public function getAll();
    public function save(School &$school);
+   public function update(School $school);
 }

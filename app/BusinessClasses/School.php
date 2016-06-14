@@ -53,6 +53,11 @@ class School implements Arrayable {
       return $this->id;
    }
 
+   public function setName($name)
+   {
+      $this->name = $name;
+   }
+
    public function getName()
    {
       return $this->name;
@@ -66,6 +71,11 @@ class School implements Arrayable {
    public function getFacultad()
    {
       return $this->facultad;
+   }
+
+   public function setCode($code)
+   {
+      $this->code = $code;
    }
 
    public function getCode()

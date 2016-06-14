@@ -11,7 +11,7 @@
 @include('backend.show_errors')
 
 <div class="row">
-   <form class="form-horizontal" action="{{ route('eaps.update') }}" method="POST">
+   <form class="form-horizontal" action="{{ route('eaps.update', ['eap' => $eap->getId() ]) }}" method="POST">
       {!! csrf_field() !!}
 
       <div class="form-container">

@@ -68,4 +68,20 @@ class EapController extends Controller
       return view('backend.eaps.edit', $data);
    }
 
+   public function update($eap, StoreRequest $request)
+   {
+      extract($request->all());
+
+      $eap = $this->school_persistence->createBusinessClass($eap);
+      $facultad = $this->facultad_persistence->findById($facultad_id);
+
+      $eap->setName($name);
+      $eap->setCode($code);
+      $eap->setFacultad($facultad);
+
+      $this->school_persistence->update($eap);
+
+      return redirect()->route('eaps.index')->with('message', 'EAP actualizada exitosamente.');
+   }
+
 }

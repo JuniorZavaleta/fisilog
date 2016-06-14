@@ -62,4 +62,11 @@ class SchoolDaoEloquent implements SchoolDao {
       $school_business->setId($school_model->id);
    }
 
+   public function update(SchoolBusiness $school_business)
+   {
+      $school_model = SchoolModel::find($school_business->getId());
+      $school_model->fill($school_business->toArray());
+      $school_model->save();
+   }
+
 }
