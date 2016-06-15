@@ -21,12 +21,18 @@
    <table class="table">
       <thead>
          <th>Nombre</th>
+         <th>Cantidad de créditos</th>
+         <th>Ciclo</th>
+         <th>Tipo</th>
          <th>Acciones</th>
       </thead>
       <tbody>
          @foreach($courses as $course)
          <tr>
             <td>{{ $course->getName() }}</td>
+            <td>{{ $course->getQuantityOfCredits() }}</td>
+            <td>{{ $course->getCiclo() }}</td>
+            <td>{{ $course->getCourseTypeName() }}</td>
             <td>
 
             </td>
