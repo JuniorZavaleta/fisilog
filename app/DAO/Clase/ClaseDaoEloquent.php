@@ -1,5 +1,6 @@
 <?php
 namespace FisiLog\DAO\Clase;
+
 use FisiLog\BusinessClasses\Clase as ClaseBusiness;
 use FisiLog\BusinessClasses\Professor as ProfessorBusiness;
 use FisiLog\BusinessClasses\ClassRoom as ClassRoomBusiness;
@@ -9,126 +10,95 @@ use FisiLog\BusinessClasses\CourseOpened as CourseOpenedBusiness;
 use FisiLog\BusinessClasses\Course as CourseBusiness;
 use FisiLog\Models\Clase as ClaseModel;
 
-
 class ClaseDaoEloquent implements ClaseDao {
-  private function createClassRoom($clase) {
-    $classroom = new ClassRoomBusiness;
-    $classroom->setId($clase->classroom->id);
-    $classroom->setName($clase->classroom->name);
 
-    return $classroom;
-  }
-  private function createSchedule($clase) {
-    $schedule = new ScheduleBusiness;
-    $schedule->setStartHour($clase->schedule->start_hour);
-    $schedule->setEndHour($clase->schedule->end_hour);
-    $schedule->setDayOfTheWeek($clase->schedule->day_of_the_week);
+   private function createClassRoom($clase)
+   {
+      $classroom = new ClassRoomBusiness;
+      $classroom->setId($clase->classroom->id);
+      $classroom->setName($clase->classroom->name);
 
-    return $schedule;
-  }
-  private function createGroup($clase) {
-    $groupModel = $clase->group;
-    $group = new GroupBusiness;
-    $group->setId($groupModel->id);
-    $group->setNumberOfGroup($groupModel->number_of_group);
+      return $classroom;
+   }
 
-    $courseOpenedModel = $groupModel->courseOpened;
-    $courseModel = $courseOpenedModel->course;
+   private function createSchedule($clase)
+   {
+      $schedule = new ScheduleBusiness;
+      $schedule->setStartHour($clase->schedule->start_hour);
+      $schedule->setEndHour($clase->schedule->end_hour);
+      $schedule->setDayOfTheWeek($clase->schedule->day_of_the_week);
 
-    $course = new CourseBusiness;
-    $course->setId($courseModel->id);
-    $course->setName($courseModel->name);
-    $course->setCode($courseModel->code);
-    $course->setQuantityOfCredits($courseModel->quantity_of_credits);
+      return $schedule;
+   }
 
-    $courseOpened = new CourseOpenedBusiness;
-    $courseOpened->setCourse($course);
-    $group->setCourseOpened($courseOpened);
+   private function createGroup($clase)
+   {
+      $groupModel = $clase->group;
+      $group = new GroupBusiness;
+      $group->setId($groupModel->id);
+      $group->setNumberOfGroup($groupModel->number_of_group);
 
-    return $group;
-  }
-  private function createProfessor($clase) {
-    $professorModel = $clase->professor;
-    $professorBusiness = new ProfessorBusiness;
-    $professorBusiness->setId($professorModel->id);
-    $professorBusiness->setProfessorType($professorModel->type);
+      $courseOpenedModel = $groupModel->courseOpened;
+      $courseModel = $courseOpenedModel->course;
 
-    return $professorBusiness;
-  }
-  public function getByProfessor(ProfessorBusiness $professorBusiness, $relations = null) {
-    if ($relations == null)
-      $relations = ['classroom','schedule','group'];
-    $claseModel = ClaseModel::where('professor_id', '=', $professorBusiness->getId())
-                            ->with($relations)
-                            ->get();
-    $claseBusiness = [];
+      $course = new CourseBusiness;
+      $course->setId($courseModel->id);
+      $course->setName($courseModel->name);
+      $course->setCode($courseModel->code);
+      $course->setQuantityOfCredits($courseModel->quantity_of_credits);
 
-    foreach ($claseModel as $clase) {
-      if (in_array("classroom", $relations)) {
-        $classroom = $this->createClassRoom($clase);
-      } else {
-        $classroom = null;
-      }
+      $courseOpened = new CourseOpenedBusiness;
+      $courseOpened->setCourse($course);
+      $group->setCourseOpened($courseOpened);
 
-      if (in_array("schedule", $relations)) {
-        $schedule = $this->createSchedule($clase);
-      } else {
-        $schedule = null;
-      }
+      return $group;
+   }
 
-      if (in_array("group", $relations)) {
-        $group = $this->createGroup($clase);
-      } else {
-        $group = null;
-      }
+   private function createProfessor($clase)
+   {
+      $professorModel = $clase->professor;
+      $professorBusiness = new ProfessorBusiness;
+      $professorBusiness->setId($professorModel->id);
+      $professorBusiness->setProfessorType($professorModel->type);
 
-      $newClaseBusiness = new ClaseBusiness;
-      $newClaseBusiness->setId($clase->id);
-      $newClaseBusiness->setClassRoom($classroom);
-      $newClaseBusiness->setSchedule($schedule);
-      $newClaseBusiness->setGroup($group);
-      $newClaseBusiness->setProfessor($professorBusiness);
-      $claseBusiness[] = $newClaseBusiness;
-    }
+      return $professorBusiness;
+   }
 
-    return $claseBusiness;
-  }
+   public function getByProfessor($professor_id)
+   {
+      $clases_model = ClaseModel::where('professor_id', '=', $professor_id)->get();
+      $clases_business = [];
 
-  public function findById($id, $relations = null) {
-    $claseModel = ClaseModel::find($id);
-    if ($relations == null)
-      $relations = ['classroom','schedule','group','professor'];
-    if (in_array("classroom", $relations)) {
-      $classroom = $this->createClassRoom($claseModel);
-    } else {
-      $classroom = null;
-    }
+      foreach ($clases_model as $clase_model)
+         $clases_business[] = static::createBusinessClass($clase_model);
 
-    if (in_array("schedule", $relations)) {
-      $schedule = $this->createSchedule($claseModel);
-    } else {
-      $schedule = null;
-    }
+      return $clases_business;
+   }
 
-    if (in_array("group", $relations)) {
-      $group = $this->createGroup($claseModel);
-    } else {
-      $group = null;
-    }
+   public function findById($id)
+   {
+      $clase_model = ClaseModel::find($id);
 
-    if (in_array("professor", $relations)) {
-      $professor = $this->createProfessor($claseModel);
-    } else {
-      $professor = null;
-    }
+      return static::createBusinessClass($clase_model);
+   }
 
-    $claseBusiness = new ClaseBusiness;
-    $claseBusiness->setId($claseModel->id);
-    $claseBusiness->setClassRoom($classroom);
-    $claseBusiness->setSchedule($schedule);
-    $claseBusiness->setGroup($group);
-    $claseBusiness->setProfessor($professor);
+   public static function createBusinessClass(ClaseModel $clase_model)
+   {
+      if ($clase_model == null)
+         return null;
 
-    return $claseBusiness;
-  }
+      $classroom = $this->createClassRoom($clase_model);
+      $schedule = $this->createSchedule($clase_model);
+      $group = $this->createGroup($clase_model);
+      $professor = $this->createProfessor($clase_model);
+
+      $clase_business = new ClaseBusiness;
+      $clase_business->setId($clase_model->id);
+      $clase_business->setClassRoom($classroom);
+      $clase_business->setSchedule($schedule);
+      $clase_business->setGroup($group);
+      $clase_business->setProfessor($professor);
+
+      return $clase_business;
+   }
 }
