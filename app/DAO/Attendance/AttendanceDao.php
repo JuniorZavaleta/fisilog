@@ -1,9 +1,9 @@
 <?php
 namespace FisiLog\DAO\Attendance;
 use FisiLog\BusinessClasses\Attendance as AttendanceBusiness;
-use FisiLog\BusinessClasses\User as UserBusiness;
-use FisiLog\BusinessClasses\Clase as ClaseBusiness;
+
 interface AttendanceDao {
-	public function getAttendancesByUserAndClaseAndDate(UserBusiness $userBusiness, ClaseBusiness $claseBusiness, $date);
-	public function save(AttendanceBusiness $attendanceBusiness);
+   public function verifyAttendance($user_id, $clase_id, $date);
+   public function save(AttendanceBusiness &$attendanceBusiness);
+   public function getByClaseId($clase_id);
 }
