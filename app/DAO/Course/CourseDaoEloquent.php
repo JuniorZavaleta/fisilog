@@ -5,6 +5,7 @@ use FisiLog\BusinessClasses\Course as CourseBusiness;
 use FisiLog\Models\Course as CourseModel;
 
 use FisiLog\DAO\AcademicPlan\AcademicPlanDaoEloquent as AcademicPlanModel;
+use FisiLog\DAO\CourseType\CourseTypeDaoEloquent as CourseTypeModel;
 
 class CourseDaoEloquent implements CourseDao {
 
@@ -35,7 +36,10 @@ class CourseDaoEloquent implements CourseDao {
          $course_model->name,
          $course_model->code,
          $course_model->quantity_of_credits,
-         AcademicPlanModel::createBusinessClass($course_model->academic_plan)
+         AcademicPlanModel::createBusinessClass($course_model->academic_plan),
+         $course_model->ciclo,
+         CourseTypeModel::createBusinessClass($course_model->course_type),
+         $course_model->id
       );
 
       return $course_business;

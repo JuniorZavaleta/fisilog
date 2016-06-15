@@ -17,12 +17,18 @@ class Course implements Arrayable {
 
    private $academic_plan;
 
-   public function __construct($name, $code, $quantity_of_credits, $academic_plan, $id = null)
+   private $ciclo;
+
+   private $course_type;
+
+   public function __construct($name, $code, $quantity_of_credits, $academic_plan, $ciclo, $course_type, $id = null)
    {
       $this->name = $name;
       $this->code = $code;
       $this->quantity_of_credits = $quantity_of_credits;
       $this->setAcademicPlan($academic_plan);
+      $this->ciclo = $ciclo;
+      $this->setCourseType($course_type);
       $this->id = $id;
    }
 
@@ -76,9 +82,39 @@ class Course implements Arrayable {
       return $this->academic_plan;
    }
 
+   public function setCiclo($ciclo)
+   {
+      $this->ciclo = $ciclo;
+   }
+
+   public function getCiclo()
+   {
+      return $this->ciclo;
+   }
+
+   public function setCourseType(CourseType $course_type)
+   {
+      $this->course_type = $course_type;
+   }
+
+   public function getCourseType()
+   {
+      return $this->course_type;
+   }
+
    public function getAcademicPlanId()
    {
       return $this->academic_plan->getId();
+   }
+
+   public function getCourseTypeId()
+   {
+      return $this->course_type->getId();
+   }
+
+   public function getCourseTypeName()
+   {
+      return $this->course_type->getName();
    }
 
    /**
@@ -94,6 +130,9 @@ class Course implements Arrayable {
          'code' => $this->code,
          'quantity_of_credits' => $this->quantity_of_credits,
          'academic_plan_id' => $this->getAcademicPlanId(),
+         'ciclo' => $this->ciclo,
+         'course_type_id' => $this->getCourseTypeId(),
+         'course_type' => $this->course_type->toArray(),
       ];
    }
 

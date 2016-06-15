@@ -7,7 +7,7 @@ class Course extends Model
 {
 
    protected $table = 'courses';
-   protected $fillable = ['name', 'code', 'quantity_of_credits', 'academic_plan_id'];
+   protected $fillable = ['name', 'code', 'quantity_of_credits', 'academic_plan_id', 'ciclo', 'course_type_id'];
    public $timestamps = false;
 
    public function academic_plan()
@@ -18,6 +18,11 @@ class Course extends Model
    public function courses_opened()
    {
       return $this->hasMany(CourseOpened::class,'id');
+   }
+
+   public function course_type()
+   {
+      return $this->belongsTo(CourseType::class);
    }
 
 }
