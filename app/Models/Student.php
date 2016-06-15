@@ -8,18 +8,24 @@ use Illuminate\Database\Eloquent\Model;
 
 class Student extends Model
 {
-  protected $table = 'students';
-  public $timestamps = false;
+   protected $table = 'students';
 
-  public function groups(){
-    return $this->belongsToMany(Group::class,'students_x_groups','student_id','group_id');
-  }
+   protected $fillable = ['id', 'school_id', 'code', 'year_of_entry'];
 
-  public function user(){
-    return $this->belongsTo(User::class);
-  } 
+   public $timestamps = false;
 
-  public function school(){
-    return $this->belongsTo(School::class);
-  } 
+   public function groups()
+   {
+      return $this->belongsToMany(Group::class,'students_x_groups','student_id','group_id');
+   }
+
+   public function user()
+   {
+      return $this->belongsTo(User::class);
+   }
+
+   public function school()
+   {
+      return $this->belongsTo(School::class);
+   }
 }

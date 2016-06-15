@@ -1,57 +1,78 @@
 <?php
 namespace FisiLog\DAO\Student;
+
 use FisiLog\BusinessClasses\Student as StudentBusiness;
-use FisiLog\BusinessClasses\User as UserBusiness;
-use FisiLog\BusinessClasses\Group as GroupBusiness;
 use FisiLog\Models\Student as StudentModel;
-use FisiLog\BusinessClasses\NotificationByMail;
-use FisiLog\BusinessClasses\NotificationChannel;
+
+use FisiLog\DAO\User\UserDaoEloquent as UserDao;
+use FisiLog\DAO\School\SchoolDaoEloquent as SchoolDao;
 
 class StudentDaoEloquent implements StudentDao {
-  public function save(StudentBusiness $studentBusiness) {
-    $studentModel = new StudentModel;
-    $studentModel->user_id = $studentBusiness->getId();
-    $studentModel->school_id = $studentBusiness->getSchool()->getId();
-    $studentModel->code = $studentBusiness->getCode();
-    $studentModel->year_of_entry = $studentBusiness->getYearOfEntry();
-    $studentModel->save();
-    $studentBusiness->setId($studentModel->id);
 
-    return $studentBusiness;
-  }
-  public function findByUser(UserBusiness $userBusiness) {
-    $studentModel = StudentModel::where('user_id', '=', $userBusiness->getId())
-                                ->first();
-    if($studentModel == null)
-      return null;
+   /**
+    * Save in DB a student entity
+    * @param StudentBusiness $studentBusiness
+    * @return
+    */
+   public function save(StudentBusiness $student_business)
+   {
+      StudentModel::create($student_business->toArray());
 
-    $studentBusiness = new StudentBusiness;
-    $studentBusiness->setId($studentModel->id);
-    $studentBusiness->setYearOfEntry($studentModel->year_of_entry);
-    $studentBusiness->setCode($studentModel->code);
+      return $student_business;
+   }
 
-    return $studentBusiness;
-  }
-  public function getByGroup(GroupBusiness $groupBusiness) {
-    $studentModel = StudentModel::whereHas('groups', function($query) use($groupBusiness){
-      $query->where('group_id','=',$groupBusiness->getId());
-    })->get();
+   /**
+    * Find a student with the user id
+    * @param integer $user_id
+    * @return StudentBusiness
+    */
+   public function findByUserId($user_id)
+   {
+      $student_model = StudentModel::where('id', '=', $user_id)
+      ->with('user', 'user.user_type', 'user.notification_channel', 'school')
+      ->first();
 
-    $studentBusiness = [];
-    foreach ($studentModel as $student) {
-      $newStudentBusinesss = new StudentBusiness;
+      return static::createBusinessClass($student_model);
+   }
 
-      $newStudentBusinesss->setId($student->user->id);
-      $newStudentBusinesss->setEmail($student->user->email);
-      if( $student->user->notification_channel_id == 1) {
-        $notification_channel = new NotificationChannel;
-        $notification_channel->setStrategyNotification(new NotificationByMail);
-        $newStudentBusinesss->setNotificationChannel($notification_channel);
-      }
+   /**
+    * Get a collection of student of a group with the group id
+    * @param integer $group_id
+    * @return Collection of StudentBusiness
+    */
+   public function getByGroupId($group_id)
+   {
+      $students_model = StudentModel::whereHas('groups', function($query) use ($group_id) {
+         $query->where('group_id', '=', $group_id);
+      })
+      ->with('user', 'user.user_type', 'user.notification_channel', 'school')
+      ->get();
 
-      $studentBusiness[] = $newStudentBusinesss;
-    }
+      $students_business = [];
 
-    return $studentBusiness;
-  }
+      foreach ($students_model as $student_model)
+         $students_business[] = static::createBusinessClass($student_model);
+
+      return $students_business;
+   }
+
+   /**
+    * Create an object StudentBusiness
+    * @param StudentModel $studentModel
+    * @return StudentBusiness
+    */
+   public function createBusinessClass(StudentModel $studentModel)
+   {
+      if ($studentModel == null)
+         return null;
+
+      $student = new StudentBusiness(
+         UserDao::createBusinessClass($studentModel->user),
+         SchoolDao::createBusinessClass($studentModel->school),
+         $studentModel->year_of_entry,
+         $studentModel->code
+      );
+
+      return $student;
+   }
 }

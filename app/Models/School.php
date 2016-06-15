@@ -1,25 +1,28 @@
 <?php
-
 namespace FisiLog\Models;
-use FisiLog\Models\Facultad;
-use FisiLog\Models\AcademicPlan;
-use Fisilog\Models\Student;
+
 use Illuminate\Database\Eloquent\Model;
 
 class School extends Model
 {
-    protected $table = 'schools';
-    public $timestamps = false;
 
-    public function facultad(){
-        return $this->belongsTo(Facultad::class);
-    } 
-    
-    public function academicPlan(){
-        return $this->hasMany(AcademicPlan::class,'id');
-    }    
+   protected $table = 'schools';
+   protected $fillable = ['name', 'code', 'facultad_id'];
+   public $timestamps = false;
 
-    public function student(){
-        return $this->hasMany(Student::class,'id');
-    } 
+   public function facultad()
+   {
+      return $this->belongsTo(Facultad::class);
+   }
+
+   public function academic_plan()
+   {
+      return $this->hasMany(AcademicPlan::class,'id');
+   }
+
+   public function student()
+   {
+      return $this->hasMany(Student::class,'id');
+   }
+
 }

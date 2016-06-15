@@ -6,6 +6,7 @@ class DocumentTypeSeeder extends Seeder
 {
    public function run()
    {
+      DB::table('document_types')->truncate();
       DB::table('document_types')->insert([
          ['id' => 1, 'name' => 'DNI'],
          ['id' => 2, 'name' => 'Carné Universitario'],

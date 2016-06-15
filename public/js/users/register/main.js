@@ -5,6 +5,14 @@ $(function () {
   var student_type = 1;
   var professor_type = 2;
 
+  if (user_type_selected == student_type) {
+    show_student_fields();
+    hide_professor_fields();
+  } else if(user_type_selected == professor_type) {
+    show_professor_fields();
+    hide_student_fields();
+  }
+
   select_user_types.on('change', function(){
     var element = $(this);
     if(element.val() == student_type) {

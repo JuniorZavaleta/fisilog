@@ -1,25 +1,37 @@
 <?php
 namespace FisiLog\DAO\Professor;
+
 use FisiLog\BusinessClasses\Professor as ProfessorBusiness;
 use FisiLog\Models\Professor as ProfessorModel;
 
 class ProfessorDaoEloquent implements ProfessorDao {
-  public function save(ProfessorBusiness $professorBusiness) {
-    $professorModel = new ProfessorModel;
-    $professorModel->user_id = $professorBusiness->getId();
-    $professorModel->academic_department_id = $professorBusiness->getAcademicDepartment()->getId();
-    $professorModel->type = $professorBusiness->getType();
-    $professorModel->save();
-    $professorBusiness->setId($professorModel->id);
 
-    return $professorBusiness;
-  }
-  public function findById($id) {
-    $professorModel = ProfessorModel::where('user_id','=',$id)->first();
-    $professorBusiness = new ProfessorBusiness;
-    $professorBusiness->setId($professorModel->id);
-    $professorBusiness->setType($professorModel->type);
+   public function save(ProfessorBusiness $professor_business)
+   {
+      ProfessorModel::create($professor_business->toArray());
+   }
 
-    return $professorBusiness;
-  }
+   public function findById($id)
+   {
+      $professor_model = ProfessorModel::where('id','=',$id)
+      ->with('user', 'user.user_type', 'user.notification_channel', 'school')
+      ->first();
+
+      return static::createBusinessClass($professor_model);
+   }
+
+   public static function createBusinessClass(ProfessorModel $professor_model)
+   {
+      if ($professor_model == null)
+         return null;
+
+      $professor = new ProfessorBusiness(
+         $professor_model->academic_department_id,
+         $professor_model->type,
+         $professor_model->id
+      );
+
+      return $professor;
+   }
+
 }
