@@ -20,4 +20,9 @@ class Facultad extends Model
       return $this->hasMany(AcademicCycle::class,'facultad_id');
    }
 
+   public function academic_periods()
+   {
+      return $this->hasMany(AcademicPeriod::class,'facultad_id');
+   }
+
 }
