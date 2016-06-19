@@ -61,7 +61,7 @@ class Clase {
       return $this->group;
    }
 
-   public function setType(ClassType $type)
+   public function setType($type)
    {
       $this->type = $type;
    }
@@ -109,7 +109,6 @@ class Clase {
    public function toArray() {
       return [
          'id' => $this->id,
-         'name' => $this->name,
       ];
    }
 
