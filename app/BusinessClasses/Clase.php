@@ -1,11 +1,11 @@
 <?php
 namespace FisiLog\BusinessClasses;
 
+use Illuminate\Contracts\Support\Arrayable;
+
 class Clase {
 
    private $id;
-
-   private $schedule;
 
    private $classroom;
 
@@ -15,7 +15,11 @@ class Clase {
 
    private $type;
 
-   private $status;
+   private $start_hour;
+
+   private $end_hour;
+
+   private $day_of_the_week;
 
    public function setId($id)
    {
@@ -25,16 +29,6 @@ class Clase {
    public function getId()
    {
       return $this->id;
-   }
-
-   public function setSchedule(Schedule $schedule)
-   {
-      $this->schedule = $schedule;
-   }
-
-   public function getSchedule()
-   {
-      return $this->schedule;
    }
 
    public function setClassRoom(ClassRoom $classroom)
@@ -57,7 +51,7 @@ class Clase {
       return $this->professor;
    }
 
-   public function setGroup(Group $group)
+   public function setGroup($group)
    {
       $this->group = $group;
    }
@@ -67,7 +61,7 @@ class Clase {
       return $this->group;
    }
 
-   public function setType($type)
+   public function setType(ClassType $type)
    {
       $this->type = $type;
    }
@@ -77,14 +71,46 @@ class Clase {
       return $this->type;
    }
 
-   public function setStatus($status)
+   public function setStartHour($start_hour)
    {
-      $this->status = $status;
+      $this->start_hour = $start_hour;
    }
 
-   public function getStatus()
+   public function getStartHour()
    {
-      return $this->status;
+      return $this->start_hour;
+   }
+
+   public function setEndHour($end_hour)
+   {
+      $this->end_hour = $end_hour;
+   }
+
+   public function setEndHour()
+   {
+      return $this->end_hour;
+   }
+
+   public function setDayOfTheWeek($day_of_the_week)
+   {
+      $this->day_of_the_week = $day_of_the_week;
+   }
+
+   public function getDayOfTheWeek()
+   {
+      return $this->day_of_the_week;
+   }
+
+   /**
+     * Get the instance as an array.
+     *
+     * @return array
+     */
+   public function toArray() {
+      return [
+         'id' => $this->id,
+         'name' => $this->name,
+      ];
    }
 
 }
