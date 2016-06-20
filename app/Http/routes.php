@@ -38,6 +38,8 @@ Route::group(['middleware' => ['web', 'auth'], 'namespace' => 'Backend'], functi
 
          Route::get('/edit', ['as' => 'edit', 'uses' => 'FacultadController@edit']);
          Route::post('/edit', ['as' => 'update', 'uses' => 'FacultadController@update']);
+
+         Route::get('/eaps', ['as' => 'eaps', 'uses' => 'EapController@getByFacultad']);
       });
    });
 
@@ -61,7 +63,13 @@ Route::group(['middleware' => ['web', 'auth'], 'namespace' => 'Backend'], functi
                });
             });
          });
+
+         Route::get('/courses/{ciclo}', ['as' => 'courses', 'uses' => 'CourseController@getByEap']);
       });
+   });
+
+   Route::group(['prefix' => 'classes', 'as' => 'classes.'], function() {
+      Route::get('/search', ['as' => 'index', 'uses' => 'ClassController@search']);
    });
 
 

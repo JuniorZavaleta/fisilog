@@ -84,4 +84,21 @@ class EapController extends Controller
       return redirect()->route('eaps.index')->with('message', 'EAP actualizada exitosamente.');
    }
 
+   public function getByFacultad($facultad)
+   {
+      $facultad = $this->facultad_persistence->createBusinessClass($facultad);
+      $eaps = $this->school_persistence->getByFacultadId($facultad->getId());
+
+      $output = [];
+
+      foreach ($eaps as $eap) {
+         $output[] = [
+            'id' => $eap->getId(),
+            'name' => $eap->getName(),
+         ];
+      }
+
+      return response()->json($output);
+   }
+
 }

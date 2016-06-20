@@ -69,4 +69,20 @@ class CourseDaoEloquent implements CourseDao {
       return $courses_business;
    }
 
+   public function getByEapIdAndCiclo($eap_id, $ciclo)
+   {
+      $courses_model = CourseModel::whereHas('academic_plan', function($academic_plan) use ($eap_id) {
+         $academic_plan->where('school_id', '=', $eap_id);
+      })
+      ->where('ciclo', '=', $ciclo)
+      ->get();
+
+      $courses_business = [];
+
+      foreach ($courses_model as $course_model)
+         $courses_business[] = static::createBusinessClass($course_model);
+
+      return $courses_business;
+   }
+
 }
