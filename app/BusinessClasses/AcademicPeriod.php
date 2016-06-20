@@ -4,8 +4,10 @@ namespace Fisilog\BusinessClasses;
 use Illuminate\Contracts\Support\Arrayable;
 
 use Fisilog\BusinessClasses\Facultad;
+use DateTime;
 
 class AcademicPeriod implements Arrayable {
+
    protected $id;
 
    protected $name;
@@ -16,18 +18,24 @@ class AcademicPeriod implements Arrayable {
 
    protected $facultad;
 
-   public function __construct(Facultad $facultad, $id, $name, $start_date, $end_date)
+   public function __construct($facultad, $name, $start_date, $end_date)
    {
-      $this->id = $id;
+      $sdate = DateTime::createFromFormat('d/m/Y', $start_date);
+      $edate = DateTime::createFromFormat('d/m/Y', $end_date);
       $this->name = $name;
-      $this->start_date = $start_date;
-      $this->end_date = $end_date;
-      $this->facultad_id = $facultad->getId();
+      $this->start_date = $sdate->format('Y-m-d');
+      $this->end_date = $edate->format('Y-m-d');
+      $this->facultad = $facultad;
    }
 
    public function getId()
    {
       return $this->id;
+   }
+
+   public function setId($id)
+   {
+      return $this->id = $id;
    }
 
    public function getName()
@@ -45,14 +53,29 @@ class AcademicPeriod implements Arrayable {
       return $this->end_date;
    }
 
+   public function getFacultad()
+   {
+      return $this->facultad;
+   }
+
+   public function setFacultad(Facultad $facultad)
+   {
+      return $this->facultad = $facultad;
+   }
+
+   public function getFacultadId()
+   {
+      return $this->facultad->getId();
+   }
+
    public function toArray()
    {
       return [
-         'id' => $this->id,
          'name' => $this->name,
          'start_date' => $this->start_date,
          'end_date' => $this->end_date,
-         'facultad_id' => $this->facultad->getId(),
+         'facultad_id' => $this->getFacultadId(),
+         'facultad' => $this->facultad->toArray(),
       ];
    }
 }

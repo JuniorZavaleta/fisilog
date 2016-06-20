@@ -22,15 +22,15 @@
       <thead>
          <th>Nombre</th>
          <th>Fecha de Inicio</th>
-         <th>Fechad de Fin</th>
+         <th>Fecha de Fin</th>
          <th>Acciones</th>
       </thead>
       <tbody>
-         @foreach($academic_perios as $academic_period)
+         @foreach($academic_periods as $academic_period)
          <tr>
             <td>{{ $academic_period->getName() }}</td>
             <td>{{ $academic_period->getStartDate() }}</td>
-            <td>{{ $academic_period->getEndDate()</td>
+            <td>{{ $academic_period->getEndDate()}}</td>
             <td>
 
             </td>

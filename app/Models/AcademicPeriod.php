@@ -8,6 +8,7 @@ class AcademicPeriod extends Model
 {
    protected $table = 'academic_periods';
    protected $fillable = ['name', 'start_date', 'end_date', 'school_id'];
+   public $timestamps = false;
 
    public function facultad()
    {

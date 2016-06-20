@@ -4,7 +4,7 @@ namespace FisiLog\DAO\AcademicPeriod;
 use FisiLog\BusinessClasses\AcademicPeriod as AcademicPeriodBusiness;
 use FisiLog\Models\AcademicPeriod as AcademicPeriodModel;
 
-use FisiLog\DAO\FacultadDao\FacultadDaoEloquent as FacultadDao;
+use FisiLog\DAO\Facultad\FacultadDaoEloquent as FacultadModel;
 
 class AcademicPeriodDaoEloquent implements AcademicPeriodDao {
 
@@ -26,14 +26,29 @@ class AcademicPeriodDaoEloquent implements AcademicPeriodDao {
       return $academic_periods_business;
    }
 
-   public function save(AcademicPeriodBusiness $academic_periods_business)
+   public function save(AcademicPeriodBusiness &$academic_period_business)
    {
+      $today = date('Y-m-d');
+
+      $academic_period = AcademicPeriodModel::where('start_date', '<=', $today)
+      ->where('end_date', '>=', $today)
+      ->where('facultad_id', '=', 20)
+      ->first();
+
       $academic_period_model = AcademicPeriodModel::create($academic_period_business->toArray());
+      $academic_period_business->setId($academic_period_model->id);
+   }
+
+   public function update(AcademicPeriodBusiness $academic_period_business)
+   {
+      $academic_period_model = AcademicPeriodModel::find($academic_period_business->getId());
+      $academic_period_model->fill($academic_period_business->toArray());
+      $academic_period_model->save();
    }
 
    public function getByFacultyId($facultad_id)
    {
-      $academic_period_model = AcademicPeriodModel::where('facultad_id', '=', $facultad_id)->get();
+      $academic_periods_model = AcademicPeriodModel::where('facultad_id', '=', $facultad_id)->get();
       $academic_periods_business = [];
 
       foreach ($academic_periods_model as $academic_period_model)
@@ -48,7 +63,7 @@ class AcademicPeriodDaoEloquent implements AcademicPeriodDao {
          return null;
 
       $academic_period_business = new AcademicPeriodBusiness(
-         FacultadDao::createBusinessClass($academic_period_model->facultad)
+         FacultadModel::createBusinessClass($academic_period_model->facultad),
          $academic_period_model->id,
          $academic_period_model->name,
          $academic_period_model->start_date,
