@@ -4,7 +4,7 @@
 
 <div class="row">
    <div class="col-xs-12">
-      <h2>Registrar EAP</h2>
+      <h2>Buscar clase</h2>
    </div>
 </div>
 
@@ -61,7 +61,32 @@
          </div>
          <!-- End Curso -->
       </div>
+      <!-- End form container -->
    </div>
+</div>
+<div class="row">
+   <!-- Start col-md-9 col-lg-9 -->
+   <div class="hidden-xs ">
+      <table class="table table-hover" id="resultados">
+         <thead>
+            <th>Grupo</th>
+            <th>Docente</th>
+            <th>Dia</th>
+            <th>Horario</th>
+            <th>Tipo</th>
+            <th>Aula</th>
+            <th>Estado</th>
+            <th>Tiempo tolerancia</th>
+         </thead>
+         <tbody>
+
+         </tbody>
+      </table>
+   </div>
+   <div class="visible-xs" id="resultados-movil">
+
+   </div>
+   <!-- End col-sm-7 col-md-8 col-lg-9 -->
 </div>
 
 <script type="text/javascript">
@@ -70,14 +95,15 @@
       var eap_select = $('#eap');
       var ciclo = $('#ciclo');
       var curso_select = $('#curso');
+      var resultados = $('#resultados');
+      var last_row = $('#resultados > tbody:last-child');
+      var resultados_movil = $('#resultados-movil');
 
-      var btn_search = $('#search');
-
-      facultad.change(function(){
+      facultad.change(function() {
          var url = base_url + '/facultades/' + facultad.val() + '/eaps';
 
          $.get(url, {},
-            function(eaps){
+            function(eaps) {
                eap_select.html('<option value="">Seleccione una EAP</option>');
 
                $.each(eaps, function(index, eap) {
@@ -90,10 +116,11 @@
          );
       });
 
-      ciclo.change(function(){
+      ciclo.change(function() {
          var url = base_url + '/eaps/' + eap_select.val() + '/courses/' + ciclo.val();
+
          $.get(url, {},
-            function(courses){
+            function(courses) {
                curso_select.html('<option value="">Seleccione un Curso</option>');
 
                $.each(courses, function(index, course) {
@@ -106,8 +133,43 @@
          );
       });
 
-      btn_search.click(function(){
-         window.location.href = base_url + '/classes/search?eap=' + eap_select.val();
+      curso_select.change(function() {
+         var url = base_url + '/classes/getByCourse/' + curso_select.val();
+
+         $.get(url, {},
+            function(classes) {
+
+               if (window.innerWidth > 768) {
+                  $('#resultados > tbody').html('');
+
+                  $.each(classes, function(index, clase) {
+                     var row =   '<tr>'+
+                                    '<td>' + clase.group_number + '</td>'+
+                                    '<td>' + clase.professor_name + '</td>' +
+                                    '<td>' + clase.day_of_the_week + '</td>' +
+                                    '<td>' + clase.schedule + '</td>' +
+                                    '<td>' + clase.class_type + '</td>' +
+                                    '<td>' + clase.classroom + '</td>' +
+                                    '<td>' + clase.status + '</td>' +
+                                    '<td>' + clase.deadline + '</td>' +
+                                 '</tr>';
+
+                     last_row.append(row);
+                  });
+               } else {
+                  $.each(classes, function(index, clase) {
+                     var row =   '<div class="col-xs-12">' +
+                                    'Grupo: ' + clase.group_number + '<br>' +
+                                    'Profesor: ' + clase.professor_name + '<br>' +
+                                    '-- ' + clase.day_of_the_week + ' - ' + clase.schedule + '<br>' +
+                                    'Tipo: ' + clase.class_type + ' Salon: ' + clase.classroom + '<br>' +
+                                 '</div>';
+
+                     resultados_movil.append(row);
+                  });
+               }
+            }
+         );
       });
 
    });

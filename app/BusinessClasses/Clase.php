@@ -13,13 +13,25 @@ class Clase {
 
    private $group;
 
-   private $type;
+   private $class_type;
 
    private $start_hour;
 
    private $end_hour;
 
    private $day_of_the_week;
+
+   public function __construct($classroom, $professor, $group, $start_hour, $end_hour, $day_of_the_week, $class_type, $id = null)
+   {
+      $this->setClassRoom($classroom);
+      $this->setProfessor($professor);
+      $this->setGroup($group);
+      $this->start_hour = $start_hour;
+      $this->end_hour = $end_hour;
+      $this->day_of_the_week = $day_of_the_week;
+      $this->class_type = $class_type;
+      $this->id = $id;
+   }
 
    public function setId($id)
    {
@@ -51,7 +63,7 @@ class Clase {
       return $this->professor;
    }
 
-   public function setGroup($group)
+   public function setGroup(Group $group)
    {
       $this->group = $group;
    }
@@ -61,14 +73,14 @@ class Clase {
       return $this->group;
    }
 
-   public function setType($type)
+   public function setClassType($class_type)
    {
-      $this->type = $type;
+      $this->class_type = $class_type;
    }
 
-   public function getType()
+   public function getClassType()
    {
-      return $this->type;
+      return $this->class_type;
    }
 
    public function setStartHour($start_hour)
@@ -86,7 +98,7 @@ class Clase {
       $this->end_hour = $end_hour;
    }
 
-   public function setEndHour()
+   public function getEndHour()
    {
       return $this->end_hour;
    }
@@ -99,6 +111,21 @@ class Clase {
    public function getDayOfTheWeek()
    {
       return $this->day_of_the_week;
+   }
+
+   public function getClassRoomName()
+   {
+      return $this->classroom->getName();
+   }
+
+   public function getGroupNumber()
+   {
+      return $this->group->getNumberOfGroup();
+   }
+
+   public function getSchedule()
+   {
+      return date('H:i', strtotime($this->start_hour)). ' - ' . date('H:i', strtotime($this->end_hour));
    }
 
    /**

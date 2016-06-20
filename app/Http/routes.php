@@ -69,7 +69,8 @@ Route::group(['middleware' => ['web', 'auth'], 'namespace' => 'Backend'], functi
    });
 
    Route::group(['prefix' => 'classes', 'as' => 'classes.'], function() {
-      Route::get('/search', ['as' => 'index', 'uses' => 'ClassController@search']);
+      Route::get('/search', ['as' => 'index', 'uses' => 'ClassController@index']);
+      Route::get('/getByCourse/{course}', ['as' => 'index', 'uses' => 'ClassController@search']);
    });
 
 

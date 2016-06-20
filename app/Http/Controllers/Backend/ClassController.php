@@ -19,42 +19,48 @@ class ClassController extends Controller
    {
       $this->school_persistence = $dao->getSchoolDAO();
       $this->facultad_persistence = $dao->getFacultadDAO();
+      $this->class_persistence = $dao->getClaseDAO();
    }
 
-   public function search(Request $request)
+   public function index()
    {
-      extract($request->all());
-
       $facultades = $this->facultad_persistence->getAll();
-
-      if ($course) {
-
-         $today = date('Y-m-d');
-         $academic_cycle = AcademicCycle::where('start_date', '<=', $today)
-         ->where('end_date', '>=', $today)
-         ->where('facultad_id', '=', 20)
-         ->first();
-         $academic_cycle_id = $academic_cycle->id;
-
-         $clases = Clase::whereHas('group', function($group) use($course, $academic_cycle_id)
-         {
-            $group->whereHas('courseOpened', function($course_opened) use($course, $academic_cycle_id)
-            {
-               $course_opened->where('course_id', '=', $course)
-               ->where('academic_cycle_id', '=', $academic_cycle_id);
-            });
-         })
-         ->get()->toArray();
-
-         //dd($clases);
-      }
 
       $data = [
          'facultades' => $facultades,
-         //'clases' => $clases,
       ];
 
       return view('backend.classes.search', $data);
+   }
+
+   public function search($course)
+   {
+      $today = date('Y-m-d');
+      $academic_cycle = AcademicCycle::where('start_date', '<=', $today)
+      ->where('end_date', '>=', $today)
+      ->where('facultad_id', '=', 20)
+      ->first();
+
+      $academic_cycle_id = $academic_cycle->id;
+
+      $classes = $this->class_persistence->getByCourseId($course, $academic_cycle_id);
+
+      $rows = [];
+
+      foreach ($classes as $class)
+         $rows[] = [
+            'id' => $class->getId(),
+            'group_number' => $class->getGroupNumber(),
+            'professor_name' => '',
+            'day_of_the_week' => $class->getDayOfTheWeek(),
+            'schedule' => $class->getSchedule(),
+            'class_type' => $class->getClassType(),
+            'classroom' => $class->getClassRoomName(),
+            'status' => '',
+            'deadline' => '',
+         ];
+
+      return response()->json($rows);
    }
 
 }
