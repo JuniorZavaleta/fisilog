@@ -1,87 +1,75 @@
 <?php
 namespace FisiLog\DAO\Attendance;
+
 use FisiLog\BusinessClasses\Attendance as AttendanceBusiness;
-use FisiLog\BusinessClasses\User as UserBusiness;
-use FisiLog\BusinessClasses\Clase as ClaseBusiness;
+
 use FisiLog\Models\Attendance as AttendanceModel;
-use FisiLog\Models\User as UserModel;
-use FisiLog\Models\Clase as ClaseModel;
 
 class AttendanceDaoEloquent implements AttendanceDao {
-    public function getAttendancesByUserAndClaseAndDate(
-        UserBusiness $userBusiness, 
-        ClaseBusiness $claseBusiness,
-        $date) {
-        $attendanceModel = AttendanceModel::where('user_id','=',$userBusiness->getId())
-                                          ->where('class_id','=',$claseBusiness->getId())
-                                          ->where('date','=',$date)
-                                          ->first();
 
-        if ($attendanceModel == null)
-            return null;
-        $attendanceBusiness = new AttendanceBusiness;
-        $attendanceBusiness->setId($attendanceModel->id);
-        $attendanceBusiness->setUser($userBusiness);
-        $attendanceBusiness->setClase($claseBusiness);
-        $attendanceBusiness->setDate($attendanceModel->date);
-        $attendanceBusiness->setVerified($attendanceModel->verified);
+   public function verifyAttendance($user_id, $clase_id, $date)
+   {
+      $attendance_model = AttendanceModel::where('user_id','=',$user_id)
+                                         ->where('class_id','=',$clase_id)
+                                         ->where('date','=',$date)
+                                         ->first();
 
-        return $attendanceBusiness;
-    }
-    public function save(AttendanceBusiness $attendanceBusiness) {
-        $attendanceModel = new AttendanceModel;
-        $attendanceModel->user_id = $attendanceBusiness->getUser()->getId();
-        $attendanceModel->class_id = $attendanceBusiness->getClase()->getId();
-        $attendanceModel->date = date('Y-m-d H:i:s');
-        $attendanceModel->verified = $attendanceBusiness->getVerified();
-        $attendanceModel->save();
-        $attendanceBusiness->setId($attendanceModel->id);
+      if ($attendance_model == null)
+         return false;
 
-        return $attendanceBusiness;
-    }
-    public function checkAttendance(AttendanceBusiness $attendanceBusiness, $check) {
-        $attendanceModel = AttendanceModel::find($attendanceBusiness->getId());
-        $attendanceModel->verified = $check;
-        $attendanceModel->save();
-    }
-    public function getById($id) {
-        $attendanceModel    = AttendanceModel::find($id);
-        if ($attendanceModel == null)
-            return null;
-        $attendanceBusiness = new attendanceBusiness;
-        $attendanceBusiness->setId($id);
-        $attendanceBusiness->setUser($attendanceModel->user);
-        $attendanceBusiness->setClase($attendanceModel->claser);
-        $attendanceBusiness->setDate($attendanceModel->date);
-        $attendanceBusiness->setVerified($attendanceModel->verified);
-        return $attendanceBusiness;
-    }
-    public function all() {
-        $attendanceModels = AttendanceModel::all();
-        $attendances      = [];
-        foreach ($attendanceModels as $model) {
-            $attendanceBusiness = new attendanceBusiness;
-            $attendanceBusiness->setId($id);
-            $attendanceBusiness->setUser($model->user);
-            $attendanceBusiness->setClase($model->claser);
-            $attendanceBusiness->setDate($model->date);
-            $attendanceBusiness->setVerified($model->verified);
-            $attendances[] = $attendanceBusiness;
-        }
-        return $attendances;
-    }
-    public function getByClase(ClaseBusiness $claseBusiness) {
-        $attendanceModels = AttendanceModel::where('class_id', $claseBusiness->getId())->get();
-        $attendances      = [];
-        foreach ($attendanceModels as $model) {
-            $attendanceBusiness = new attendanceBusiness;
-            $attendanceBusiness->setId($id);
-            $attendanceBusiness->setUser($model->user);
-            $attendanceBusiness->setClase($model->claser);
-            $attendanceBusiness->setDate($model->date);
-            $attendanceBusiness->setVerified($model->verified);
-            $attendances[] = $attendanceBusiness;
-        }
-        return $attendances;
-    }
+      return (boolean)$attendance_model->verified;
+   }
+
+   public function save(AttendanceBusiness &$attendanceBusiness)
+   {
+      $attendance_model = new AttendanceModel;
+      $attendance_model->user_id = $attendanceBusiness->getUser()->getId();
+      $attendance_model->class_id = $attendanceBusiness->getClase()->getId();
+      $attendance_model->date = date('Y-m-d H:i:s');
+      $attendance_model->verified = $attendanceBusiness->getVerified();
+      $attendance_model->save();
+      $attendanceBusiness->setId($attendance_model->id);
+
+      return $attendanceBusiness;
+   }
+
+   public function checkAttendance(AttendanceBusiness $attendanceBusiness, $check)
+   {
+      $attendance_model = AttendanceModel::find($attendanceBusiness->getId());
+      $attendance_model->verified = $check;
+      $attendance_model->save();
+   }
+
+   public function getById($id)
+   {
+      $attendance_model = AttendanceModel::find($id);
+
+      return static::createBusinessClass($attendance_model);
+   }
+
+   public function getByClaseId($clase_id)
+   {
+      $attendance_models = AttendanceModel::where('class_id', '=', $clase_id)->get();
+      $attendances      = [];
+
+      foreach ($attendance_models as $model)
+         $attendances[] = static::createBusinessClass($model);
+
+      return $attendances;
+   }
+
+   public static function createBusinessClass(AttendanceModel $attendance_model)
+   {
+      if ($attendance_model == null)
+         return null;
+
+      $attendance_business = new AttendanceBusiness;
+      $attendance_business->setId($attendance_model->id);
+      $attendance_business->setUser($attendance_model->user);
+      $attendance_business->setClase($attendance_model->claser);
+      $attendance_business->setDate($attendance_model->date);
+      $attendance_business->setVerified($attendance_model->verified);
+
+      return $attendance_business;
+   }
 }
