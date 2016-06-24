@@ -128,6 +128,11 @@ class Clase {
       return date('H:i', strtotime($this->start_hour)). ' - ' . date('H:i', strtotime($this->end_hour));
    }
 
+   public function getProfessorFullName()
+   {
+      return $this->professor->getFullName();
+   }
+
    /**
      * Get the instance as an array.
      *

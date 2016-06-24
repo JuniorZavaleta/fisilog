@@ -51,7 +51,7 @@ class ClassController extends Controller
          $rows[] = [
             'id' => $class->getId(),
             'group_number' => $class->getGroupNumber(),
-            'professor_name' => '',
+            'professor_name' => $class->getProfessorFullName(),
             'day_of_the_week' => $class->getDayOfTheWeek(),
             'schedule' => $class->getSchedule(),
             'class_type' => $class->getClassType(),
