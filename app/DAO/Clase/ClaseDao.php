@@ -2,5 +2,7 @@
 namespace FisiLog\DAO\Clase;
 
 interface ClaseDao {
-   public function getByProfessor($professor_id);
+   public function getByProfessorId($professor_id);
+   public function getByCourseId($course_id, $academic_cycle_id);
+   public function findById($id);
 }

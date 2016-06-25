@@ -8,4 +8,5 @@ interface SchoolDao {
    public function getAll();
    public function save(School &$school);
    public function update(School $school);
+   public function getByFacultadId($facultad_id);
 }

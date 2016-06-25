@@ -107,6 +107,11 @@ class Course implements Arrayable {
       return $this->academic_plan->getId();
    }
 
+   public function getAcademicPlanName()
+   {
+      return $this->academic_plan->getName();
+   }
+
    public function getCourseTypeId()
    {
       return $this->course_type->getId();

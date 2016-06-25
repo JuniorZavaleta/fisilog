@@ -69,4 +69,16 @@ class SchoolDaoEloquent implements SchoolDao {
       $school_model->save();
    }
 
+   public function getByFacultadId($facultad_id)
+   {
+      $schools_model = SchoolModel::where('facultad_id', $facultad_id)->get();
+
+      $schools_business = [];
+
+      foreach ($schools_model as $school_model)
+         $schools_business[] = static::createBusinessClass($school_model);
+
+      return $schools_business;
+   }
+
 }

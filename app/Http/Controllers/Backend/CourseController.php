@@ -36,4 +36,22 @@ class CourseController extends Controller
       return view('backend.eaps.academic_plans.courses.index', $data);
    }
 
+   public function getByEap($eap, $ciclo)
+   {
+      $eap = $this->eap_persistence->createBusinessClass($eap);
+      $courses = $this->course_persistence->getByEapIdAndCiclo($eap->getId(), $ciclo);
+
+      $output = [];
+
+      foreach ($courses as $course) {
+         $output[] = [
+            'id' => $course->getId(),
+            'name' => $course->getName(),
+            'academic_plan' => $course->getAcademicPlanName(),
+         ];
+      }
+
+      return response()->json($output);
+   }
+
 }

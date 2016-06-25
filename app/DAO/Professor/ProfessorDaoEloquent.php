@@ -4,6 +4,9 @@ namespace FisiLog\DAO\Professor;
 use FisiLog\BusinessClasses\Professor as ProfessorBusiness;
 use FisiLog\Models\Professor as ProfessorModel;
 
+use FisiLog\DAO\User\UserDaoEloquent as UserModel;
+use FisiLog\DAO\AcademicDepartment\AcademicDepartmentDaoEloquent as AcademicDepartmentModel;
+
 class ProfessorDaoEloquent implements ProfessorDao {
 
    public function save(ProfessorBusiness $professor_business)
@@ -26,7 +29,8 @@ class ProfessorDaoEloquent implements ProfessorDao {
          return null;
 
       $professor = new ProfessorBusiness(
-         $professor_model->academic_department_id,
+         UserModel::createBusinessClass($professor_model->user),
+         AcademicDepartmentModel::createBusinessClass($professor_model->academic_department),
          $professor_model->type,
          $professor_model->id
       );
