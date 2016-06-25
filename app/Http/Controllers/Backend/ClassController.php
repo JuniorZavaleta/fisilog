@@ -9,7 +9,6 @@ use FisiLog\Http\Controllers\Controller;
 
 use FisiLog\Dao\DaoEloquentFactory;
 
-use FisiLog\Models\Clase;
 use FisiLog\Models\AcademicCycle;
 
 class ClassController extends Controller
@@ -20,6 +19,7 @@ class ClassController extends Controller
       $this->school_persistence = $dao->getSchoolDAO();
       $this->facultad_persistence = $dao->getFacultadDAO();
       $this->class_persistence = $dao->getClaseDAO();
+      $this->session_class_persistence = $dao->getSessionClassDAO();
    }
 
    public function index()
@@ -47,18 +47,22 @@ class ClassController extends Controller
 
       $rows = [];
 
-      foreach ($classes as $class)
+      foreach ($classes as $class) {
+         $clase_id = $class->getId();
+         $session_class = $this->session_class_persistence->findSessionClassToNextWeek($clase_id);
+
          $rows[] = [
-            'id' => $class->getId(),
+            'id' => $clase_id,
             'group_number' => $class->getGroupNumber(),
             'professor_name' => $class->getProfessorFullName(),
             'day_of_the_week' => $class->getDayOfTheWeek(),
             'schedule' => $class->getSchedule(),
             'class_type' => $class->getClassType(),
             'classroom' => $class->getClassRoomName(),
-            'status' => '',
-            'deadline' => '',
+            'status' => $session_class->getStatus(),
+            'deadline' => $session_class->getDeadlineMessage(),
          ];
+      }
 
       return response()->json($rows);
    }

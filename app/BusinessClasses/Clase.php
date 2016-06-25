@@ -3,6 +3,8 @@ namespace FisiLog\BusinessClasses;
 
 use Illuminate\Contracts\Support\Arrayable;
 
+use FisiLog\Helpers\TimeHelper;
+
 class Clase {
 
    private $id;
@@ -131,6 +133,11 @@ class Clase {
    public function getProfessorFullName()
    {
       return $this->professor->getFullName();
+   }
+
+   public function getQuantityOfMinutes()
+   {
+      return TimeHelper::getMinutesBetween($this->start_hour, $this->end_hour);
    }
 
    /**

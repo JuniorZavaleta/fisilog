@@ -3,6 +3,8 @@ namespace FisiLog\BusinessClasses;
 
 use Illuminate\Contracts\Support\Arrayable;
 
+use FisiLog\Helpers\TimeHelper;
+
 class SessionClass {
 
    private $id;
@@ -66,6 +68,59 @@ class SessionClass {
       return $this->clase->getId();
    }
 
+   public function getStartHour()
+   {
+      return $this->clase->getStartHour();
+   }
+
+   public function getQuantityOfMinutes()
+   {
+      return $this->clase->getQuantityOfMinutes();
+   }
+
+   public function getDeadlineMessage()
+   {
+      if ($this->status == 'S') //Sin iniciar
+      {
+         $today = date('Y-m-d');
+         if ($today == $this->session_date)
+         {
+            $start_hour = $this->getStartHour();
+            $actual_hour = date('H:i:s');
+
+            if ($start_hour > $actual_hour)
+            {
+               $diff_minutes = TimeHelper::getMinutesBetween($actual_hour, $start_hour);
+
+               if ($diff_minutes <= 120)
+                  return 'Faltan '. $diff_minutes . ' minutos para que empiece la clase';
+               else
+                  return 'Faltan más de 2 horas para que empiece la clase';
+            }
+
+            $diff_minutes = TimeHelper::getMinutesBetween($start_hour, $actual_hour);
+
+            $minutes_tolerance = $this->getQuantityOfMinutes();
+
+            if ($diff_minutes > $minutes_tolerance)
+               return 'Pide lista papu';
+            else
+               return 'Quedan ' . ($minutes_tolerance - $diff_minutes) . ' minutos de tolerancia';
+         }
+
+         return 'La clase no esta programada para hoy';
+      }
+      elseif ($this->status == 'C') // Cancelada
+      {
+         return 'Que esperas, si la clase fue cancelada';
+      }
+      elseif ($this->status == 'I') // Iniciada
+      {
+         return 'Apresurate!, Clase en curso';
+      }
+
+   }
+
    /**
      * Get the instance as an array.
      *
@@ -75,7 +130,7 @@ class SessionClass {
       return [
          'id' => $this->id,
          'clase' => $this->getClase()->toArray(),
-         'clase_id' => $this->getClaseId();
+         'clase_id' => $this->getClaseId(),
          'session_date' => $this->session_date,
          'status' => $this->status,
       ];

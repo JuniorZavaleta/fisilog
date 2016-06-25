@@ -27,4 +27,9 @@ class Clase extends Model
       return $this->belongsTo(Professor::class);
    }
 
+   public function sessions()
+   {
+      return $this->hasMany(SessionClass::class);
+   }
+
 }
