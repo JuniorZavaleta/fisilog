@@ -6,26 +6,16 @@ use FisiLog\BusinessClasses\Clase as ClaseBusiness;
 use FisiLog\Models\Group as GroupModel;
 
 class GroupDaoEloquent implements GroupDao {
-  public function findByStudent(StudentBusiness $studentBusiness) {
-    $groups = GroupModel::whereHas('students', function($query) use($studentBusiness) {
-      $query->where('student_id', '=', $studentBusiness->getId());
-    })->get();
 
-    $groupBusiness = [];
-    foreach ($groups as $group) {
-      $newGroup = new GroupBusiness;
-      $newGroup->setId( $group->id );
-      $newGroup->setNumberOfGroup( $group->number_of_group );
+   public static function createBusinessClass(GroupModel $group_model)
+   {
+      if ($group_model == null)
+         return null;
 
-      foreach ($group->clases as $clase) {
-        $newClase = new ClaseBusiness;
-        $newClase->setId( $clase->id );
-        $newClase->setType( $clase->type );
-        $newGroup->addClase( $newClase );
-      }
-      $groupBusiness[] = $newGroup;
-    }
+      $group_business = new GroupBusiness(
+         $group_model->number_of_group
+      );
 
-    return $groupBusiness;
-  }
+      return $group_business;
+   }
 }

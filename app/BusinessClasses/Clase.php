@@ -1,11 +1,13 @@
 <?php
 namespace FisiLog\BusinessClasses;
 
+use Illuminate\Contracts\Support\Arrayable;
+
+use FisiLog\Helpers\TimeHelper;
+
 class Clase {
 
    private $id;
-
-   private $schedule;
 
    private $classroom;
 
@@ -13,9 +15,25 @@ class Clase {
 
    private $group;
 
-   private $type;
+   private $class_type;
 
-   private $status;
+   private $start_hour;
+
+   private $end_hour;
+
+   private $day_of_the_week;
+
+   public function __construct($classroom, $professor, $group, $start_hour, $end_hour, $day_of_the_week, $class_type, $id = null)
+   {
+      $this->setClassRoom($classroom);
+      $this->setProfessor($professor);
+      $this->setGroup($group);
+      $this->start_hour = $start_hour;
+      $this->end_hour = $end_hour;
+      $this->day_of_the_week = $day_of_the_week;
+      $this->class_type = $class_type;
+      $this->id = $id;
+   }
 
    public function setId($id)
    {
@@ -25,16 +43,6 @@ class Clase {
    public function getId()
    {
       return $this->id;
-   }
-
-   public function setSchedule(Schedule $schedule)
-   {
-      $this->schedule = $schedule;
-   }
-
-   public function getSchedule()
-   {
-      return $this->schedule;
    }
 
    public function setClassRoom(ClassRoom $classroom)
@@ -67,24 +75,80 @@ class Clase {
       return $this->group;
    }
 
-   public function setType($type)
+   public function setClassType($class_type)
    {
-      $this->type = $type;
+      $this->class_type = $class_type;
    }
 
-   public function getType()
+   public function getClassType()
    {
-      return $this->type;
+      return $this->class_type;
    }
 
-   public function setStatus($status)
+   public function setStartHour($start_hour)
    {
-      $this->status = $status;
+      $this->start_hour = $start_hour;
    }
 
-   public function getStatus()
+   public function getStartHour()
    {
-      return $this->status;
+      return $this->start_hour;
+   }
+
+   public function setEndHour($end_hour)
+   {
+      $this->end_hour = $end_hour;
+   }
+
+   public function getEndHour()
+   {
+      return $this->end_hour;
+   }
+
+   public function setDayOfTheWeek($day_of_the_week)
+   {
+      $this->day_of_the_week = $day_of_the_week;
+   }
+
+   public function getDayOfTheWeek()
+   {
+      return $this->day_of_the_week;
+   }
+
+   public function getClassRoomName()
+   {
+      return $this->classroom->getName();
+   }
+
+   public function getGroupNumber()
+   {
+      return $this->group->getNumberOfGroup();
+   }
+
+   public function getSchedule()
+   {
+      return date('H:i', strtotime($this->start_hour)). ' - ' . date('H:i', strtotime($this->end_hour));
+   }
+
+   public function getProfessorFullName()
+   {
+      return $this->professor->getFullName();
+   }
+
+   public function getQuantityOfMinutes()
+   {
+      return TimeHelper::getMinutesBetween($this->start_hour, $this->end_hour);
+   }
+
+   /**
+     * Get the instance as an array.
+     *
+     * @return array
+     */
+   public function toArray() {
+      return [
+         'id' => $this->id,
+      ];
    }
 
 }

@@ -1,34 +1,35 @@
 <?php
-
 namespace FisiLog\Models;
-use FisiLog\Models\Group;
-use FisiLog\Models\Professor;
-use FisiLog\Models\ClassRoom;
-use FisiLog\Models\Schedule;
-use FisiLog\Models\Attendance;
+
 use Illuminate\Database\Eloquent\Model;
 
 class Clase extends Model
 {
-    protected $table = 'classes';
 
-    public function group(){
-        return $this->belongsTo(Group::class);
-    } 
+   protected $table = 'classes';
 
-    public function classroom(){
-        return $this->belongsTo(ClassRoom::class);
-    } 
+   protected $fillable = ['classroom_id', 'group_id', 'professor_id', 'start_hour', 'end_hour', 'day', 'type'];
 
-    public function schedule(){
-        return $this->belongsTo(Schedule::class);
-    } 
+   public $timestamps = false;
 
-    public function professor(){
-        return $this->belongsTo(Professor::class);
-    } 
+   public function group()
+   {
+      return $this->belongsTo(Group::class);
+   }
 
-    public function attendance(){
-        return $this->hasMany(Attendance::class, 'id');
-    }
+   public function classroom()
+   {
+      return $this->belongsTo(ClassRoom::class);
+   }
+
+   public function professor()
+   {
+      return $this->belongsTo(Professor::class);
+   }
+
+   public function sessions()
+   {
+      return $this->hasMany(SessionClass::class);
+   }
+
 }

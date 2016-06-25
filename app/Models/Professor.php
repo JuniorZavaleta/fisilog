@@ -14,14 +14,14 @@ class Professor extends Model
 
    public $timestamps = false;
 
-   public function academicDepartment()
+   public function academic_department()
    {
       return $this->belongsTo(AcademicDepartment::class);
    }
 
    public function user()
    {
-      return $this->belongsTo(User::class);
+      return $this->belongsTo(User::class, 'id');
    }
 
    public function classes()

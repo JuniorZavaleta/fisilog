@@ -80,6 +80,9 @@
 
     </div>
     <!-- /#wrapper -->
+    <script type="text/javascript">
+       var base_url = '{{ url("/")}}';
+    </script>
 </body>
 
 </html>
