@@ -73,6 +73,9 @@ Route::group(['middleware' => ['web', 'auth'], 'namespace' => 'Backend'], functi
       Route::get('/getByCourse/{course}', ['as' => 'index', 'uses' => 'ClassController@search']);
    });
 
+   Route::group(['prefix' => 'sessions_class', 'as' => 'sessions_class.'], function() {
+      Route::get('/{id}', ['as' => 'index', 'uses' => 'SessionClassController@show']);
+   });
 
 });
 

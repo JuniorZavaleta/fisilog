@@ -49,6 +49,24 @@ class ClaseDaoEloquent implements ClaseDao {
       return $clases_business;
    }
 
+   public function getByStudentId($student_id)
+   {
+      $groups_id = \FisiLog\Models\Group::whereHas('students', function($students) use($student_id) {
+         $students->where('student_id', '=', $student_id);
+      })->get()->pluck('id')->toArray();
+
+      $clases_business = [];
+
+      $clases_model = ClaseModel::whereHas('group', function($groups) use ($groups_id) {
+         $groups->whereIn('id', $groups_id);
+      })->get();
+
+      foreach ($clases_model as $clase_model)
+         $clases_business[] = static::createBusinessClass($clase_model);
+
+      return $clases_business;
+   }
+
    public static function createBusinessClass(ClaseModel $clase_model)
    {
       if ($clase_model == null)
