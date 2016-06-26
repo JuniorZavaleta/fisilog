@@ -35,7 +35,8 @@ class AcademicPlanDaoEloquent implements AcademicPlanDao {
          $academic_plan_model->name,
          SchoolModel::createBusinessClass($academic_plan_model->school),
          $academic_plan_model->year_of_publication,
-         $academic_plan_model->is_active
+         $academic_plan_model->is_active,
+         $academic_plan_model->id
       );
 
       return $academic_plan_business;

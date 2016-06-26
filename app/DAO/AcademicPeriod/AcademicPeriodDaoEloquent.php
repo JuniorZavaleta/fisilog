@@ -57,6 +57,17 @@ class AcademicPeriodDaoEloquent implements AcademicPeriodDao {
       return $academic_periods_business;
    }
 
+   public function getPresentPeriodByFacultyId($facultad_id)
+   {
+      $today = date('Y-m-d');
+      $present_academic_period = AcademicPeriodModel::where('faculty_id', '=', $faculty_id)
+      ->where('start_date', '<=', $today)
+      ->where('end_date', '>=', $today)
+      ->first();
+
+      return $present_academic_period;
+   }
+
    public static function createBusinessClass(AcademicPeriodModel $academic_period_model)
    {
       if ($academic_period_model == null)

@@ -1,6 +1,8 @@
 <?php
 namespace FisiLog\DAO\Clase;
-use FisiLog\BusinessClasses\Professor as ProfessorBusiness;
+
 interface ClaseDao {
-	public function getByProfessor(ProfessorBusiness $professor, $relations = null);
+   public function getByProfessorId($professor_id);
+   public function getByCourseId($course_id, $academic_cycle_id);
+   public function findById($id);
 }

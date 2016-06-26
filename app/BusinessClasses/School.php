@@ -101,6 +101,7 @@ class School implements Arrayable {
    public function toArray()
    {
       return [
+         'id' => $this->id,
          'name' => $this->name,
          'code' => $this->code,
          'facultad_id' => $this->getFacultadId(),
