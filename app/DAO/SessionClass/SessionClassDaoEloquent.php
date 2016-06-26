@@ -15,14 +15,15 @@ class SessionClassDaoEloquent implements SessionClassDao {
 
       $session_class_model = SessionClassModel::where('session_date', '>=', $start_date)
       ->where('session_date', '<=', $end_date)
+      ->where('class_id', '=', $clase_id)
       ->first();
 
       return static::createBusinessClass($session_class_model);
    }
 
-   public static function createBusinessClass(SessionClassModel $session_class_model)
+   public static function createBusinessClass($session_class_model)
    {
-      if ($session_class_model == null)
+      if (is_null($session_class_model))
          return null;
 
       $session_class_business = new SessionClassBusiness(

@@ -59,8 +59,8 @@ class ClassController extends Controller
             'schedule' => $class->getSchedule(),
             'class_type' => $class->getClassType(),
             'classroom' => $class->getClassRoomName(),
-            'status' => $session_class->getStatus(),
-            'deadline' => $session_class->getDeadlineMessage(),
+            'status' => ($session_class != null) ? $session_class->getStatus() : 'No hay sesion de clase',
+            'deadline' => ($session_class != null) ? $session_class->getDeadlineMessage() : 'No hay sesion de clase',
          ];
       }
 
