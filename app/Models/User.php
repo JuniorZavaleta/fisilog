@@ -1,6 +1,13 @@
 <?php
 namespace FisiLog\Models;
 
+use FisiLog\Models\Document;
+use FisiLog\Models\Student;
+use FisiLog\Models\Professor;
+use FisiLog\Models\Attendance;
+use FisiLog\Models\UserType;
+use FisiLog\Models\NotificationChannel;
+
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;

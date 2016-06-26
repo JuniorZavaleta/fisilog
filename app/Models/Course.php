@@ -1,6 +1,8 @@
 <?php
 namespace FisiLog\Models;
-
+use FisiLog\Models\AcademicPlan;
+use FisiLog\Models\CourseOpened;
+use FisiLog\Models\CourseType;
 use Illuminate\Database\Eloquent\Model;
 
 class Course extends Model

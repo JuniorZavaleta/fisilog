@@ -2,6 +2,7 @@
 
 namespace FisiLog\Models;
 use FisiLog\Models\Facultad;
+use FisiLog\Models\CourseOpened;
 use Illuminate\Database\Eloquent\Model;
 
 class AcademicPeriod extends Model
@@ -12,6 +13,10 @@ class AcademicPeriod extends Model
 
    public function facultad()
    {
-      return $this->belongsTo(Facultad::class, 'id');
+      return $this->belongsTo(Facultad::class, 'school_id');
+   }
+
+   public function courseOpened(){
+        return $this->hasMany(CourseOpened::class,'id');
    }
 }

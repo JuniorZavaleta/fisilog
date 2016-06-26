@@ -1,5 +1,7 @@
 <?php
 namespace FisiLog\Models;
+use FisiLog\Models\Clase;
+use FisiLog\Models\Facultad;
 
 use Illuminate\Database\Eloquent\Model;
 

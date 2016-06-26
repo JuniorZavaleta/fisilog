@@ -1,6 +1,7 @@
 <?php
 namespace FisiLog\Models;
-
+use FisiLog\Models\Clase;
+use FisiLog\Models\Attendance;
 use Illuminate\Database\Eloquent\Model;
 
 class SessionClass extends Model
@@ -15,6 +16,11 @@ class SessionClass extends Model
    public function clase()
    {
       return $this->belongsTo(Clase::class, 'class_id');
+   }
+
+   public function attendances()
+   {
+      return $this->hasMay(Attendance::class);
    }
 
 }

@@ -1,6 +1,8 @@
 <?php
-namespace FisiLog\Models;
 
+namespace FisiLog\Models;
+use FisiLog\Models\SessionClass;
+use FisiLog\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Attendance extends Model
@@ -8,13 +10,11 @@ class Attendance extends Model
 
    protected $table = 'attendances';
 
-   protected $fillable = ['user_id', 'class_id', 'verified', 'date'];
+   protected $fillable = ['user_id', 'verified', 'session_class_id'];
 
-   protected $dates = ['date'];
-
-   public function clase()
+   public function session()
    {
-      return $this->belongsTo(Clase::class);
+      return $this->belongsTo(SessionClass::class, 'session_class_id');
    }
 
    public function user()
