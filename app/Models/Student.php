@@ -1,9 +1,6 @@
 <?php
-
 namespace FisiLog\Models;
-use FisiLog\Models\User;
-use FisiLog\Models\School;
-use FisiLog\Models\Group;
+
 use Illuminate\Database\Eloquent\Model;
 
 class Student extends Model
@@ -27,5 +24,10 @@ class Student extends Model
    public function school()
    {
       return $this->belongsTo(School::class);
+   }
+
+   public function classes()
+   {
+      return $this->hasManyThrough(Clase::class, Group::class);
    }
 }

@@ -74,9 +74,20 @@ Route::group(['middleware' => ['web', 'auth'], 'namespace' => 'Backend'], functi
 
    Route::group(['prefix' => 'classes', 'as' => 'classes.'], function() {
       Route::get('/search', ['as' => 'index', 'uses' => 'ClassController@index']);
-      Route::get('/getByCourse/{course}', ['as' => 'index', 'uses' => 'ClassController@search']);
+      Route::get('/getByCourse/{course}', ['as' => 'getByCourse', 'uses' => 'ClassController@search']);
+      Route::get('/show/{clase}', ['as' => 'show', 'uses' => 'ClassController@show']);
+
+      Route::group(['prefix' => '{clase}'], function(){
+         Route::group(['prefix' => 'attendances', 'as' => 'attendances.'], function(){
+            Route::get('/', ['as' => 'index', 'uses' => 'AttendanceController@index']);
+         });
+      });
+
    });
 
+   Route::group(['prefix' => 'sessions_class', 'as' => 'sessions_class.'], function() {
+      Route::get('/{id}', ['as' => 'index', 'uses' => 'SessionClassController@show']);
+   });
 
 });
 

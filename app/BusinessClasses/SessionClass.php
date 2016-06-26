@@ -33,14 +33,14 @@ class SessionClass {
       return $this->clase;
    }
 
-   public function setSessionDate($date)
+   public function setSessionDate($session_date)
    {
-      $this->date = $date;
+      $this->session_date = $session_date;
    }
 
    public function getSessionDate()
    {
-      return $this->date;
+      return $this->session_date;
    }
 
    public function setStatus($status)

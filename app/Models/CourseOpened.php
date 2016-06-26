@@ -1,25 +1,33 @@
 <?php
-
 namespace FisiLog\Models;
-use FisiLog\Models\AcademicCycle;
-use FisiLog\Models\Course;
-use FisiLog\Models\Group;
+
 use Illuminate\Database\Eloquent\Model;
 
 class CourseOpened extends Model
 {
-    protected $table = 'courses_opened';
 
-	public function academicCycle(){
-        return $this->belongsTo(AcademicCycle::class);
-  	}
+   protected $table = 'courses_opened';
 
-    public function course(){
-        return $this->belongsTo(Course::class);
-    } 
+   public $timestamps = false;
 
-  	public function group(){
-        return $this->hasMany(Group::class,'id');
-  	}
+   public function academic_cycle()
+   {
+      return $this->belongsTo(AcademicCycle::class);
+   }
+
+   public function course()
+   {
+      return $this->belongsTo(Course::class);
+   }
+
+   public function group()
+   {
+      return $this->hasMany(Group::class,'id');
+   }
+
+   public function classes()
+   {
+      return $this->hasManyThrough(Clase::class, Group::class);
+   }
 
 }
