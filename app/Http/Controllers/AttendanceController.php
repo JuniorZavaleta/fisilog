@@ -33,7 +33,7 @@ class AttendanceController extends Controller
         if ($this->user)
             $classes = $this->clase_persistence_service->getByProfessor($this->user->id);
         else
-            $classes = null;
+            $classes = [];
 
         $data = [
             'classes' => $classes,
@@ -42,7 +42,7 @@ class AttendanceController extends Controller
         return view('attendance.index', $data);
     }
 
-    public function getStudent($clase_id) 
+    public function getStudent($clase_id)
     {
         $clase = $this->clase_persistence_service->findById($clase_id);
         $document_types = $this->document_type_persistence_service->all();

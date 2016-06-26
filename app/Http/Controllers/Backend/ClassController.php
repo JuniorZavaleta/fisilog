@@ -11,6 +11,10 @@ use FisiLog\Dao\DaoEloquentFactory;
 
 use FisiLog\Models\AcademicCycle;
 
+use FisiLog\Models\Attendance;
+
+use Auth;
+
 class ClassController extends Controller
 {
 
@@ -49,7 +53,7 @@ class ClassController extends Controller
 
       foreach ($classes as $class) {
          $clase_id = $class->getId();
-         $session_class = $this->session_class_persistence->findSessionClassToNextWeek($clase_id);
+         $session_class = $this->session_class_persistence->findNextSessionClass($clase_id);
 
          $rows[] = [
             'id' => $clase_id,
@@ -65,6 +69,15 @@ class ClassController extends Controller
       }
 
       return response()->json($rows);
+   }
+
+   public function show($class)
+   {
+      $data = [
+         'clase' => $class,
+      ];
+
+      return view('backend.classes.show', $data);
    }
 
 }

@@ -5,11 +5,20 @@ class Attendance {
 
    private $id;
 
-   private $clase;
+   private $sesion_class;
 
    private $user;
 
-   private $date;
+   private $register_time;
+
+   public function __construct($user, $sesion_class, $verified = false, $register_time = null, $id = null)
+   {
+      $this->setUser($user);
+      $this->setSessionClass($sesion_class);
+      $this->verified = $verified;
+      $this->register_time = $register_time;
+      $this->id = $id;
+   }
 
    public function setId($id)
    {
@@ -31,24 +40,14 @@ class Attendance {
       return $this->user;
    }
 
-   public function setClase(Clase $clase)
+   public function setSessionClass(SessionClass $sesion_class)
    {
-      $this->clase = $clase;
+      $this->sesion_class = $sesion_class;
    }
 
-   public function getClase()
+   public function getSessionClass()
    {
-      return $this->clase;
-   }
-
-   public function setDate($date)
-   {
-      $this->date = $date;
-   }
-
-   public function getDate()
-   {
-      return $this->date;
+      return $this->sesion_class;
    }
 
    public function setVerified($verified)
@@ -59,5 +58,15 @@ class Attendance {
    public function getVerified()
    {
       return $this->verified;
+   }
+
+   public function setRegisterTime($register_time)
+   {
+      $this->register_time = $register_time;
+   }
+
+   public function getRegisterTime()
+   {
+      return $this->register_time;
    }
 }

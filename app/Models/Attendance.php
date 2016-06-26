@@ -8,13 +8,11 @@ class Attendance extends Model
 
    protected $table = 'attendances';
 
-   protected $fillable = ['user_id', 'class_id', 'verified', 'date'];
+   protected $fillable = ['user_id', 'class_id', 'verified'];
 
-   protected $dates = ['date'];
-
-   public function clase()
+   public function session_class()
    {
-      return $this->belongsTo(Clase::class);
+      return $this->belongsTo(SessionClass::class);
    }
 
    public function user()
