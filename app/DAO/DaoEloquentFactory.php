@@ -18,6 +18,7 @@ use FisiLog\DAO\AcademicPlan\AcademicPlanDaoEloquent;
 use FisiLog\DAO\ClassRoom\ClassRoomDaoEloquent;
 use FisiLog\DAO\Course\CourseDaoEloquent;
 use FisiLog\DAO\SessionClass\SessionClassDaoEloquent;
+use FisiLog\DAO\AcademicPeriod\AcademicPeriodDaoEloquent;
 
 class DaoEloquentFactory {
 
@@ -104,6 +105,11 @@ class DaoEloquentFactory {
    public static function getSessionClassDAO()
    {
       return new SessionClassDaoEloquent;
+   }
+
+   public static function getAcademicPeriodDAO()
+   {
+      return new AcademicPeriodDaoEloquent;
    }
 
 }

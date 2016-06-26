@@ -32,10 +32,14 @@ Route::group(['middleware' => ['web', 'auth'], 'namespace' => 'Backend'], functi
       Route::post('/new', ['as' => 'store', 'uses' => 'FacultadController@store']);
 
       Route::group(['prefix' => '{facultad}'], function(){
+         Route::group(['prefix' => 'academic_periods', 'as' => 'academic_periods.'], function(){
+            Route::get('/', ['as' => 'index', 'uses' => 'AcademicPeriodController@index']);
+            Route::get('/new', ['as' => 'create', 'uses' => 'AcademicPeriodController@create']);
+            Route::post('/new', ['as' => 'store', 'uses' => 'AcademicPeriodController@store']);
+         });
          Route::group(['prefix' => 'classrooms', 'as' => 'classrooms.'], function(){
             Route::get('/', ['as' => 'index', 'uses' => 'ClassRoomController@index']);
          });
-
          Route::get('/edit', ['as' => 'edit', 'uses' => 'FacultadController@edit']);
          Route::post('/edit', ['as' => 'update', 'uses' => 'FacultadController@update']);
 
