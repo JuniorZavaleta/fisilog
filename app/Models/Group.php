@@ -18,7 +18,7 @@ class Group extends Model
       return $this->belongsTo(CourseOpened::class);
    }
 
-   public function clases()
+   public function classes()
    {
       return $this->hasMany(Clase::class);
   	}

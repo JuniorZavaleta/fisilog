@@ -4,6 +4,7 @@ namespace FisiLog\DAO\Clase;
 use FisiLog\BusinessClasses\Clase as ClaseBusiness;
 use FisiLog\Models\Clase as ClaseModel;
 use FisiLog\Models\CourseOpened as CourseOpenedModel;
+use FisiLog\Models\Student as StudentModel;
 
 use FisiLog\DAO\ClassRoom\ClassRoomDaoEloquent as ClassRoomModel;
 use FisiLog\DAO\Professor\ProfessorDaoEloquent as ProfessorModel;
@@ -42,8 +43,6 @@ class ClaseDaoEloquent implements ClaseDao {
 
          foreach ($clases_model as $clase_model)
             $clases_business[] = static::createBusinessClass($clase_model);
-
-         return $clases_business;
       }
 
       return $clases_business;
@@ -51,18 +50,13 @@ class ClaseDaoEloquent implements ClaseDao {
 
    public function getByStudentId($student_id)
    {
-      $groups_id = \FisiLog\Models\Group::whereHas('students', function($students) use($student_id) {
-         $students->where('student_id', '=', $student_id);
-      })->get()->pluck('id')->toArray();
+      $groups_model = StudentModel::find($student_id)->groups;
 
       $clases_business = [];
 
-      $clases_model = ClaseModel::whereHas('group', function($groups) use ($groups_id) {
-         $groups->whereIn('id', $groups_id);
-      })->get();
-
-      foreach ($clases_model as $clase_model)
-         $clases_business[] = static::createBusinessClass($clase_model);
+      foreach ($groups_model as $group_model)
+         foreach ($group_model->classes as $clase_model)
+            $clases_business[] = static::createBusinessClass($clase_model);
 
       return $clases_business;
    }
