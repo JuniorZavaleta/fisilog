@@ -8,8 +8,8 @@ class ClaseSeeder extends Seeder
    {
       DB::table('classes')->truncate();
       DB::table('classes')->insert([
-         ['id'=>1, 'classroom_id'=>1, 'professor_id'=>1, 'group_id'=>1],
-         ['id'=>2, 'classroom_id'=>1, 'professor_id'=>1, 'group_id'=>1],
+         ['id' => 1, 'classroom_id' => 1, 'professor_id' => 2, 'group_id' => 1],
+         ['id' => 2, 'classroom_id' => 1, 'professor_id' => 2, 'group_id' => 1],
       ]);
    }
 }

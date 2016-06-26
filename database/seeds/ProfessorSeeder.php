@@ -8,7 +8,7 @@ class ProfessorSeeder extends Seeder
    {
       DB::table('professors')->truncate();
       DB::table('professors')->insert([
-         ['id'=>1, 'academic_department_id'=>1, 'type'=>'Nombrado'],
+         ['id' => 2, 'academic_department_id' => 1, 'type' => 'Nombrado'],
       ]);
    }
 }
