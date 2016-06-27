@@ -21,19 +21,23 @@ class IndexController extends Controller
       if ($user->user_type_id == 1) {
          $classes = $this->class_persistence->getByStudentId($user->id);
 
+         $view = 'backend.index.students';
          $data = [
             'classes' => $classes,
          ];
+      } elseif ($user->user_type_id == 2) {
 
-         return view('backend.index.students', $data);
-      }
-      elseif ($user->user_type_id == 2) {
+         $classes = $this->class_persistence->getByProfessorId($user->id);
 
-         return view('users.complete');
-      }
-      else {
+         $view = 'backend.index.professors';
+         $data = [
+            'classes' => $classes,
+         ];
+      } else {
 
          //return view('');
       }
+
+      return view($view, $data);
    }
 }

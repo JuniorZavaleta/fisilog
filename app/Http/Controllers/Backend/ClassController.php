@@ -24,6 +24,7 @@ class ClassController extends Controller
       $this->facultad_persistence = $dao->getFacultadDAO();
       $this->class_persistence = $dao->getClaseDAO();
       $this->session_class_persistence = $dao->getSessionClassDAO();
+      $this->academic_period_persistence = $dao->getAcademicPeriodDAO();
    }
 
    public function index()
@@ -40,10 +41,7 @@ class ClassController extends Controller
    public function search($course)
    {
       $today = date('Y-m-d');
-      $academic_cycle = AcademicCycle::where('start_date', '<=', $today)
-      ->where('end_date', '>=', $today)
-      ->where('facultad_id', '=', 20)
-      ->first();
+      $academic_cycle = $this->academic_period_persistence->getPresentPeriodByFacultyId(20);
 
       $academic_cycle_id = $academic_cycle->id;
 

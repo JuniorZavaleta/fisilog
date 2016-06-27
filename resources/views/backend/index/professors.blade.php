@@ -12,7 +12,7 @@
      <table class="table table-striped">
        <thead>
            <tr>
-               <th>Nombre</th>
+               <th>Curso</th>
                <th>Grupo</th>
                <th>Tipo</th>
                <th>Horario</th>
@@ -23,12 +23,12 @@
        <tbody>
            @foreach($classes as $class)
            <tr>
-              <td>{{ $class->getProfessorFullName() }}</td>
-              <td>{{ $class->getGroupNumber() }}</td>
-              <td>{{ $class->getClassType() }}</td>
-              <td>{{ $class->getSchedule() }}</td>
-              <td>{{ $class->getClassRoomName() }}</td>
-              <td>
+               <td>{{ $class->getCourseName()  }}</td>
+               <td>{{ $class->getGroupNumber() }}</td>
+               <td>{{ $class->getClassType() }}</td>
+               <td>{{ $class->getSchedule() }}</td>
+               <td>{{ $class->getClassRoomName() }}</td>
+               <td>
                  <a href="{{ route('classes.show', ['class' => $class->getId()]) }}" title="Ver datos de la clase"><i class="fa fa-eye fa-fw" aria-hidden="true"></i></a>
                  <a href="{{ route('classes.attendances.index', ['class' => $class->getId()]) }}" title="Ver registro de asistencias"><i class="fa fa-database fa-fw" aria-hidden="true"></i></a>
               </td>

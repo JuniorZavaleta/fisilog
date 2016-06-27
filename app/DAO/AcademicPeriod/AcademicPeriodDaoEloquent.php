@@ -60,7 +60,7 @@ class AcademicPeriodDaoEloquent implements AcademicPeriodDao {
    public function getPresentPeriodByFacultyId($facultad_id)
    {
       $today = date('Y-m-d');
-      $present_academic_period = AcademicPeriodModel::where('faculty_id', '=', $faculty_id)
+      $present_academic_period = AcademicPeriodModel::where('facultad_id', '=', $facultad_id)
       ->where('start_date', '<=', $today)
       ->where('end_date', '>=', $today)
       ->first();
