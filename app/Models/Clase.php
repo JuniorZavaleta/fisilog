@@ -37,4 +37,9 @@ class Clase extends Model
       return $this->hasManyThrough(Attendance::class, SessionClass::class, 'class_id');
    }
 
+   public function course()
+   {
+      return $this->belongsTo(Course::class);
+   }
+
 }
