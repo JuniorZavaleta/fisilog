@@ -25,6 +25,11 @@ class CourseOpened extends Model
       return $this->hasMany(Group::class,'id');
    }
 
+   public function academic_period()
+   {
+        return $this->belongsTo(AcademicPeriod::class);
+   }
+
    public function classes()
    {
       return $this->hasManyThrough(Clase::class, Group::class);
