@@ -1,8 +1,6 @@
 <?php
 namespace FisiLog\Models;
-use FisiLog\Models\School;
-use FisiLog\Models\Classroom;
-use FisiLog\Models\AcademicPeriod;
+
 use Illuminate\Database\Eloquent\Model;
 
 class Facultad extends Model
@@ -22,7 +20,7 @@ class Facultad extends Model
       return $this->hasMany(Classroom::class);
    }
 
-   public function academic_periods()
+   public function academicPeriods()
    {
       return $this->hasMany(AcademicPeriod::class);
    }

@@ -1,8 +1,6 @@
 <?php
-
 namespace FisiLog\Models;
-use FisiLog\Models\SessionClass;
-use FisiLog\Models\User;
+
 use Illuminate\Database\Eloquent\Model;
 
 class Attendance extends Model

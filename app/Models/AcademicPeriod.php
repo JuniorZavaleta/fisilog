@@ -2,7 +2,6 @@
 
 namespace FisiLog\Models;
 use FisiLog\Models\Facultad;
-use FisiLog\Models\CourseOpened;
 use Illuminate\Database\Eloquent\Model;
 
 class AcademicPeriod extends Model

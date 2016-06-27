@@ -1,7 +1,6 @@
 <?php
 namespace FisiLog\Models;
-use FisiLog\Models\Clase;
-use FisiLog\Models\Attendance;
+
 use Illuminate\Database\Eloquent\Model;
 
 class SessionClass extends Model

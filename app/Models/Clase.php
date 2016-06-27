@@ -1,9 +1,6 @@
 <?php
 namespace FisiLog\Models;
-use FisiLog\Models\Group;
-use FisiLog\Models\ClassRoom;
-use FisiLog\Models\Professor;
-use FisiLog\Models\SessionClass;
+
 use Illuminate\Database\Eloquent\Model;
 
 class Clase extends Model
