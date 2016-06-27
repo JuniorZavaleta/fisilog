@@ -32,4 +32,9 @@ class Clase extends Model
       return $this->hasMany(SessionClass::class);
    }
 
+   public function attendances()
+   {
+      return $this->hasManyThrough(Attendance::class, SessionClass::class, 'class_id');
+   }
+
 }
