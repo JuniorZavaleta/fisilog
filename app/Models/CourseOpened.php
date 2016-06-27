@@ -30,7 +30,7 @@ class CourseOpened extends Model
       return $this->hasManyThrough(Clase::class, Group::class);
    }
 
-   public function teacher()
+   public function professor()
    {
       return $this->belongsTo(Professor::class);
    }
