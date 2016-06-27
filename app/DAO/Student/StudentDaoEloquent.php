@@ -3,6 +3,7 @@ namespace FisiLog\DAO\Student;
 
 use FisiLog\BusinessClasses\Student as StudentBusiness;
 use FisiLog\Models\Student as StudentModel;
+use FisiLog\Models\Group as GroupModel;
 
 use FisiLog\DAO\User\UserDaoEloquent as UserDao;
 use FisiLog\DAO\School\SchoolDaoEloquent as SchoolDao;
@@ -42,11 +43,7 @@ class StudentDaoEloquent implements StudentDao {
     */
    public function getByGroupId($group_id)
    {
-      $students_model = StudentModel::whereHas('groups', function($query) use ($group_id) {
-         $query->where('group_id', '=', $group_id);
-      })
-      ->with('user', 'user.user_type', 'user.notification_channel', 'school')
-      ->get();
+      $students_model = GroupModel::find($group_id)->students;
 
       $students_business = [];
 

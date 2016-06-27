@@ -13,7 +13,8 @@ class GroupDaoEloquent implements GroupDao {
          return null;
 
       $group_business = new GroupBusiness(
-         $group_model->number_of_group
+         $group_model->number_of_group,
+         $group_model->id
       );
 
       return $group_business;
