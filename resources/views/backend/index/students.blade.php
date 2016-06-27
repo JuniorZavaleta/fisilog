@@ -14,6 +14,7 @@
            <tr>
                <th>Nombre</th>
                <th>Grupo</th>
+               <th>Tipo</th>
                <th>Horario</th>
                <th>Aula</th>
                <th>Acciones</th>
@@ -24,6 +25,7 @@
            <tr>
               <td>{{ $class->getProfessorFullName() }}</td>
               <td>{{ $class->getGroupNumber() }}</td>
+              <td>{{ $class->getClassType() }}</td>
               <td>{{ $class->getSchedule() }}</td>
               <td>{{ $class->getClassRoomName() }}</td>
               <td>
