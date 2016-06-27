@@ -21,7 +21,7 @@ class ClaseSeeder extends Seeder
          [
             'id' => 2,
             'classroom_id' => 1,
-            'professor_id' => 1,
+            'professor_id' => 2,
             'group_id' => 1,
             'start_hour' => date('H:i:s', strtotime('16:00:00')),
             'end_hour' => date('H:i:s', strtotime('18:00:00')),

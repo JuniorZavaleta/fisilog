@@ -3,7 +3,7 @@ namespace FisiLog\Http\Controllers\Backend;
 
 use FisiLog\Http\Controllers\Controller;
 
-use FisiLog\Models\Attendance;
+use FisiLog\Models\Clase;
 
 use FisiLog\Dao\DaoEloquentFactory;
 
@@ -21,13 +21,7 @@ class AttendanceController extends Controller
       $user = Auth::user();
       $clase_id = $clase->id;
 
-      $attendances = Attendance::where('user_id','=', $user->id)
-      ->whereHas('session_class', function($session_class) use ($clase_id)
-      {
-         $session_class->where('class_id', '=', $clase_id);
-      })
-      ->with('session_class')
-      ->get();
+      $attendances = Clase::find($clase_id)->attendances;
 
       $data = [
          'attendances' => $attendances,
