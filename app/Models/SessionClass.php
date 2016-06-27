@@ -17,4 +17,9 @@ class SessionClass extends Model
       return $this->belongsTo(Clase::class, 'class_id');
    }
 
+   public function attendances()
+   {
+      return $this->hasMay(Attendance::class);
+   }
+
 }
