@@ -48,7 +48,7 @@ $(function ()
 
    button_register.on('click', function()
    {
-      var url = window.location.href + "_verified";
+      var url = window.location.href + "/store_student_attendance";
       $.post(url,
          {
             document_type: input_document_type.val(),
