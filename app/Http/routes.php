@@ -90,6 +90,9 @@ Route::group(['middleware' => ['web', 'auth'], 'namespace' => 'Backend'], functi
 
    });
 
+   Route::group(['prefix' => 'students', 'as' => 'students.'], function() {
+      Route::post('/getByDocument', ['as' => 'getByDocument', 'uses' => 'StudentController@getByDocument']);
+   });
 
 });
 
