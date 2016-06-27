@@ -23,11 +23,14 @@ class Clase {
 
    private $day_of_the_week;
 
-   public function __construct($classroom, $professor, $group, $start_hour, $end_hour, $day_of_the_week, $class_type, $id = null)
+   private $course;
+
+   public function __construct($classroom, $professor, $group, $course, $start_hour, $end_hour, $day_of_the_week, $class_type, $id = null)
    {
       $this->setClassRoom($classroom);
       $this->setProfessor($professor);
       $this->setGroup($group);
+      $this->setCourse($course);
       $this->start_hour = $start_hour;
       $this->end_hour = $end_hour;
       $this->day_of_the_week = $day_of_the_week;
@@ -115,6 +118,16 @@ class Clase {
       return $this->day_of_the_week;
    }
 
+   public function setCourse(Course $course)
+   {
+      $this->course = $course;
+   }
+
+   public function getCourse($course)
+   {
+      return $this->course;
+   }
+
    public function getClassRoomName()
    {
       return $this->classroom->getName();
@@ -138,6 +151,11 @@ class Clase {
    public function getQuantityOfMinutes()
    {
       return TimeHelper::getMinutesBetween($this->start_hour, $this->end_hour);
+   }
+
+   public function getCourseName()
+   {
+      return $this->course->getName();
    }
 
    /**

@@ -9,6 +9,7 @@ use FisiLog\Models\Student as StudentModel;
 use FisiLog\DAO\ClassRoom\ClassRoomDaoEloquent as ClassRoomModel;
 use FisiLog\DAO\Professor\ProfessorDaoEloquent as ProfessorModel;
 use FisiLog\DAO\Group\GroupDaoEloquent as GroupModel;
+use FisiLog\DAO\Course\CourseDaoEloquent as CourseDao;
 
 class ClaseDaoEloquent implements ClaseDao {
 
@@ -30,20 +31,14 @@ class ClaseDaoEloquent implements ClaseDao {
       return static::createBusinessClass($clase_model);
    }
 
-   public function getByCourseId($course_id, $academic_cycle_id)
+   public function getByCourseId($course_id)
    {
-      $courses_model = CourseOpenedModel::where('course_id', '=', $course_id)
-                                       ->where('academic_cycle_id', '=', $academic_cycle_id)
-                                       ->first();
+      $clases_model = ClaseModel::where('course_id', '=', $course_id)->get();
 
       $clases_business = [];
 
-      if ($courses_model) {
-         $clases_model = $courses_model->classes;
-
-         foreach ($clases_model as $clase_model)
-            $clases_business[] = static::createBusinessClass($clase_model);
-      }
+      foreach ($clases_model as $clase_model)
+         $clases_business[] = static::createBusinessClass($clase_model);
 
       return $clases_business;
    }
@@ -70,6 +65,7 @@ class ClaseDaoEloquent implements ClaseDao {
          ClassRoomModel::createBusinessClass($clase_model->classroom),
          ProfessorModel::createBusinessClass($clase_model->professor),
          GroupModel::createBusinessClass($clase_model->group),
+         CourseDao::createBusinessClass($clase_model->course),
          $clase_model->start_hour,
          $clase_model->end_hour,
          $clase_model->day,
