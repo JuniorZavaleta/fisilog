@@ -10,11 +10,6 @@ class CourseOpened extends Model
 
    public $timestamps = false;
 
-   public function academic_cycle()
-   {
-      return $this->belongsTo(AcademicCycle::class);
-   }
-
    public function course()
    {
       return $this->belongsTo(Course::class);
@@ -27,12 +22,17 @@ class CourseOpened extends Model
 
    public function academic_period()
    {
-        return $this->belongsTo(AcademicPeriod::class);
+      return $this->belongsTo(AcademicPeriod::class);
    }
 
    public function classes()
    {
       return $this->hasManyThrough(Clase::class, Group::class);
+   }
+
+   public function teacher()
+   {
+      return $this->belongsTo(Professor::class);
    }
 
 }
