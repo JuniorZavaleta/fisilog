@@ -2,26 +2,6 @@
 
 @section('content')
 
-<style type="text/css">
-   #view-student {
-      margin-top: 20px;
-   }
-
-   .form-group {
-      margin-top: 6.5px;
-   }
-
-   .error-message {
-      color: red;
-      font-size: 1em;
-   }
-
-   .success-message {
-      color: green;
-      font-size: 1em;
-   }
-</style>
-
 {!! Html::script('js/attendances/students/main.js') !!}
 
 <div class="row" style="text-align: center;">
@@ -48,6 +28,7 @@
 </div>
 
 <div class="row">
+
    <div class="col-md-6">
       {!! Form::token() !!}
       <div class="form-group">
@@ -74,18 +55,10 @@
 
          <a class="btn btn-primary" id="button_pre_register">Registrar asistencia</a>
 
-         <a class="btn btn-success hidden" id="button_register">Confirmar</a>
+         <a class="btn btn-success" id="button_register">Confirmar</a>
 
-         <a class="btn btn-danger hidden" id="button_cancel">Cancelar</a>
+         <a class="btn btn-danger" id="button_cancel">Cancelar</a>
 
-      </div>
-
-      <div class="form-group">
-         <label class="error-message" id="response_error" hidden></label>
-      </div>
-
-      <div class="form-group">
-         <label class="success-message" id="response_success" hidden>Asistencia registrada correctamente.</label>
       </div>
 
    </div>
@@ -98,17 +71,55 @@
 </div>
 
 <div class="row">
+   <div class="alert alert-success" id="response_success" hidden>
+      Asistencia registrada exitosamente.
+   </div>
+   <div class="alert alert-danger" id="response_error" hidden>
+
+   </div>
+</div>
+
+<div class="row">
+
    <div class="panel panel-green">
+
       <div class="panel-heading">
          <h3 class="panel-title">Alumnos</h3>
       </div>
+
+      <script type="text/javascript">
+         var student_ids = new Array();
+      </script>
+
       <!-- Lista de alumnos -->
       <div class="panel-body">
-      @foreach($students as $student)
-      <p>{{ $student->getName() }}</p>
-      @endforeach
+
+         <table class="table">
+
+            <thead>
+               <th>Nombre</th>
+               <th>Asistencia</th>
+            </thead>
+
+            <tbody>
+            @foreach($students as $student)
+               <tr>
+                  <td>{{ $student->getName() }}</td>
+                  <td id="marca_{{ $student->getId() }}">Falta</td>
+               </tr>
+
+               <script type="text/javascript">
+                  student_ids.push({{ $student->getId() }});
+               </script>
+            @endforeach
+            </tbody>
+
+         </table>
+
       </div>
+
    </div>
+
 </div>
 
 @endsection
