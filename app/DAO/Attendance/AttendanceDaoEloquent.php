@@ -7,11 +7,11 @@ use FisiLog\Models\Attendance as AttendanceModel;
 
 class AttendanceDaoEloquent implements AttendanceDao {
 
-   public function verifyAttendance($user_id, $clase_id, $date)
+   public function verifyAttendance($user_id, $session_class_id, $register_time)
    {
       $attendance_model = AttendanceModel::where('user_id','=',$user_id)
-                                         ->where('class_id','=',$clase_id)
-                                         ->where('date','=',$date)
+                                         ->where('session_class_id','=',$session_class_id)
+                                         ->where('created_at','=',$register_time)
                                          ->first();
 
       if ($attendance_model == null)
@@ -24,8 +24,7 @@ class AttendanceDaoEloquent implements AttendanceDao {
    {
       $attendance_model = new AttendanceModel;
       $attendance_model->user_id = $attendanceBusiness->getUser()->getId();
-      $attendance_model->class_id = $attendanceBusiness->getClase()->getId();
-      $attendance_model->date = date('Y-m-d H:i:s');
+      $attendance_model->session_class_id = $attendanceBusiness->getSessionClass()->getId();
       $attendance_model->verified = $attendanceBusiness->getVerified();
       $attendance_model->save();
       $attendanceBusiness->setId($attendance_model->id);
@@ -47,9 +46,9 @@ class AttendanceDaoEloquent implements AttendanceDao {
       return static::createBusinessClass($attendance_model);
    }
 
-   public function getByClaseId($clase_id)
+   public function getBySessionClassId($session_class_id)
    {
-      $attendance_models = AttendanceModel::where('class_id', '=', $clase_id)->get();
+      $attendance_models = AttendanceModel::where('session_class_id', '=', $session_class_id)->get();
       $attendances      = [];
 
       foreach ($attendance_models as $model)
@@ -66,10 +65,20 @@ class AttendanceDaoEloquent implements AttendanceDao {
       $attendance_business = new AttendanceBusiness;
       $attendance_business->setId($attendance_model->id);
       $attendance_business->setUser($attendance_model->user);
-      $attendance_business->setClase($attendance_model->claser);
-      $attendance_business->setDate($attendance_model->date);
+      $attendance_business->setSessionClass($attendance_model->session_class);
+      $attendance_business->setRegisterTime($attendance_model->register_time);
       $attendance_business->setVerified($attendance_model->verified);
 
       return $attendance_business;
+   }
+
+   public static function getByUser($user, $clase)
+   {
+      $attendances = AttendanceModel::where('user_id', '=', $user->id)
+      ->whereHas('session_class', function($session_class) use ($clase) {
+         $session_class->where('class_id', '=', $clase->id);
+      })->get();
+
+      return $attendances;
    }
 }
