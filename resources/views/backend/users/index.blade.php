@@ -8,6 +8,14 @@
    </div>
 </div>
 
+@if( session()->has('message') )
+<div class="row">
+   <div class="alert alert-success">
+      {{ session('message') }}
+   </div>
+</div>
+@endif
+
 <div class="row">
 
    <table class="table">

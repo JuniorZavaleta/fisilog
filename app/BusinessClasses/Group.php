@@ -14,9 +14,10 @@ class Group {
 
    private $clases;
 
-   public function __construct($number_of_group)
+   public function __construct($number_of_group, $id = null)
    {
       $this->number_of_group = $number_of_group;
+      $this->id = $id;
       $clases = [];
    }
 

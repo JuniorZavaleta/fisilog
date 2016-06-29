@@ -224,7 +224,7 @@ class User implements Arrayable {
       return [
          'id' => $this->id,
          'name' => $this->name,
-         'last_name' => $this->last_name,
+         'lastname' => $this->last_name,
          'email' => $this->email,
          'password' => $this->password,
          'phone' => $this->phone,

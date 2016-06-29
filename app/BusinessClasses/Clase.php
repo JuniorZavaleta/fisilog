@@ -133,6 +133,11 @@ class Clase {
       return $this->classroom->getName();
    }
 
+   public function getGroupId()
+   {
+      return $this->group->getId();
+   }
+
    public function getGroupNumber()
    {
       return $this->group->getNumberOfGroup();
