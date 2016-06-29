@@ -12,6 +12,7 @@ use FisiLog\Http\Requests\Backend\User\StoreRequest;
 use FisiLog\BusinessClasses\User;
 use FisiLog\BusinessClasses\Student;
 use FisiLog\BusinessClasses\Professor;
+use FisiLog\BusinessClasses\Document;
 
 class UserController extends Controller
 {
@@ -96,7 +97,7 @@ class UserController extends Controller
 
       }
 
-      return redirect()->route('index')->with('message', 'user created');
+      return redirect()->route('users.index')->with('message', 'Usuario registrado exitosamente.');
    }
 
    public function urlToString($photo)

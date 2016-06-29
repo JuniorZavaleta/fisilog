@@ -14,7 +14,7 @@ class DocumentDaoEloquent implements DocumentDao {
 
    public function save(DocumentBusiness &$document_business)
    {
-      $document_model = DocumentModel::create($document_business);
+      $document_model = DocumentModel::create($document_business->toArray());
       $document_business->setId($document_model->id);
    }
 
