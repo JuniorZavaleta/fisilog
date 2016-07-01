@@ -1,3 +1,8 @@
+## FisiLog
+### Integrantes
+* Claudio Zavaleta, Giancarlos Junior
+* Farro Hinoshita, Takeshi Santiago
+
 ## Laravel PHP Framework
 
 [![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
