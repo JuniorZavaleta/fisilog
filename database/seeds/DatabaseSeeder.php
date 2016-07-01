@@ -1,21 +1,41 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Eloquent\Model;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
-    public function run()
-    {
-        Model::unguard();
+   public function run()
+   {
+      Eloquent::unguard();
 
-        // $this->call(UserTableSeeder::class);
+      //disable foreign key check for this connection before running seeders
+      DB::statement('SET FOREIGN_KEY_CHECKS=0;');
 
-        Model::reguard();
-    }
+      $this->call(DocumentTypeSeeder::class);
+      $this->call(NotificationChannelSeeder::class);
+      $this->call(UserTypeSeeder::class);
+      $this->call(UserSeeder::class);
+      $this->call(DocumentSeeder::class);
+      $this->call(FacultadSeeder::class);
+      $this->call(SchoolSeeder::class);
+      $this->call(ClassRoomSeeder::class);
+      $this->call(StudentSeeder::class);
+      $this->call(AcademicDepartmentSeeder::class);
+      $this->call(ProfessorSeeder::class);
+      $this->call(AcademicPlanSeeder::class);
+      $this->call(CourseTypeSeeder::class);
+      $this->call(CourseSeeder::class);
+      $this->call(CourseOpenedSeeder::class);
+      $this->call(GroupSeeder::class);
+      $this->call(ClaseSeeder::class);
+      $this->call(SessionClassSeeder::class);
+      $this->call(AttendanceSeeder::class);
+      $this->call(DeviceSeeder::class);
+      $this->call(StudentXGroupSeeder::class);
+      $this->call(AcademicPeriodSeeder::class);
+
+      DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
+      Eloquent::reguard();
+   }
 }

@@ -1,65 +1,68 @@
 <?php
-
 namespace FisiLog\Http\Controllers\Auth;
 
-use FisiLog\User;
-use Validator;
 use FisiLog\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
-use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+
+use Auth;
+use FisiLog\Models\User;
+
+use FisiLog\Http\Requests\Auth\AuthenticationDocument;
+use FisiLog\Http\Requests\Auth\AuthenticationEmail;
+
+use FisiLog\Dao\DaoEloquentFactory;
 
 class AuthController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Registration & Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users, as well as the
-    | authentication of existing users. By default, this controller uses
-    | a simple trait to add these behaviors. Why don't you explore it?
-    |
-    */
+   use ThrottlesLogins;
 
-    use AuthenticatesAndRegistersUsers, ThrottlesLogins;
+   public function __construct(DaoEloquentFactory $dao)
+   {
+      $this->middleware('guest', ['except' => 'logout']);
+      $this->document_type_persistence = $dao->getDocumentTypeDAO();
+      $this->user_persistence          = $dao->getUserDAO();
+   }
 
-    /**
-     * Create a new authentication controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('guest', ['except' => 'getLogout']);
-    }
+   protected function getLogin()
+   {
+      $document_types = $this->document_type_persistence->getAll();
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|confirmed|min:6',
-        ]);
-    }
+      $data = [
+         'document_types' => $document_types,
+      ];
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return User
-     */
-    protected function create(array $data)
-    {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
-    }
+      return view('auth.login', $data);
+   }
+
+   protected function postLogin(AuthenticationEmail $request)
+   {
+      $email = $request->input('email');
+      $password = $request->input('password');
+
+      if (Auth::attempt([ 'email' => $email, 'password' => $password ]))
+         return redirect()->intended('index');
+
+      return redirect()->route('auth.login');
+   }
+
+   public function authenticationDocument(AuthenticationDocument $request)
+   {
+      extract($request->all());
+
+      $user = $this->user_persistence->findByDocument($document_id, $document_type);
+
+      if ( $user && Auth::attempt(['email' => $user->getEmail(), 'password' => $password]) )
+         return redirect()->intended('index');
+
+      $error_message = 'Invalid credentials';
+
+      return redirect('/login')->with('error_message', $error_message);
+   }
+
+   public function logout()
+   {
+      Auth::logout();
+
+      return redirect()->route('auth.login');
+   }
 }
