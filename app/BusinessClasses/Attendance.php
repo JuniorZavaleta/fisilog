@@ -69,4 +69,46 @@ class Attendance {
    {
       return $this->register_time;
    }
+
+   public static function verifyDateAndAttendanceDate($clase)
+   {
+      $start_hour = $clase->start_hour;
+      $end_hour = $clase->end_hour;
+      $day_id = date("N");
+      $day = Attendance::getDayChar($day_id);
+      $current_hour = date('H:i:s');
+
+      if ($day == $clase->day){
+         if($start_hour <= $current_hour && $end_hour >= $current_hour)
+            return true;
+      }
+      return false;
+   }
+
+   public static function getDayChar($day_id)
+   {
+      switch ($day_id) {
+         case 1:
+            return 'L';
+            break;
+         case 2:
+            return 'M';
+            break;
+         case 3:
+            return 'X';
+            break;
+         case 4:
+            return 'J';
+            break;
+         case 5:
+            return 'V';
+            break;
+         case 6:
+            return 'S';
+            break;
+         case 7:
+            return 'D';
+            break;
+      }
+   }
 }
