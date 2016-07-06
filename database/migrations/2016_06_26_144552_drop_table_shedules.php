@@ -22,6 +22,11 @@ class DropTableShedules extends Migration
      */
    public function down()
    {
-        //
+      Schema::create('schedules', function(Blueprint $table) {
+         $table->increments('id');
+         $table->time('start_hour');
+         $table->time('end_hour');
+         $table->enum('day_of_the_week',['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']);
+      });
    }
 }
