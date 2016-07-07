@@ -47,7 +47,7 @@ class AttendanceController extends Controller
       $user = $this->user_persistence->findByDocument($document_code, $document_type);
       $clase = $this->clase_persistence->createBusinessClass($clase);
 
-      $attendance = Attendance::where('user_id', '=', $user->getId())
+      $attendance = AttendanceModel::where('user_id', '=', $user->getId())
       ->where('session_class_id', '=', $session_class->id)
       ->first();
 
