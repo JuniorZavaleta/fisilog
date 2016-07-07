@@ -21,6 +21,8 @@ class SessionClassSeeder extends Seeder
          ['id'=>6, 'class_id'=>2, 'session_date'=>date('Y-m-d',strtotime('06/12/2016')), 'status'=>'C'],
          ['id'=>7, 'class_id'=>2, 'session_date'=>date('Y-m-d',strtotime('06/19/2016')), 'status'=>'I'],
          ['id'=>8, 'class_id'=>2, 'session_date'=>date('Y-m-d',strtotime('06/26/2016')), 'status'=>'I'],
+         ['id'=>9, 'class_id'=>1, 'session_date'=>date('Y-m-d',strtotime('07/07/2016')), 'status'=>'I'],
+         ['id'=>10, 'class_id'=>2, 'session_date'=>date('Y-m-d',strtotime('07/07/2016')), 'status'=>'I'],
       ]);
    }
 }
