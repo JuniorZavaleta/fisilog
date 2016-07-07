@@ -1,5 +1,7 @@
 @extends('backend.layout.base')
 
+<link rel="stylesheet" type="text/css" href="{{ asset('css/table-results.css') }}">
+
 @section('content')
 
 <div class="row">
@@ -11,6 +13,7 @@
 @include('backend.show_errors')
 
 <div class="row">
+   <input type="hidden" id="_token" value="<?php echo csrf_token(); ?>">
    <div class="col-sm-5 col-md-4 col-lg-3">
 
       <div class="form-container">
@@ -62,12 +65,18 @@
          <!-- End Curso -->
       </div>
       <!-- End form container -->
+
+      <!-- Start Action buttons -->
+      <div id="action-buttons">
+         <button type="button" class="btn btn-danger" data-toggle="modal" id="cancel_button">Cancelar clase</button>
+      </div>
+      <!-- End Action buttons -->
    </div>
 </div>
 <div class="row">
    <!-- Start col-md-9 col-lg-9 -->
    <div class="hidden-xs ">
-      <table class="table table-hover" id="resultados">
+      <table class="table table-bordered" id="resultados">
          <thead>
             <th>Grupo</th>
             <th>Docente</th>
@@ -89,90 +98,43 @@
    <!-- End col-sm-7 col-md-8 col-lg-9 -->
 </div>
 
-<script type="text/javascript">
-   $(function(){
-      var facultad = $('#facultad');
-      var eap_select = $('#eap');
-      var ciclo = $('#ciclo');
-      var curso_select = $('#curso');
-      var resultados = $('#resultados');
-      var last_row = $('#resultados > tbody:last-child');
-      var resultados_movil = $('#resultados-movil');
+<div class="modal fade" tabindex="-1" role="dialog" id="modal-cancel">
+   <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Cancelar clase</h4>
+         </div>
+         <div class="modal-body" id="modal-cancel-content">
 
-      facultad.change(function() {
-         var url = base_url + '/facultades/' + facultad.val() + '/eaps';
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" id="exit_cancel_button" >No, Cerrar</button>
+            <button type="button" class="btn btn-danger" id="confirm_cancel_button">Si, Cancelar clase</button>
+         </div>
+      </div>
+   </div>
+</div>
 
-         $.get(url, {},
-            function(eaps) {
-               eap_select.html('<option value="">Seleccione una EAP</option>');
+<div class="modal fade" tabindex="-1" role="dialog" id="modal-confirmation-cancel">
+   <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Cancelar clase - Confirmación de contraseña</h4>
+         </div>
+         <div class="modal-body" id="modal-cancel-content">
+            <div class="input-group">
+               <input type="password" class="form-control" name="password" placeholder="Contraseña">
+            </div>
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-danger" id="password_confirmation_cancel">Si, Cancelar clase</button>
+         </div>
+      </div>
+   </div>
+</div>
 
-               $.each(eaps, function(index, eap) {
-                  $('<option>', {
-                     value: eap.id,
-                     text: eap.name,
-                  }).appendTo(eap_select);
-               });
-            }
-         );
-      });
-
-      ciclo.change(function() {
-         var url = base_url + '/eaps/' + eap_select.val() + '/courses/' + ciclo.val();
-
-         $.get(url, {},
-            function(courses) {
-               curso_select.html('<option value="">Seleccione un Curso</option>');
-
-               $.each(courses, function(index, course) {
-                  $('<option>', {
-                     value: course.id,
-                     text: course.name + " - " + course.academic_plan,
-                  }).appendTo(curso_select);
-               });
-            }
-         );
-      });
-
-      curso_select.change(function() {
-         var url = base_url + '/classes/getByCourse/' + curso_select.val();
-
-         $.get(url, {},
-            function(classes) {
-
-               if (window.innerWidth > 768) {
-                  $('#resultados > tbody').html('');
-
-                  $.each(classes, function(index, clase) {
-                     var row =   '<tr>'+
-                                    '<td>' + clase.group_number + '</td>'+
-                                    '<td>' + clase.professor_name + '</td>' +
-                                    '<td>' + clase.day_of_the_week + '</td>' +
-                                    '<td>' + clase.schedule + '</td>' +
-                                    '<td>' + clase.class_type + '</td>' +
-                                    '<td>' + clase.classroom + '</td>' +
-                                    '<td>' + clase.status + '</td>' +
-                                    '<td>' + clase.deadline + '</td>' +
-                                 '</tr>';
-
-                     last_row.append(row);
-                  });
-               } else {
-                  $.each(classes, function(index, clase) {
-                     var row =   '<div class="col-xs-12">' +
-                                    'Grupo: ' + clase.group_number + '<br>' +
-                                    'Profesor: ' + clase.professor_name + '<br>' +
-                                    '-- ' + clase.day_of_the_week + ' - ' + clase.schedule + '<br>' +
-                                    'Tipo: ' + clase.class_type + ' Salon: ' + clase.classroom + '<br>' +
-                                 '</div>';
-
-                     resultados_movil.append(row);
-                  });
-               }
-            }
-         );
-      });
-
-   });
-</script>
+<script type="text/javascript" src="{{ asset('js/classes/search.js') }}"></script>
 
 @endsection

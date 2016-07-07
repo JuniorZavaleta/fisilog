@@ -12,6 +12,7 @@ class SessionClassController extends Controller
       $this->document_type_persistence = $dao->getDocumentTypeDAO();
       $this->student_persistence = $dao->getStudentDAO();
       $this->clase_persistence = $dao->getClaseDAO();
+      $this->session_class_persistence = $dao->getSessionClassDAO();
    }
 
    public function show($clase, $id)
@@ -27,5 +28,10 @@ class SessionClassController extends Controller
       ];
 
       return view('backend.classes.sessions.index', $data);
+   }
+
+   public function cancel($clase)
+   {
+
    }
 }

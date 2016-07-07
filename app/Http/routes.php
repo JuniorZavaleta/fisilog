@@ -87,6 +87,7 @@ Route::group(['middleware' => ['web', 'auth'], 'namespace' => 'Backend'], functi
          Route::group(['prefix' => 'sessions_class', 'as' => 'sessions_class.'], function() {
             Route::get('/{session_class}', ['as' => 'index', 'uses' => 'SessionClassController@show']);
             Route::post('/{session_class}/store_student_attendance', ['as' => 'store_student', 'uses' => 'AttendanceController@storeStudent']);
+            Route::post('/{session_class}/cancel', ['as' => 'cancel', 'uses' => 'SessionClassController@cancel']);
          });
       });
 
