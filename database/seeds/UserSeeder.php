@@ -15,9 +15,10 @@ class UserSeeder extends Seeder
             'email' => 'juniorclaudiozavaleta@gmail.com',
             'phone' => '76726604',
             'password' => Hash::make('123456'),
-            'notification_channel_id' => 1,
+            'notification_channel_id' => 3,
             'user_type_id' => 1,
             'photo_url' => '/',
+            'notification_receipt' => '',
          ],
          [
             'id' => 2,
@@ -29,6 +30,7 @@ class UserSeeder extends Seeder
             'notification_channel_id' => 2,
             'user_type_id' => 2,
             'photo_url' => '/',
+            'notification_receipt' => '',
          ],
          [
             'id' => 3,
@@ -40,6 +42,7 @@ class UserSeeder extends Seeder
             'notification_channel_id' => 1,
             'user_type_id' => 1,
             'photo_url' => '/',
+            'notification_receipt' => '',
          ],
          [
             'id' => 4,
@@ -51,7 +54,20 @@ class UserSeeder extends Seeder
             'notification_channel_id' => 2,
             'user_type_id' => 2,
             'photo_url' => '/',
-         ]
+            'notification_receipt' => '',
+         ],
+         [
+            'id' => 5,
+            'name' => 'junior',
+            'lastname' => 'zavaleta',
+            'email' => '12200187@unmsm.edu.pe',
+            'phone' => '123456789',
+            'password' => Hash::make('123456'),
+            'notification_channel_id' => 2,
+            'user_type_id' => 1,
+            'photo_url' => '/',
+            'notification_receipt' => '12200187@unmsm.edu.pe',
+         ],
       ]);
    }
 }
