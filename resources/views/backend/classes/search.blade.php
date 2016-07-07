@@ -66,13 +66,9 @@
       </div>
       <!-- End form container -->
 
-      <!-- Start Action buttons -->
-      <div id="action-buttons">
-         <button type="button" class="btn btn-danger" data-toggle="modal" id="cancel_button">Cancelar clase</button>
-      </div>
-      <!-- End Action buttons -->
    </div>
 </div>
+
 <div class="row">
    <!-- Start col-md-9 col-lg-9 -->
    <div class="hidden-xs ">
@@ -96,6 +92,14 @@
 
    </div>
    <!-- End col-sm-7 col-md-8 col-lg-9 -->
+</div>
+
+<div class="row">
+   <!-- Start Action buttons -->
+   <div id="action-buttons">
+      <button type="button" class="btn btn-danger" data-toggle="modal" id="cancel_button">Cancelar clase</button>
+   </div>
+   <!-- End Action buttons -->
 </div>
 
 <div class="modal fade" tabindex="-1" role="dialog" id="modal-cancel">
