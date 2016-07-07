@@ -29,7 +29,7 @@ class Clase extends Model
 
    public function sessions()
    {
-      return $this->hasMany(SessionClass::class);
+      return $this->hasMany(SessionClass::class, 'class_id');
    }
 
    public function attendances()

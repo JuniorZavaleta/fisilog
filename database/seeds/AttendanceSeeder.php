@@ -25,6 +25,18 @@ class AttendanceSeeder extends Seeder
          ['id' => 14, 'user_id' => 5, 'verified' => 0, 'session_class_id' => 6],
          ['id' => 15, 'user_id' => 5, 'verified' => 1, 'session_class_id' => 7],
          ['id' => 16, 'user_id' => 5, 'verified' => 0, 'session_class_id' => 8],
+
+         ['id' => 17, 'user_id' => 2, 'verified' => 1, 'session_class_id' => 1],
+         ['id' => 18, 'user_id' => 2, 'verified' => 0, 'session_class_id' => 2],
+         ['id' => 19, 'user_id' => 2, 'verified' => 1, 'session_class_id' => 3],
+         ['id' => 20, 'user_id' => 2, 'verified' => 0, 'session_class_id' => 4],
+         ['id' => 21, 'user_id' => 2, 'verified' => 1, 'session_class_id' => 5],
+         ['id' => 22, 'user_id' => 2, 'verified' => 0, 'session_class_id' => 6],
+         ['id' => 23, 'user_id' => 2, 'verified' => 1, 'session_class_id' => 7],
+         ['id' => 24, 'user_id' => 2, 'verified' => 0, 'session_class_id' => 8],
+
+         ['id' => 25, 'user_id' => 2, 'verified' => 0, 'session_class_id' => 11],
+         ['id' => 26, 'user_id' => 2, 'verified' => 0, 'session_class_id' => 12],
       ]);
    }
 }

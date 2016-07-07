@@ -23,6 +23,7 @@ class AttendanceController extends Controller
       $this->user_persistence = $dao->getUserDAO();
       $this->session_class_persistence = $dao->getSessionClassDAO();
       $this->clase_persistence = $dao->getClaseDAO();
+      $this->student_persistence = $dao->getStudentDAO();
    }
 
    public function index($clase)
@@ -87,6 +88,11 @@ class AttendanceController extends Controller
             $this->attendance_persistence->save($attendance);
 
             $attendances = Clase::find($clase_id)->attendances;
+
+            $students = $this->student_persistence->getByGroupId($clase->getGroupId());
+
+            foreach ($students as $student)
+               $student->notify('cancel_class', $data, 'Clase Cancelada');
 
             return redirect()-> route('classes.sessions_class.index', ['clase' => $clase_id, 'session_class' => $session_class_id]);
          } else {

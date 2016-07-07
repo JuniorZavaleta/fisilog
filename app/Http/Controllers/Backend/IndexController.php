@@ -33,6 +33,14 @@ class IndexController extends Controller
          $data = [
             'classes' => $classes,
          ];
+      } elseif ($user->user_type_id == 3) {
+
+         $current_date = date('Y-m-d');
+         $classes = $this->class_persistence->getByVerifyAttendance($current_date);
+         $view = 'backend.index.workers';
+         $data = [
+            'classes' => $classes,
+         ];
       } else {
 
          //return view('');

@@ -19,7 +19,7 @@ class SessionClass extends Model
 
    public function attendances()
    {
-      return $this->hasMay(Attendance::class);
+      return $this->hasMany(Attendance::class);
    }
 
 }

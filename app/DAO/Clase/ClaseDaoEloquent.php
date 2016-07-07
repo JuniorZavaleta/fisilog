@@ -75,4 +75,21 @@ class ClaseDaoEloquent implements ClaseDao {
 
       return $clase_business;
    }
+
+   public function getByVerifyAttendance($current_date)
+   {
+      $clase_models = ClaseModel::whereHas('sessions', function($session_class) use ($current_date){
+         $session_class->whereHas('attendances', function($attendance) use ($current_date) {
+            $attendance->where('verified', '=', '0')
+                       ->where('created_at', '>=', $current_date);
+         });
+      })->get();
+
+      $clases = [];
+
+      foreach ($clase_models as $model) {
+         $clases[] = static::createBusinessClass($model);
+      }
+      return $clases;
+   }
 }
