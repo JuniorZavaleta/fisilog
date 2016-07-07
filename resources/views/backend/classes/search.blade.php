@@ -129,7 +129,7 @@
          </div>
          <div class="modal-body" id="modal-cancel-content">
             <div class="input-group">
-               <input type="password" class="form-control" name="password" placeholder="Contraseña">
+               <input type="password" class="form-control" name="password" id="password" placeholder="Contraseña">
             </div>
          </div>
          <div class="modal-footer">
