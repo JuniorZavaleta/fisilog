@@ -7,31 +7,31 @@ use FisiLog\Models\NotificationChannel as NotificationChannelModel;
 
 class NotificationChannelDaoEloquent implements NotificationChannelDao {
 
-   public function save(NotificationChannelBusiness $notificationChannel)
+   public function save(NotificationChannelBusiness $notification_channel_business)
    {
-      $notificationChannelModel = NotificationChannelModel::create($notificationChannel->toArray());
+      $notification_channel_model = NotificationChannelModel::create($notification_channel_business->toArray());
 
-      return $notificationChannelModel->id;
+      return $notification_channel_model->id;
    }
 
    public function findById($id)
    {
-      $notificationChannelModel = NotificationChannelModel::find($id);
+      $notification_channel_model = NotificationChannelModel::find($id);
 
-      return static::createBusinessClass($notificationChannelModel);
+      return static::createBusinessClass($notification_channel_model);
    }
 
-   public static function createBusinessClass(NotificationChannelModel $notificationChannelModel)
+   public static function createBusinessClass(NotificationChannelModel $notification_channel_model)
    {
-      if ($notificationChannelModel == null)
+      if ($notification_channel_model == null)
          return null;
 
-      $notificationChannel = new NotificationChannelBusiness(
-         $notificationChannelModel->name,
-         $notificationChannelModel->id
+      $notification_channel_business = new NotificationChannelBusiness(
+         $notification_channel_model->name,
+         $notification_channel_model->id
       );
 
-      return $notificationChannel;
+      return $notification_channel_business;
    }
 
 }

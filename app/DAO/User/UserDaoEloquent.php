@@ -65,6 +65,7 @@ class UserDaoEloquent implements UserDao {
          UserTypeModel::createBusinessClass($user_model->user_type),
          $user_model->photo_url,
          NotificationChannelModel::createBusinessClass($user_model->notification_channel),
+         $user_model->notification_receipt,
          $user_model->id
       );
 

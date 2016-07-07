@@ -11,21 +11,35 @@ class NotificationChannel implements Arrayable {
 
    private $notificator;
 
+   const SMS = 1;
+   const EMAIL = 2;
+   const TELEGRAM = 3;
+
    public function __construct($name, $id = null)
    {
       $this->name = $name;
       $this->id = $id;
+      if ($this->id == self::SMS) {
+         //To-Do
+      } elseif($this->id == self::EMAIL) {
+         $this->setStrategyNotification(new NotificationByMail);
+      } elseif($this->id == self::TELEGRAM) {
+         $this->setStrategyNotification(new NotificationByTelegram);
+      }
    }
 
-   public function setStrategyNotification(Notificator $strategyNotification) {
+   public function setStrategyNotification(Notificator $strategyNotification)
+   {
       $this->notificator = $strategyNotification;
    }
 
-   public function executeStrategyNotification($message, $subject, $to) {
-      $this->notificator->notify($message, $subject, $to);
+   public function executeStrategyNotification($view, $data, $subject, $to)
+   {
+      $this->notificator->notify($view, $data, $subject, $to);
    }
 
-   public function getId() {
+   public function getId()
+   {
       return $this->id;
    }
 

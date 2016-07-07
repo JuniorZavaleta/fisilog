@@ -5,7 +5,7 @@
 </head>
 <body>
 <div style="width: 660px">
-{{$notification_message}}
+Prueba
 </div>
 </body>
 </html>

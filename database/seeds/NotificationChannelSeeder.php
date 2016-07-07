@@ -8,8 +8,9 @@ class NotificationChannelSeeder extends Seeder
    {
       DB::table('notification_channels')->truncate();
       DB::table('notification_channels')->insert([
-         ['id'=>1, 'name'=>'SMS'],
-         ['id'=>2, 'name'=>'Email'],
+         ['id' => 1, 'name' => 'sms'],
+         ['id' => 2, 'name' => 'email'],
+         ['id' => 3, 'name' => 'telegram'],
       ]);
    }
 }
