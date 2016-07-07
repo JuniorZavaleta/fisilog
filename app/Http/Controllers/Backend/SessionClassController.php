@@ -44,7 +44,7 @@ class SessionClassController extends Controller
       $plain_password = $request->input('password');
 
       if (Auth::attempt(['email' => $user->getEmail() , 'password' => $plain_password ])) {
-         $this->session_class_persistence->cancel($clase->getId());
+         $this->session_class_persistence->cancel($session_class->getId());
 
          $students = $this->student_persistence->getByGroupId($clase->getGroupId());
 
