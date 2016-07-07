@@ -9,6 +9,7 @@ $(function(){
    var clase_id_selected = 0;
    var session_id_selected = 0;
    var token = $('#_token');
+   var password = $('#password');
 
    var cancel_button = $('#cancel_button');
    var confirm_cancel_button = $('#confirm_cancel_button');
@@ -131,20 +132,22 @@ $(function(){
    password_confirmation_cancel.click(function()
    {
       if (clase_id_selected > 0) {
-         if (session_id_selected > 0) {
+         //if (session_id_selected > 0) {
+            session_id_selected = 1;
             var url = base_url + '/classes/' + clase_id_selected + '/sessions_class/' + session_id_selected + '/cancel';
             $.post(url,
                {
                   _token: token.val(),
+                  password: password.val(),
                },
                function(response)
                {
                   alert('Sesion cancelada');
                }
             );
-         } else {
-            alert("No hay una sesion valida");
-         }
+         // } else {
+         //    alert("No hay una sesion valida");
+         // }
       } else {
          alert("Seleccione la clase que desea cancelar");
       }
