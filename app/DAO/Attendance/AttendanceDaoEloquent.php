@@ -5,6 +5,10 @@ use FisiLog\BusinessClasses\Attendance as AttendanceBusiness;
 
 use FisiLog\Models\Attendance as AttendanceModel;
 
+use FisiLog\DAO\User\UserDaoEloquent as UserModel;
+
+use FisiLog\DAO\SessionClass\SessionClassDaoEloquent as SessionClassModel;
+
 class AttendanceDaoEloquent implements AttendanceDao {
 
    public function verifyAttendance($user_id, $session_class_id)
@@ -61,21 +65,27 @@ class AttendanceDaoEloquent implements AttendanceDao {
       if ($attendance_model == null)
          return null;
 
-      $attendance_business = new AttendanceBusiness;
-      $attendance_business->setId($attendance_model->id);
-      $attendance_business->setUser($attendance_model->user);
-      $attendance_business->setSessionClass($attendance_model->session_class);
-      $attendance_business->setVerified($attendance_model->verified);
+      $attendance_business = new AttendanceBusiness(
+         UserModel::createBusinessClass($attendance_model->user),
+         SessionClassModel::createBusinessClass($attendance_model->session_class),
+         $attendance_model->verified,
+         $attendance_model->created_at,
+         $attendance_model->id
+      );
 
       return $attendance_business;
    }
 
-   public static function getAttendancesOfUserByClase($user, $clase)
+   public function getAttendancesOfUserByClase($user_id, $clase_id)
    {
-      $attendances = AttendanceModel::where('user_id', '=', $user->id)
-      ->whereHas('session_class', function($session_class) use ($clase) {
-         $session_class->where('class_id', '=', $clase->id);
-      })->get();
+      $attendance_models = AttendanceModel::where('user_id', '=', $user_id)
+                                          ->whereHas('session_class', function($session_class) use ($clase_id) {
+                                             $session_class->where('class_id', '=', $clase_id);
+                                          })->get();
+      $attendances      = [];
+
+      foreach ($attendance_models as $model)
+         $attendances[] = static::createBusinessClass($model);
 
       return $attendances;
    }

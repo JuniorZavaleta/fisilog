@@ -5,16 +5,16 @@ class Attendance {
 
    private $id;
 
-   private $sesion_class;
+   private $session_class;
 
    private $user;
 
    private $register_time;
 
-   public function __construct($user, $sesion_class, $verified = false, $register_time = null, $id = null)
+   public function __construct($user, $session_class, $verified = false, $register_time = null, $id = null)
    {
       $this->setUser($user);
-      $this->setSessionClass($sesion_class);
+      $this->setSessionClass($session_class);
       $this->verified = $verified;
       $this->register_time = $register_time;
       $this->id = $id;
@@ -40,14 +40,14 @@ class Attendance {
       return $this->user;
    }
 
-   public function setSessionClass(SessionClass $sesion_class)
+   public function setSessionClass(SessionClass $session_class)
    {
-      $this->sesion_class = $sesion_class;
+      $this->session_class = $session_class;
    }
 
    public function getSessionClass()
    {
-      return $this->sesion_class;
+      return $this->session_class;
    }
 
    public function setVerified($verified)

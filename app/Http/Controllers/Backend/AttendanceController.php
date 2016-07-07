@@ -27,8 +27,10 @@ class AttendanceController extends Controller
    public function index($clase)
    {
       $user = Auth::user();
+      $user_id = $user->id;
+      $clase_id = $clase->id;
 
-      $attendances = $this->attendance_persistence->getAttendancesOfUserByClase($user, $clase);
+      $attendances = $this->attendance_persistence->getAttendancesOfUserByClase($user_id, $clase_id);
 
       $data = [
          'attendances' => $attendances,
