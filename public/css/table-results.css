@@ -1,0 +1,6 @@
+tr.selected {
+   background-color: #AAA;
+}
+tr:hover {
+   cursor: pointer;
+}

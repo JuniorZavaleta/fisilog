@@ -33,6 +33,15 @@ class SessionClassDaoEloquent implements SessionClassDao {
       return $sessions_class_business;
    }
 
+   public function cancel($id)
+   {
+      $session_class_model = SessionClassModel::find($id);
+      $session_class_model->status = 'C';
+      $session_class_model->save();
+
+      return static::createBusinessClass($session_class_model);
+   }
+
    public static function createBusinessClass($session_class_model)
    {
       if (is_null($session_class_model))

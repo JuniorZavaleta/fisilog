@@ -36,6 +36,7 @@ class Student extends User implements Arrayable {
       $this->user_type = $user->getUserType();
       $this->photo_url = $user->getPhotoUrl();
       $this->notification_channel = $user->getNotificationChannel();
+      $this->notification_receipt = $user->getNotificationReceipt();
       $this->setSchool($school);
       $this->yearOfEntry = $yearOfEntry;
       $this->code = $code;
