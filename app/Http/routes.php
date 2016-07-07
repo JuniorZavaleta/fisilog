@@ -81,6 +81,7 @@ Route::group(['middleware' => ['web', 'auth'], 'namespace' => 'Backend'], functi
 
          Route::group(['prefix' => 'attendances', 'as' => 'attendances.'], function(){
             Route::get('/', ['as' => 'index', 'uses' => 'AttendanceController@index']);
+            Route::get('/new', ['as' => 'store', 'uses' => 'AttendanceController@storeProfessor']);
 
          });
 

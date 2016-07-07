@@ -2,5 +2,5 @@
 namespace FisiLog\BusinessClasses;
 
 interface Notificator {
-    public function notify($message, $subject, $to);
+   public function notify($view, $data, $subject, $to);
 }

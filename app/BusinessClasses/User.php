@@ -68,6 +68,11 @@ class User implements Arrayable {
     */
    protected $notification_channel;
 
+   /**
+    * @var string
+    */
+   protected $notification_receipt;
+
    const STUDENT = 1;
    const PROFESSOR = 2;
 
@@ -83,7 +88,7 @@ class User implements Arrayable {
     * @param NotificationChannel $notification_channel
     * @return
     */
-   public function __construct($name, $last_name, $email, $password, $phone, $user_type, $photo_url, $notification_channel, $id = null)
+   public function __construct($name, $last_name, $email, $password, $phone, $user_type, $photo_url, $notification_channel, $notification_receipt = null, $id = null)
    {
       $this->name = $name;
       $this->last_name = $last_name;
@@ -93,6 +98,7 @@ class User implements Arrayable {
       $this->setUserType($user_type);
       $this->photo_url = $photo_url;
       $this->setNotificationChannel($notification_channel);
+      $this->notification_receipt = $notification_receipt;
       $this->id = $id;
    }
 
@@ -215,6 +221,28 @@ class User implements Arrayable {
    }
 
    /**
+    * Notify to user any event
+    * @param string $view
+    * @param array $data
+    * @param string $subject
+    * @return
+    */
+   public function notify($view, $data, $subject)
+   {
+      $this->notification_channel->executeStrategyNotification($view, $data, $subject, $this->notification_receipt);
+   }
+
+   public function setNotificationReceipt($notification_receipt)
+   {
+      $this->notification_receipt = $notification_receipt;
+   }
+
+   public function getNotificationReceipt()
+   {
+      return $this->notification_receipt;
+   }
+
+   /**
      * Get the instance as an array.
      *
      * @return array
@@ -230,6 +258,7 @@ class User implements Arrayable {
          'phone' => $this->phone,
          'notification_channel_id' => $this->notification_channel->getId(),
          'notification_channel' => $this->notification_channel->toArray(),
+         'notification_receipt' => $this->notification_receipt,
          'photo_url' => $this->photo_url,
          'user_type_id' => $this->user_type->getId(),
          'user_type' => $this->user_type->toArray(),
