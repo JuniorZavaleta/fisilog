@@ -145,7 +145,7 @@ return [
         FisiLog\Providers\AuthServiceProvider::class,
         FisiLog\Providers\EventServiceProvider::class,
         FisiLog\Providers\RouteServiceProvider::class,
-
+        Telegram\Bot\Laravel\TelegramServiceProvider::class,
     ],
 
     /*
@@ -197,6 +197,7 @@ return [
         'Html'      => Illuminate\Html\HtmlFacade::class,
         'Form'      => Illuminate\Html\FormFacade::class,
         'Image'     => Intervention\Image\Facades\Image::class,
+        'Telegram'  => Telegram\Bot\Laravel\Facades\Telegram::class,
     ],
 
 ];

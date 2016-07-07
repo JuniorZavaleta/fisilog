@@ -19,6 +19,7 @@ class AttendanceController extends Controller
    {
       $this->attendance_persistence = $dao->getAttendanceDAO();
       $this->user_persistence = $dao->getUserDAO();
+      $this->clase_persistence = $dao->getClaseDAO();
    }
 
    public function index($clase)
@@ -41,6 +42,7 @@ class AttendanceController extends Controller
       extract($request->all());
 
       $user = $this->user_persistence->findByDocument($document_code, $document_type);
+      $clase = $this->clase_persistence->createBusinessClass($clase);
 
       $attendance = Attendance::where('user_id', '=', $user->getId())
       ->where('session_class_id', '=', $session_class->id)
@@ -50,6 +52,13 @@ class AttendanceController extends Controller
          $attendance->verified = true;
          $attendance->save();
       }
+
+      $data = [
+         'full_name' => $user->getFullName(),
+         'course_name' => $clase->getCourseName(),
+      ];
+
+      $user->notify('attendance', $data, 'Asistencia a clases');
 
       return response()->json(['message' => 'OK']);
    }
