@@ -71,13 +71,13 @@ class AttendanceController extends Controller
          $has_attendance = $this->attendance_persistence->verifyAttendance($user_id, $session_class_id);
 
          if($has_attendance == false){
-            $attendance = new Attendance($user, $session_class, 1);
+            $attendance = new Attendance($user, $session_class, 0);
 
             $this->attendance_persistence->save($attendance);
 
             $attendances = Clase::find($clase_id)->attendances;
 
-         return redirect()-> route('classes.attendances.index', ['class' => $clase_id]);
+         return redirect()-> route('classes.sessions_class.index', ['clase' => $clase_id, 'session_class' => $session_class_id]);
          }else {
             return redirect()->route('index')->with('error', 'asistencia ya marcada');
          }
