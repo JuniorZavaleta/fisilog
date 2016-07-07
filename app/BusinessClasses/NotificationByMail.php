@@ -4,12 +4,16 @@ use Mail;
 use FisiLog\BusinessClasses\Notificator;
 
 class NotificationByMail implements Notificator {
-    public function notify($message, $subject, $to) {
-        Mail::queue('email.class.notification', ['notification_message'=>$message], 
-            function($m) use ($subject, $to) {
-            $m->from('test@email.com', 'Fisi Bot');
+
+   public function notify($view, $data, $subject, $to)
+   {
+      $view = 'notifications.emails.'.$view;
+      Mail::send($view, $data,
+         function($m) use ($subject, $to) {
             $m->subject($subject);
             $m->to($to);
-        });
-    }
+         }
+      );
+   }
+
 }
