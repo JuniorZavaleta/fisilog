@@ -5,24 +5,30 @@ use Illuminate\Database\Eloquent\Model;
 
 class Facultad extends Model
 {
+    protected $table = 'facultades';
 
-   protected $table = 'facultades';
-   protected $fillable = ['name', 'code'];
-   public $timestamps = false;
+    protected $fillable = ['name', 'code', 'branch_id'];
 
-   public function schools()
-   {
-      return $this->hasMany(School::class,'facultad_id');
-   }
+    public $timestamps = false;
 
-   public function classrooms()
-   {
-      return $this->hasMany(Classroom::class);
-   }
+    public function schools()
+    {
+       return $this->hasMany(School::class,'facultad_id');
+    }
 
-   public function academicPeriods()
-   {
-      return $this->hasMany(AcademicPeriod::class);
-   }
+    public function classrooms()
+    {
+        return $this->hasMany(Classroom::class);
+    }
+
+    public function academicPeriods()
+    {
+        return $this->hasMany(AcademicPeriod::class);
+    }
+
+    public function branch()
+    {
+        return $this->belongsTo(Branch::class);
+    }
 
 }
