@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use FisiLog\Http\Requests;
 use FisiLog\Http\Controllers\Controller;
 
-use FisiLog\Dao\DaoEloquentFactory;
+use FisiLog\DAO\DaoEloquentFactory;
 
 use FisiLog\DAO\User\UserDaoEloquent as User;
 

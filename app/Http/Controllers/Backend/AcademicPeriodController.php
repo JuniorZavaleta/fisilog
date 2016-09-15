@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use FisiLog\Http\Requests\Backend\AcademicPeriod\StoreRequest;
 use FisiLog\Http\Controllers\Controller;
-use FisiLog\Dao\DaoEloquentFactory;
+use FisiLog\DAO\DaoEloquentFactory;
 
 use FisiLog\BusinessClasses\AcademicPeriod;
 

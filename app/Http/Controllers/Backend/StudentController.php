@@ -5,7 +5,7 @@ use FisiLog\Http\Controllers\Controller;
 
 use FisiLog\Http\Requests\Backend\Student\GetByDocument;
 
-use FisiLog\Dao\DaoEloquentFactory;
+use FisiLog\DAO\DaoEloquentFactory;
 
 class StudentController extends Controller
 {

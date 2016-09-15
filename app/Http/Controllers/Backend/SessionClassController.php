@@ -3,7 +3,7 @@ namespace FisiLog\Http\Controllers\Backend;
 
 use FisiLog\Http\Controllers\Controller;
 
-use FisiLog\Dao\DaoEloquentFactory;
+use FisiLog\DAO\DaoEloquentFactory;
 
 use FisiLog\Http\Requests\Backend\SessionClass\CancelRequest;
 

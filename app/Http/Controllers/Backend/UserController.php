@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 
 use FisiLog\Http\Controllers\Controller;
 
-use FisiLog\Dao\DaoEloquentFactory;
+use FisiLog\DAO\DaoEloquentFactory;
 
 use FisiLog\Http\Requests\Backend\User\StoreRequest;
 

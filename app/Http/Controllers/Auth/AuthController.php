@@ -10,7 +10,7 @@ use FisiLog\Models\User;
 use FisiLog\Http\Requests\Auth\AuthenticationDocument;
 use FisiLog\Http\Requests\Auth\AuthenticationEmail;
 
-use FisiLog\Dao\DaoEloquentFactory;
+use FisiLog\DAO\DaoEloquentFactory;
 
 class AuthController extends Controller
 {

@@ -5,7 +5,7 @@ use FisiLog\Http\Controllers\Controller;
 
 use FisiLog\Models\Clase;
 
-use FisiLog\Dao\DaoEloquentFactory;
+use FisiLog\DAO\DaoEloquentFactory;
 
 use FisiLog\BusinessClasses\Attendance;
 
