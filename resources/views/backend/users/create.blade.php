@@ -7,7 +7,7 @@
     text-align: left;
    }
 </style>
-{!! Html::script('js/users/register/main.js') !!}
+<script src="{{ url('js/users/register/main.js') }}"></script>
 <script type="text/javascript">
    var user_type_selected = "{{ old('user_type') }}";
 </script>
@@ -161,7 +161,8 @@
             </div>
 
             <div class="col-sm-9">
-               {!! Form::file('photo', ['style'=>'width:100%']) !!}
+                <input type="file" name="photo" style="width: 100%;">
+                   {{-- {!! Form::file('photo', ['style'=>'width:100%']) !!} --}}
             </div>
 
          </div>
@@ -253,11 +254,9 @@
          <!-- End departamento academico -->
 
          <div class="form-group">
-
             <div class="col-sm-6">
                <button class="btn btn-primary" name="registerButton" type="submit" value="register">Registrar</button>
             </div>
-
          </div>
 
       </div>
