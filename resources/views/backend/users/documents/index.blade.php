@@ -4,7 +4,7 @@
 
 <div class="row">
    <div class="col-xs-12">
-      <h2>Lista de Documentos de {{ $user->getFullName() }}</h2>
+      <h2>Lista de Documentos de {{ $user->name . " " . $user->lastname }}</h2>
    </div>
 </div>
 
@@ -19,8 +19,8 @@
       <tbody>
          @foreach($documents as $document)
          <tr>
-            <td>{{ $document->getDocumentTypeName() }}</td>
-            <td>{{ $document->getCode() }}</td>
+            <td>{{ $document->document_type->name }}</td>
+            <td>{{ $document->code }}</td>
             <td>
 
             </td>

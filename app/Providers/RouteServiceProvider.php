@@ -38,7 +38,6 @@ class RouteServiceProvider extends ServiceProvider
          require app_path('Http/routes.php');
       });
 
-      $router->model('user', 'FisiLog\Models\User');
       $router->model('facultad', 'FisiLog\Models\Facultad');
       $router->model('eap', 'FisiLog\Models\School');
       $router->model('academic_plan', 'FisiLog\Models\AcademicPlan');

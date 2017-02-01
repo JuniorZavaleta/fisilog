@@ -19,7 +19,7 @@ Route::group(['middleware' => ['web', 'auth'], 'namespace' => 'Backend'], functi
       Route::get('/new', ['as' => 'create', 'uses' => 'UserController@create']);
       Route::post('/new', ['as' => 'store', 'uses' => 'UserController@store']);
 
-      Route::group(['prefix' => '{user}'], function(){
+      Route::group(['prefix' => '{user_id}'], function(){
          Route::group(['prefix' => 'documents', 'as' => 'documents.'], function(){
             Route::get('/', ['as' => 'index', 'uses' => 'DocumentController@index']);
          });
