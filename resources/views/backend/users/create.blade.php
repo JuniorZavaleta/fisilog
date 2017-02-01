@@ -76,7 +76,7 @@
             <select name="document_type" class="form-control">
               <option value="0" >Seleccione un tipo de Documento</option>
               @foreach($document_types as $document_type)
-              <option value="{{$document_type->id}}" {{ old('document_type') == $document_type->id  ? 'selected' : '' }} >{{$document_type->name}}</option>
+              <option value="{{ $document_type->id }}" {{ old('document_type') == $document_type->id  ? 'selected' : '' }} >{{ $document_type->name }}</option>
               @endforeach
             </select>
           </div>

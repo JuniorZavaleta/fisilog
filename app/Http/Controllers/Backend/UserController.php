@@ -8,87 +8,88 @@ use FisiLog\Http\Controllers\Controller;
 use FisiLog\Http\Requests\Backend\User\StoreRequest;
 
 use FisiLog\Models\User;
+use FisiLog\Models\Student;
+use FisiLog\Models\Professor;
 use FisiLog\Models\UserType;
 use FisiLog\Models\DocumentType;
+use FisiLog\Models\Document;
 use FisiLog\Models\School;
 use FisiLog\Models\AcademicDepartment;
+use FisiLog\Models\NotificationChannel;
 
 class UserController extends Controller
 {
-   public function __construct()
-   {
-      $this->notification_by_email_id        = 2;
-   }
+    public function __construct()
+    {
+        $this->notification_by_email_id = 2;
+    }
 
-   public function index()
-   {
-      $users = User::paginate(10);
+    public function index()
+    {
+        $users = User::paginate(10);
 
-      return view('backend.users.index', compact('users'));
-   }
+        return view('backend.users.index', compact('users'));
+    }
 
-   public function create()
-   {
-      $document_types       = DocumentType::all();
-      $schools              = School::all();
-      $academic_departments = AcademicDepartment::all();
-      $professor_types      = config('enums.professor_types');
-      $user_types           = UserType::all();
+    public function create()
+    {
+        $document_types       = DocumentType::all();
+        $schools              = School::all();
+        $academic_departments = AcademicDepartment::all();
+        $professor_types      = config('enums.professor_types');
+        $user_types           = UserType::all();
 
-      $data = [
-         'document_types'       => $document_types,
-         'schools'              => $schools,
-         'academic_departments' => $academic_departments,
-         'professor_types'      => $professor_types,
-         'user_types'           => $user_types,
-      ];
+        return view('backend.users.create', compact(
+            'document_types', 'schools', 'academic_departments', 'professor_types', 'user_types'
+        ));
+    }
 
-      return view('backend.users.create', $data);
-   }
+    public function store(StoreRequest $request)
+    {
+        $user_type_id = $request->get('user_type');
+        $user_type    = UserType::find($user_type_id);
 
-   public function store(StoreRequest $request)
-   {
-      extract($request->all());
+        $photo_url = $this->urlToString($request->file('photo'));
 
-      $user_type_id = $request->input('user_type');
-      $user_type = $this->user_type_persistence->findById($user_type_id);
+        $user = new User;
+        $user->name         = $request->get('name');
+        $user->lastname     = $request->get('lastname');
+        $user->email        = $request->get('email');
+        $user->password     = bcrypt($request->get('password'));
+        $user->phone        = $request->get('phone');
+        $user->user_type_id = $request->get('user_type');
+        $user->photo_url    = $photo_url;
+        $user->notification_channel_id = NotificationChannel::EMAIl_CHANNEL;
+        $user->notification_receipt    = $request->get('email');
+        $user->save();
 
-      $photo_url = $this->urlToString($photo);
+        $document = new Document;
+        $document->user_id          = $user->id;
+        $document->document_type_id = $request->get('document_type');
+        $document->code             = $request->get('document_code');
+        $document->save();
 
-      $notification_channel = $this->notification_channel_persistence->findById($this->notification_by_email_id);
+        if ($user_type_id == UserType::STUDENT_TYPE) {
+            $student = new Student;
+            $student->school_id     = $request->get('school_id');
+            $student->year_of_entry = $request->get('year_of_entry');
+            $student->code          = $request->get('student_code');
+            $student->save();
+        } elseif($user_type_id == UserType::PROFESSOR_TYPE) {
+            $professor = new Professor;
+            $professor->type                   = $request->get('professor_type');
+            $professor->academic_department_id = $request->get('academic_department_id');
+            $professor->save();
+        }
 
-      $user = new User($name, $lastname, $email, $password, $phone, $user_type, $photo_url, $notification_channel);
+        return redirect()->route('users.index')->with('message', 'Usuario registrado exitosamente.');
+    }
 
-      $this->user_persistence->save($user);
+    public function urlToString($photo)
+    {
+        $filename  = time() . '.' . $photo->getClientOriginalName();
+        $url = "img/users/" . $filename;
 
-      $document_type = $this->document_type_persistence->findById($document_type);
-
-      $document = new Document($user, $document_type, $document_code);
-
-      $this->document_persistence->save($document);
-
-      if ( $user->isStudent() ) {
-
-         $school = $this->school_persistence->findById($school_id);
-
-         $this->student_persistence->save(new Student($user, $school, $year_of_entry, $student_code));
-
-      } elseif( $user->isProfessor() ) {
-
-         $academic_department = $this->academic_dep_persistence->findById($academic_department_id);
-
-         $this->professor_persistence->save(new Professor($user, $academic_department, $professor_type));
-
-      }
-
-      return redirect()->route('users.index')->with('message', 'Usuario registrado exitosamente.');
-   }
-
-   public function urlToString($photo)
-   {
-      $filename  = time() . '.' . $photo->getClientOriginalName();
-      $url = "img/users/" . $filename;
-
-      return $url;
-   }
+        return $url;
+    }
 }

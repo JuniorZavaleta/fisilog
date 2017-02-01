@@ -5,14 +5,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserType extends Model
 {
-   protected $table = 'user_types';
+    protected $table = 'user_types';
 
-   public $timestamps = false;
+    public $timestamps = false;
 
-   protected $fillable = ['name'];
+    protected $fillable = ['name'];
 
-   public function users()
-   {
-      return $this->hasMany(User::class);
-   }
+    const STUDENT_TYPE   = 1;
+    const PROFESSOR_TYPE = 2;
+
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
 }
