@@ -22,10 +22,10 @@
     <![endif]-->
 
     <!-- Scripts -->
-    {!! Html::script('js/jquery-1.11.3.min.js') !!}
-    {!! Html::script('js/bootstrap.min.js') !!}
-    {!! Html::script('js/metisMenu.min.js') !!}
-    {!! Html::script('js/sb-admin-2.js') !!}
+    <script src="{{ url('js/jquery-1.11.3.min.js') }}"></script>
+    <script src="{{ url('js/bootstrap.min.js') }}"></script>
+    <script src="{{ url('js/metisMenu.min.js') }}"></script>
+    <script src="{{ url('js/sb-admin-2.js') }}"></script>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
