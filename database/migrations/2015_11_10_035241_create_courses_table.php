@@ -12,19 +12,16 @@ class CreateCoursesTable extends Migration
      */
     public function up()
     {
-        Schema::create('courses', function(Blueprint $table) {
+        Schema::create('courses', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('academic_plan_id')->unsigned();
+            $table->unsignedInteger('academic_plan_id');
             $table->string('name');
             $table->string('code');
             $table->integer('quantity_of_credits');
-        });
-        Schema::table('courses', function(Blueprint $table) {
-            $table->foreign('academic_plan_id')
-                  ->references('id')
-                  ->on('academic_plans')
-                  ->onUpdate('cascade')
-                  ->onDelete('cascade');
+            $table->unsignedInteger('course_type_id');
+            $table->integer('ciclo');
+
+            $table->foreign('academic_plan_id')->references('id')->on('academic_plans');
         });
     }
 
@@ -35,9 +32,10 @@ class CreateCoursesTable extends Migration
      */
     public function down()
     {
-        Schema::table('courses', function(Blueprint $table) {
+        Schema::table('courses', function (Blueprint $table) {
             $table->dropForeign('courses_academic_plan_id_foreign');
         });
+
         Schema::drop('courses');
     }
 }

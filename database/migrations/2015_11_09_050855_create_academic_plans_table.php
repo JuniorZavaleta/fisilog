@@ -12,19 +12,14 @@ class CreateAcademicPlansTable extends Migration
      */
     public function up()
     {
-        Schema::create('academic_plans', function(Blueprint $table) {
+        Schema::create('academic_plans', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('school_id')->unsigned();
+            $table->unsignedInteger('school_id');
             $table->string('name');
             $table->integer('year_of_publication');
             $table->boolean('is_active');
-        });
-        Schema::table('academic_plans', function(Blueprint $table) {
-            $table->foreign('school_id')
-                  ->references('id')
-                  ->on('schools')
-                  ->onUpdate('cascade')
-                  ->onDelete('cascade');
+
+            $table->foreign('school_id')->references('id')->on('schools');
         });
     }
 
@@ -35,9 +30,10 @@ class CreateAcademicPlansTable extends Migration
      */
     public function down()
     {
-        Schema::table('academic_plans', function(Blueprint $table) {
+        Schema::table('academic_plans', function (Blueprint $table) {
             $table->dropForeign('academic_plans_school_id_foreign');
         });
+
         Schema::drop('academic_plans');
     }
 }

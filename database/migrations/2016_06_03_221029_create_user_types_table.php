@@ -5,16 +5,26 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateUserTypesTable extends Migration
 {
-   public function up()
-   {
-      Schema::create('user_types', function(Blueprint $table) {
-         $table->increments('id');
-         $table->string('name');
-      });
-   }
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('user_types', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+        });
+    }
 
-   public function down()
-   {
-      Schema::drop('user_types');
-   }
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::drop('user_types');
+    }
 }

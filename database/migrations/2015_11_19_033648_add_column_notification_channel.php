@@ -12,12 +12,8 @@ class AddColumnNotificationChannel extends Migration
      */
     public function up()
     {
-        Schema::table('users', function(Blueprint $table) {
-            $table->foreign('notification_channel_id')
-                  ->references('id')
-                  ->on('notification_channels')
-                  ->onDelete('cascade')
-                  ->onUpdate('cascade');
+        Schema::table('users', function (Blueprint $table) {
+            $table->foreign('notification_channel_id')->references('id')->on('notification_channels');
         });
     }
 
@@ -28,7 +24,7 @@ class AddColumnNotificationChannel extends Migration
      */
     public function down()
     {
-        Schema::table('users', function(Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             $table->dropForeign('users_notification_channel_id_foreign');
         });
     }

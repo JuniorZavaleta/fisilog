@@ -12,17 +12,12 @@ class CreateGroupsTable extends Migration
      */
     public function up()
     {
-        Schema::create('groups', function(Blueprint $table) {
+        Schema::create('groups', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('course_opened_id')->unsigned();
+            $table->unsignedInteger('course_opened_id');
             $table->integer('number_of_group');
-        });
-        Schema::table('groups', function(Blueprint $table) {
-            $table->foreign('course_opened_id')
-                  ->references('id')
-                  ->on('courses_opened')
-                  ->onUpdate('cascade')
-                  ->onDelete('cascade');
+
+            $table->foreign('course_opened_id')->references('id')->on('courses_opened');
         });
     }
 
@@ -33,9 +28,10 @@ class CreateGroupsTable extends Migration
      */
     public function down()
     {
-        Schema::table('groups', function(Blueprint $table) {
+        Schema::table('groups', function (Blueprint $table) {
             $table->dropForeign('groups_course_opened_id_foreign');
         });
+
         Schema::drop('groups');
     }
 }

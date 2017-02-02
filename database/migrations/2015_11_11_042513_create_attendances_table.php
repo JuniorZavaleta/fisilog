@@ -12,25 +12,14 @@ class CreateAttendancesTable extends Migration
      */
     public function up()
     {
-        Schema::create('attendances', function(Blueprint $table) {
+        Schema::create('attendances', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->unsigned();
-            $table->integer('class_id')->unsigned();
-            $table->dateTime('date');
             $table->boolean('verified');
+            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('session_class_id');
             $table->timestamps();
-        });
-        Schema::table('attendances', function(Blueprint $table) {
-            $table->foreign('user_id')
-                  ->references('id')
-                  ->on('users')
-                  ->onUpdate('cascade')
-                  ->onDelete('cascade');
-            $table->foreign('class_id')
-                  ->references('id')
-                  ->on('classes')
-                  ->onUpdate('cascade')
-                  ->onDelete('cascade');
+
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
@@ -41,10 +30,10 @@ class CreateAttendancesTable extends Migration
      */
     public function down()
     {
-        Schema::table('attendances', function(Blueprint $table) {
+        Schema::table('attendances', function (Blueprint $table) {
             $table->dropForeign('attendances_user_id_foreign');
-            $table->dropForeign('attendances_class_id_foreign');
         });
+
         Schema::drop('attendances');
     }
 }

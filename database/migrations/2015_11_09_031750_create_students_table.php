@@ -5,40 +5,37 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateStudentsTable extends Migration
 {
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('students', function (Blueprint $table) {
+            $table->unsignedInteger('id');
+            $table->unsignedInteger('school_id');
+            $table->string('code');
+            $table->integer('year_of_entry');
 
-   public function up()
-   {
-      Schema::create('students', function(Blueprint $table) {
-         $table->integer('id')->unsigned();
-         $table->integer('school_id')->unsigned();
-         $table->string('code');
-         $table->integer('year_of_entry');
-      });
+            $table->primary('id');
+            $table->foreign('id')->references('id')->on('users');
+            $table->foreign('school_id')->references('id')->on('schools');
+        });
+    }
 
-      Schema::table('students', function(Blueprint $table) {
-         $table->primary('id');
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::table('students', function (Blueprint $table) {
+            $table->dropForeign('students_id_foreign');
+            $table->dropForeign('students_school_id_foreign');
+        });
 
-         $table->foreign('id')
-               ->references('id')
-               ->on('users')
-               ->onUpdate('cascade')
-               ->onDelete('cascade');
-
-         $table->foreign('school_id')
-               ->references('id')
-               ->on('schools')
-               ->onUpdate('cascade')
-               ->onDelete('cascade');
-      });
-   }
-
-   public function down()
-   {
-      Schema::table('students', function(Blueprint $table) {
-         $table->dropForeign('students_id_foreign');
-         $table->dropForeign('students_school_id_foreign');
-      });
-
-      Schema::drop('students');
-   }
+        Schema::drop('students');
+    }
 }

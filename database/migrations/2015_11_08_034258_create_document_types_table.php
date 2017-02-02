@@ -12,7 +12,7 @@ class CreateDocumentTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('document_types', function(Blueprint $table) {
+        Schema::create('document_types', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
         });

@@ -12,7 +12,7 @@ class CreateNotificationChannelsTable extends Migration
      */
     public function up()
     {
-        Schema::create('notification_channels', function(Blueprint $table){
+        Schema::create('notification_channels', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
         });

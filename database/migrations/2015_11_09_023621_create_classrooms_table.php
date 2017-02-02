@@ -12,17 +12,12 @@ class CreateClassroomsTable extends Migration
      */
     public function up()
     {
-        Schema::create('classrooms', function(Blueprint $table) {
+        Schema::create('classrooms', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('facultad_id')->unsigned();
             $table->string('name');
-        });
-        Schema::table('classrooms', function(Blueprint $table) {
-            $table->foreign('facultad_id')
-                  ->references('id')
-                  ->on('facultades')
-                  ->onUpdate('cascade')
-                  ->onDelete('cascade');
+
+            $table->foreign('facultad_id')->references('id')->on('facultades');
         });
     }
 
@@ -33,9 +28,10 @@ class CreateClassroomsTable extends Migration
      */
     public function down()
     {
-        Schema::table('classrooms', function(Blueprint $table) {
+        Schema::table('classrooms', function (Blueprint $table) {
             $table->dropForeign('classrooms_facultad_id_foreign');
         });
+
         Schema::drop('classrooms');
     }
 }
