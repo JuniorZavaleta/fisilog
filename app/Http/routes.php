@@ -40,7 +40,7 @@ Route::group(['middleware' => ['web', 'auth'], 'namespace' => 'Backend'], functi
             Route::get('/', ['as' => 'facultades.classrooms', 'uses' => 'ClassRoomController@index']);
         });
 
-        Route::get('/eaps', ['as' => 'eaps', 'uses' => 'EapController@getByFacultad']);
+        Route::get('/{facultad_id}/eaps', ['as' => 'eaps', 'uses' => 'EapController@getByFacultad']);
     });
 
     Route::group(['prefix' => 'eaps', 'as' => 'eaps.'], function () {
