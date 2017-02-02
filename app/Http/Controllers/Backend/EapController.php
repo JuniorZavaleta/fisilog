@@ -5,21 +5,16 @@ use FisiLog\Http\Controllers\Controller;
 
 use FisiLog\Http\Requests\Backend\Eap\StoreRequest;
 
-use FisiLog\BusinessClasses\School;
+use FisiLog\Models\School;
 
 class EapController extends Controller
 {
-
     public function index()
     {
-      $schools = $this->school_persistence->getAll();
+        $eaps = School::all();
 
-      $data = [
-         'eaps' => $schools,
-      ];
-
-      return view('backend.eaps.index', $data);
-   }
+        return view('backend.eaps.index', compact('eaps'));
+    }
 
    public function create()
    {
