@@ -4,18 +4,14 @@ namespace FisiLog\Http\Controllers\Backend;
 
 use FisiLog\Http\Controllers\Controller;
 
+use FisiLog\Models\Facultad;
+
 class ClassRoomController extends Controller
 {
-   public function index($facultad)
+   public function index($facultad_id)
    {
-        $facultad = $this->facultad_persistence->createBusinessClass($facultad);
-        $classrooms = $this->classroom_persistence->getByFacultadId($facultad->getId());
+        $facultad = Facultad::with('classrooms')->find($facultad_id);
 
-        $data = [
-            'facultad' => $facultad,
-            'classrooms' => $classrooms,
-        ];
-
-        return view('backend.facultades.classrooms.index', $data);
+        return view('backend.facultades.classrooms.index', compact('facultad'));
     }
 }

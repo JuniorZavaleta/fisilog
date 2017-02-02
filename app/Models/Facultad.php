@@ -1,28 +1,29 @@
 <?php
+
 namespace FisiLog\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
 class Facultad extends Model
 {
+    protected $table = 'facultades';
 
-   protected $table = 'facultades';
-   protected $fillable = ['name', 'code'];
-   public $timestamps = false;
+    protected $fillable = ['name', 'code'];
 
-   public function schools()
-   {
-      return $this->hasMany(School::class,'facultad_id');
-   }
+    public $timestamps = false;
 
-   public function classrooms()
-   {
-      return $this->hasMany(Classroom::class);
-   }
+    public function schools()
+    {
+        return $this->hasMany(School::class,'facultad_id');
+    }
 
-   public function academicPeriods()
-   {
-      return $this->hasMany(AcademicPeriod::class);
-   }
+    public function classrooms()
+    {
+        return $this->hasMany(ClassRoom::class);
+    }
 
+    public function academicPeriods()
+    {
+        return $this->hasMany(AcademicPeriod::class);
+    }
 }
