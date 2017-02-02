@@ -12,92 +12,84 @@
 */
 Route::group(['middleware' => ['web', 'auth'], 'namespace' => 'Backend'], function () {
 
-   Route::get('index', ['as' => 'index', 'uses' => 'IndexController@index']);
+    Route::get('index', ['as' => 'index', 'uses' => 'IndexController@index']);
 
-   Route::group(['prefix' => 'users', 'as' => 'users.'], function() {
-      Route::get('/', ['as' => 'index', 'uses' => 'UserController@index']);
-      Route::get('/new', ['as' => 'create', 'uses' => 'UserController@create']);
-      Route::post('/new', ['as' => 'store', 'uses' => 'UserController@store']);
+    Route::group(['prefix' => 'users'], function () {
+        Route::get('/', ['as' => 'users.index', 'uses' => 'UserController@index']);
+        Route::get('/new', ['as' => 'users.create', 'uses' => 'UserController@create']);
+        Route::post('/new', ['as' => 'users.store', 'uses' => 'UserController@store']);
 
-      Route::group(['prefix' => '{user_id}'], function(){
-         Route::group(['prefix' => 'documents', 'as' => 'documents.'], function(){
-            Route::get('/', ['as' => 'index', 'uses' => 'DocumentController@index']);
-         });
-      });
-   });
+        Route::get('{user_id}/documents', ['as' => 'users.documents', 'uses' => 'DocumentController@index']);
+    });
 
-   Route::group(['prefix' => 'facultades', 'as' => 'facultades.'], function() {
-      Route::get('/', ['as' => 'index', 'uses' => 'FacultadController@index']);
-      Route::get('/new', ['as' => 'create', 'uses' => 'FacultadController@create']);
-      Route::post('/new', ['as' => 'store', 'uses' => 'FacultadController@store']);
+    Route::group(['prefix' => 'facultades'], function () {
+        Route::get('/', ['as' => 'facultades.index', 'uses' => 'FacultadController@index']);
+        Route::get('/new', ['as' => 'facultades.create', 'uses' => 'FacultadController@create']);
+        Route::post('/new', ['as' => 'facultades.store', 'uses' => 'FacultadController@store']);
 
-      Route::group(['prefix' => '{id}'], function(){
-         Route::group(['prefix' => 'academic_periods', 'as' => 'academic_periods.'], function(){
+        Route::get('/{id}/edit', ['as' => 'facultades.edit', 'uses' => 'FacultadController@edit']);
+        Route::post('/{id}/edit', ['as' => 'facultades.update', 'uses' => 'FacultadController@update']);
+
+        Route::group(['prefix' => '{id}/academic_periods'], function () {
             Route::get('/', ['as' => 'index', 'uses' => 'AcademicPeriodController@index']);
             Route::get('/new', ['as' => 'create', 'uses' => 'AcademicPeriodController@create']);
             Route::post('/new', ['as' => 'store', 'uses' => 'AcademicPeriodController@store']);
-         });
-         Route::group(['prefix' => 'classrooms', 'as' => 'classrooms.'], function(){
-            Route::get('/', ['as' => 'index', 'uses' => 'ClassRoomController@index']);
-         });
-         Route::get('/edit', ['as' => 'edit', 'uses' => 'FacultadController@edit']);
-         Route::post('/edit', ['as' => 'update', 'uses' => 'FacultadController@update']);
+        });
 
-         Route::get('/eaps', ['as' => 'eaps', 'uses' => 'EapController@getByFacultad']);
-      });
-   });
+        Route::group(['prefix' => '{id}/classrooms'], function () {
+            Route::get('/', ['as' => 'facultades.classrooms', 'uses' => 'ClassRoomController@index']);
+        });
 
-   Route::group(['prefix' => 'eaps', 'as' => 'eaps.'], function() {
-      Route::get('/', ['as' => 'index', 'uses' => 'EapController@index']);
-      Route::get('/new', ['as' => 'create', 'uses' => 'EapController@create']);
-      Route::post('/new', ['as' => 'store', 'uses' => 'EapController@store']);
+        Route::get('/eaps', ['as' => 'eaps', 'uses' => 'EapController@getByFacultad']);
+    });
 
-      Route::group(['prefix' => '{eap}'], function(){
-         Route::get('/edit', ['as' => 'edit', 'uses' => 'EapController@edit']);
-         Route::post('/edit', ['as' => 'update', 'uses' => 'EapController@update']);
+    Route::group(['prefix' => 'eaps', 'as' => 'eaps.'], function () {
+        Route::get('/', ['as' => 'index', 'uses' => 'EapController@index']);
+        Route::get('/new', ['as' => 'create', 'uses' => 'EapController@create']);
+        Route::post('/new', ['as' => 'store', 'uses' => 'EapController@store']);
 
-         Route::group(['prefix' => 'academic_plans', 'as' => 'academic_plans.'], function() {
-            Route::get('/', ['as' => 'index', 'uses' => 'AcademicPlanController@index']);
-            Route::get('/new', ['as' => 'create', 'uses' => 'AcademicPlanController@create']);
-            Route::post('/new', ['as' => 'store', 'uses' => 'AcademicPlanController@store']);
+        Route::group(['prefix' => '{eap}'], function () {
+            Route::get('/edit', ['as' => 'edit', 'uses' => 'EapController@edit']);
+            Route::post('/edit', ['as' => 'update', 'uses' => 'EapController@update']);
 
-            Route::group(['prefix' => '{academic_plan}'], function(){
-               Route::group(['prefix' => 'courses', 'as' => 'courses.'], function() {
-                  Route::get('/', ['as' => 'index', 'uses' => 'CourseController@index']);
-               });
+            Route::group(['prefix' => 'academic_plans', 'as' => 'academic_plans.'], function () {
+                Route::get('/', ['as' => 'index', 'uses' => 'AcademicPlanController@index']);
+                Route::get('/new', ['as' => 'create', 'uses' => 'AcademicPlanController@create']);
+                Route::post('/new', ['as' => 'store', 'uses' => 'AcademicPlanController@store']);
+
+                Route::group(['prefix' => '{academic_plan}'], function () {
+                    Route::group(['prefix' => 'courses', 'as' => 'courses.'], function () {
+                        Route::get('/', ['as' => 'index', 'uses' => 'CourseController@index']);
+                    });
+                });
             });
-         });
 
-         Route::get('/courses/{ciclo}', ['as' => 'courses', 'uses' => 'CourseController@getByEap']);
-      });
-   });
+            Route::get('/courses/{ciclo}', ['as' => 'courses', 'uses' => 'CourseController@getByEap']);
+        });
+    });
 
-   Route::group(['prefix' => 'classes', 'as' => 'classes.'], function() {
-      Route::get('/search', ['as' => 'index', 'uses' => 'ClassController@index']);
-      Route::get('/getByCourse/{course}', ['as' => 'getByCourse', 'uses' => 'ClassController@search']);
-      Route::get('/show/{clase}', ['as' => 'show', 'uses' => 'ClassController@show']);
+    Route::group(['prefix' => 'classes', 'as' => 'classes.'], function () {
+        Route::get('/search', ['as' => 'index', 'uses' => 'ClassController@index']);
+        Route::get('/getByCourse/{course}', ['as' => 'getByCourse', 'uses' => 'ClassController@search']);
+        Route::get('/show/{clase}', ['as' => 'show', 'uses' => 'ClassController@show']);
 
-      Route::group(['prefix' => '{clase}'], function(){
+        Route::group(['prefix' => '{clase}'], function () {
+            Route::group(['prefix' => 'attendances', 'as' => 'attendances.'], function () {
+                Route::get('/', ['as' => 'index', 'uses' => 'AttendanceController@index']);
+                Route::get('/new', ['as' => 'store', 'uses' => 'AttendanceController@storeProfessor']);
+            });
 
-         Route::group(['prefix' => 'attendances', 'as' => 'attendances.'], function(){
-            Route::get('/', ['as' => 'index', 'uses' => 'AttendanceController@index']);
-            Route::get('/new', ['as' => 'store', 'uses' => 'AttendanceController@storeProfessor']);
+            Route::group(['prefix' => 'sessions_class', 'as' => 'sessions_class.'], function () {
+                Route::get('/{session_class}', ['as' => 'index', 'uses' => 'SessionClassController@show']);
+                Route::post('/{session_class}/store_student_attendance', ['as' => 'store_student', 'uses' => 'AttendanceController@storeStudent']);
+                Route::post('/{session_class}/cancel', ['as' => 'cancel', 'uses' => 'SessionClassController@cancel']);
+            });
+        });
+    });
 
-         });
-
-         Route::group(['prefix' => 'sessions_class', 'as' => 'sessions_class.'], function() {
-            Route::get('/{session_class}', ['as' => 'index', 'uses' => 'SessionClassController@show']);
-            Route::post('/{session_class}/store_student_attendance', ['as' => 'store_student', 'uses' => 'AttendanceController@storeStudent']);
-            Route::post('/{session_class}/cancel', ['as' => 'cancel', 'uses' => 'SessionClassController@cancel']);
-         });
-      });
-
-   });
-
-   Route::group(['prefix' => 'students', 'as' => 'students.'], function() {
-      Route::post('/getByDocument', ['as' => 'getByDocument', 'uses' => 'StudentController@getByDocument']);
-   });
-
+    Route::group(['prefix' => 'students', 'as' => 'students.'], function () {
+        Route::post('/getByDocument', ['as' => 'getByDocument', 'uses' => 'StudentController@getByDocument']);
+    });
 });
 
 Route::group(['middleware' => ['web']], function () {

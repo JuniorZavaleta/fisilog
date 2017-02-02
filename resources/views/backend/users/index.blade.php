@@ -31,7 +31,7 @@
         <td>{{ $user->lastname }}</td>
         <td>{{ $user->email }}</td>
         <td>
-           <a href="{{ route('users.documents.index', ['user_id' => $user->id ]) }}" title="Documentos"><i class="fa fa-list-alt fa-fw"></i></a>
+           <a href="{{ route('users.documents', ['user_id' => $user->id ]) }}" title="Documentos"><i class="fa fa-list-alt fa-fw"></i></a>
         </td>
       </tr>
     @endforeach

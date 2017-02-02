@@ -8,6 +8,14 @@
   </div>
 </div>
 
+@if (session('message'))
+<div class="row">
+  <div class="alert alert-success">
+    {{ session('message') }}
+  </div>
+</div>
+@endif
+
 <div class="row">
   <table class="table">
     <thead>
@@ -22,7 +30,7 @@
         <td>{{ $facultad->code }}</td>
         <td>
           <a href="{{ route('facultades.edit', ['id' => $facultad->id ]) }}" title="Editar"><i class="fa fa-pencil-square-o fa-fw"></i></a>
-          <a href="{{ route('facultades.classrooms.index', ['id' => $facultad->id ]) }}" title="Salones"><i class="fa fa-cubes fa-fw"></i></a>
+          <a href="{{ route('facultades.classrooms', ['id' => $facultad->id ]) }}" title="Salones"><i class="fa fa-cubes fa-fw"></i></a>
         </td>
      </tr>
     @endforeach
