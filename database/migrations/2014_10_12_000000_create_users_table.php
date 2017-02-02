@@ -19,7 +19,10 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('phone');
-            $table->enum('type',['Estudiante', 'Profesor']);
+            $table->string('photo_url');
+            $table->string('notification_receipt');
+            $table->unsignedInteger('user_type_id');
+            $table->unsignedInteger('notification_channel_id');
             $table->rememberToken();
             $table->timestamps();
         });

@@ -16,12 +16,12 @@ class CreateClassesTable extends Migration
             $table->increments('id');
             $table->integer('classroom_id')->unsigned();
             $table->integer('professor_id')->unsigned();
-            $table->integer('schedule_id')->unsigned();
             $table->integer('group_id')->unsigned();
             $table->enum('type',['Theory','Practice','Lab']);
             $table->enum('status',['WAITING','CANCELED','ON_COURSE']);
             $table->timestamps();
         });
+
         Schema::table('classes', function(Blueprint $table) {
             $table->foreign('classroom_id')
                   ->references('id')
@@ -31,11 +31,6 @@ class CreateClassesTable extends Migration
             $table->foreign('professor_id')
                   ->references('id')
                   ->on('professors')
-                  ->onUpdate('cascade')
-                  ->onDelete('cascade');
-            $table->foreign('schedule_id')
-                  ->references('id')
-                  ->on('schedules')
                   ->onUpdate('cascade')
                   ->onDelete('cascade');
             $table->foreign('group_id')
@@ -56,9 +51,9 @@ class CreateClassesTable extends Migration
         Schema::table('classes', function(Blueprint $table) {
             $table->dropForeign('classes_classroom_id_foreign');
             $table->dropForeign('classes_professor_id_foreign');
-            $table->dropForeign('classes_schedule_id_foreign');
             $table->dropForeign('classes_group_id_foreign');
         });
+
         Schema::drop('classes');
     }
 }

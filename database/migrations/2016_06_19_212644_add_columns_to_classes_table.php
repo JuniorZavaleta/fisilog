@@ -13,11 +13,6 @@ class AddColumnsToClassesTable extends Migration
    public function up()
    {
       Schema::table('classes', function(Blueprint $table) {
-         $table->dropForeign('classes_schedule_id_foreign');
-      });
-
-      Schema::table('classes', function(Blueprint $table) {
-         $table->dropColumn('schedule_id');
          $table->dropColumn('type');
          $table->dropColumn('status');
       });
@@ -45,17 +40,8 @@ class AddColumnsToClassesTable extends Migration
       });
 
       Schema::table('classes', function(Blueprint $table) {
-         $table->integer('schedule_id')->unsigned();
          $table->enum('type',['Theory','Practice','Lab']);
          $table->enum('status',['WAITING','CANCELED','ON_COURSE']);
       });
-
-      Schema::table('classes', function(Blueprint $table) {
-         $table->foreign('schedule_id')
-               ->references('id')
-               ->on('schedules')
-               ->onUpdate('cascade')
-               ->onDelete('cascade');
-     });
    }
 }
