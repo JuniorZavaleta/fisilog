@@ -6,6 +6,7 @@ use FisiLog\Http\Controllers\Controller;
 use FisiLog\Http\Requests\Backend\Eap\StoreRequest;
 
 use FisiLog\Models\School;
+use FisiLog\Models\Facultad;
 
 class EapController extends Controller
 {
@@ -16,29 +17,23 @@ class EapController extends Controller
         return view('backend.eaps.index', compact('eaps'));
     }
 
-   public function create()
-   {
-      $facultades = $this->facultad_persistence->getAll();
+    public function create()
+    {
+        $facultades = Facultad::all();
 
-      $data = [
-         'facultades' => $facultades,
-      ];
+        return view('backend.eaps.new', compact('facultades'));
+    }
 
-      return view('backend.eaps.new', $data);
-   }
+    public function store(StoreRequest $request)
+    {
+        $eap = new School;
+        $eap->name        = $request->get('name');
+        $eap->code        = $request->get('code');
+        $eap->facultad_id = $request->get('facultad_id');
+        $eap->save();
 
-   public function store(StoreRequest $request)
-   {
-      extract($request->all());
-
-      $facultad = $this->facultad_persistence->findById($facultad_id);
-
-      $eap = new School($name, $code, $facultad);
-
-      $this->school_persistence->save($eap);
-
-      return redirect()->route('eaps.index')->with('message', 'EAP registrada existosamente.');
-   }
+        return redirect()->route('eaps.index')->with('message', 'EAP registrada existosamente.');
+    }
 
    public function edit($eap)
    {
