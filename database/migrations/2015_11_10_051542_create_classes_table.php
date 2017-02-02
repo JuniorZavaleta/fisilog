@@ -20,6 +20,7 @@ class CreateClassesTable extends Migration
             $table->integer('group_id')->unsigned();
             $table->enum('type',['Theory','Practice','Lab']);
             $table->enum('status',['WAITING','CANCELED','ON_COURSE']);
+            $table->timestamps();
         });
         Schema::table('classes', function(Blueprint $table) {
             $table->foreign('classroom_id')

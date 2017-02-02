@@ -62,4 +62,9 @@ class Clase extends Model
     {
         return $this->classroom->name;
     }
+
+    public function getCourseNameAttribute()
+    {
+        return $this->course->name;
+    }
 }

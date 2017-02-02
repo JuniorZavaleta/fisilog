@@ -6,6 +6,7 @@ use FisiLog\Http\Controllers\Controller;
 use Auth;
 use FisiLog\Models\Student;
 use FisiLog\Models\Clase;
+use FisiLog\Models\UserType;
 
 class IndexController extends Controller
 {
@@ -13,7 +14,7 @@ class IndexController extends Controller
     {
         $user = Auth::user();
 
-        if ($user->user_type_id == 1) {
+        if ($user->user_type_id == UserType::STUDENT_TYPE) {
             $classes = Clase::whereHas('group', function ($group) use ($user) {
                 $group->whereHas('students', function ($students) use ($user) {
                     $students->where('students.id', $user->id);
@@ -21,20 +22,14 @@ class IndexController extends Controller
             })->get();
 
             $view = 'backend.index.students';
-            $data = [
-                'classes' => $classes,
-            ];
-        } elseif ($user->user_type_id == 2) {
-            $classes = $this->class_persistence->getByProfessorId($user->id);
+        } elseif ($user->user_type_id == UserType::PROFESSOR_TYPE) {
+            $classes = Clase::where('professor_id', $user->id)->get();
 
             $view = 'backend.index.professors';
-            $data = [
-                'classes' => $classes,
-            ];
         } else {
-            //return view('');
+            // $classes = Clase::paginate(10)->get();
         }
 
-        return view($view, $data);
+        return view($view, compact('classes'));
     }
 }
