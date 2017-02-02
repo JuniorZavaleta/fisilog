@@ -66,22 +66,20 @@ Route::group(['middleware' => ['web', 'auth'], 'namespace' => 'Backend'], functi
         Route::get('/{eap_id}/courses/{ciclo}', ['as' => 'courses', 'uses' => 'CourseController@getByEap']);
     });
 
-    Route::group(['prefix' => 'classes', 'as' => 'classes.'], function () {
-        Route::get('/search', ['as' => 'index', 'uses' => 'ClassController@index']);
-        Route::get('/getByCourse/{course}', ['as' => 'getByCourse', 'uses' => 'ClassController@search']);
-        Route::get('/show/{clase}', ['as' => 'show', 'uses' => 'ClassController@show']);
+    Route::group(['prefix' => 'classes'], function () {
+        Route::get('/search', ['as' => 'classes.index', 'uses' => 'ClassController@index']);
+        Route::get('/getByCourse/{course}', ['as' => 'classes.getByCourse', 'uses' => 'ClassController@search']);
+        Route::get('/show/{clase_id}', ['as' => 'classes.show', 'uses' => 'ClassController@show']);
 
-        Route::group(['prefix' => '{clase}'], function () {
-            Route::group(['prefix' => 'attendances', 'as' => 'attendances.'], function () {
-                Route::get('/', ['as' => 'index', 'uses' => 'AttendanceController@index']);
-                Route::get('/new', ['as' => 'store', 'uses' => 'AttendanceController@storeProfessor']);
-            });
+        Route::group(['prefix' => '{clase_id}/attendances'], function () {
+            Route::get('/', ['as' => 'classes.attendances.index', 'uses' => 'AttendanceController@index']);
+            Route::get('/new', ['as' => 'classes.attendances.store', 'uses' => 'AttendanceController@storeProfessor']);
+        });
 
-            Route::group(['prefix' => 'sessions_class', 'as' => 'sessions_class.'], function () {
-                Route::get('/{session_class}', ['as' => 'index', 'uses' => 'SessionClassController@show']);
-                Route::post('/{session_class}/store_student_attendance', ['as' => 'store_student', 'uses' => 'AttendanceController@storeStudent']);
-                Route::post('/{session_class}/cancel', ['as' => 'cancel', 'uses' => 'SessionClassController@cancel']);
-            });
+        Route::group(['prefix' => 'sessions_class'], function () {
+            Route::get('/{session_class}', ['as' => 'sessions_class.index', 'uses' => 'SessionClassController@show']);
+            Route::post('/{session_class}/store_student_attendance', ['as' => 'sessions_class.store_student', 'uses' => 'AttendanceController@storeStudent']);
+            Route::post('/{session_class}/cancel', ['as' => 'sessions_class.cancel', 'uses' => 'SessionClassController@cancel']);
         });
     });
 

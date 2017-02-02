@@ -8,7 +8,7 @@ use FisiLog\Http\Requests;
 use FisiLog\Http\Controllers\Controller;
 
 use FisiLog\Models\AcademicCycle;
-
+use FisiLog\Models\Clase;
 use FisiLog\Models\Attendance;
 
 use Auth;
@@ -58,13 +58,11 @@ class ClassController extends Controller
       return response()->json($rows);
    }
 
-   public function show($class)
-   {
-      $data = [
-         'clase' => $class,
-      ];
+    public function show($clase_id)
+    {
+        $clase = Clase::find($clase_id);
 
-      return view('backend.classes.show', $data);
-   }
+        return view('backend.classes.show', compact('clase'));
+    }
 
 }

@@ -3,32 +3,27 @@ namespace FisiLog\Http\Controllers\Backend;
 
 use FisiLog\Http\Controllers\Controller;
 
-use FisiLog\Models\Clase;
-
-use FisiLog\BusinessClasses\Attendance;
-
 use Auth;
 
-use FisiLog\Models\Attendance as AttendanceModel;
+use FisiLog\Models\Clase;
+use FisiLog\Models\Attendance;
 
 use FisiLog\Http\Requests\Backend\Student\GetByDocument;
 
 class AttendanceController extends Controller
 {
-   public function index($clase)
-   {
-      $user = Auth::user();
-      $user_id = $user->id;
-      $clase_id = $clase->id;
+    public function index($clase_id)
+    {
+        $user  = Auth::user();
+        $clase = Clase::with('course')->find($clase_id);
 
-      $attendances = $this->attendance_persistence->getAttendancesOfUserByClase($user_id, $clase_id);
+        $attendances = Attendance::where('user_id', '=', $user->id)
+            ->whereHas('session_class', function ($session_class) use ($clase_id) {
+                $session_class->where('class_id', '=', $clase_id);
+            })->get();
 
-      $data = [
-         'attendances' => $attendances,
-      ];
-
-      return view('backend.classes.attendances.index', $data);
-   }
+        return view('backend.classes.attendances.index', compact('attendances', 'clase'));
+    }
 
    public function storeStudent($clase, $session_class, GetByDocument $request)
    {
