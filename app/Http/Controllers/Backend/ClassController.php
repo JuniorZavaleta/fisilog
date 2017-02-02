@@ -7,8 +7,6 @@ use Illuminate\Http\Request;
 use FisiLog\Http\Requests;
 use FisiLog\Http\Controllers\Controller;
 
-use FisiLog\DAO\DaoEloquentFactory;
-
 use FisiLog\Models\AcademicCycle;
 
 use FisiLog\Models\Attendance;
@@ -17,28 +15,18 @@ use Auth;
 
 class ClassController extends Controller
 {
+    public function index()
+    {
+        $facultades = $this->facultad_persistence->getAll();
 
-   public function __construct(DaoEloquentFactory $dao)
-   {
-      $this->school_persistence = $dao->getSchoolDAO();
-      $this->facultad_persistence = $dao->getFacultadDAO();
-      $this->class_persistence = $dao->getClaseDAO();
-      $this->session_class_persistence = $dao->getSessionClassDAO();
-      $this->academic_period_persistence = $dao->getAcademicPeriodDAO();
-   }
+        $data = [
+            'facultades' => $facultades,
+        ];
 
-   public function index()
-   {
-      $facultades = $this->facultad_persistence->getAll();
+        return view('backend.classes.search', $data);
+    }
 
-      $data = [
-         'facultades' => $facultades,
-      ];
-
-      return view('backend.classes.search', $data);
-   }
-
-   public function search($course)
+    public function search($course)
    {
       $today = date('Y-m-d');
       $academic_cycle = $this->academic_period_persistence->getPresentPeriodByFacultyId(20);

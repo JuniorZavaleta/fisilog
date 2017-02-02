@@ -3,25 +3,15 @@ namespace FisiLog\Http\Controllers\Backend;
 
 use FisiLog\Http\Controllers\Controller;
 
-use FisiLog\DAO\DaoEloquentFactory;
-
 use FisiLog\Http\Requests\Backend\Eap\StoreRequest;
 
 use FisiLog\BusinessClasses\School;
 
-use FisiLog\DAO\Facultad\FacultadDaoEloquent;
-
 class EapController extends Controller
 {
 
-   public function __construct(DaoEloquentFactory $dao)
-   {
-      $this->school_persistence = $dao->getSchoolDAO();
-      $this->facultad_persistence = $dao->getFacultadDAO();
-   }
-
-   public function index()
-   {
+    public function index()
+    {
       $schools = $this->school_persistence->getAll();
 
       $data = [

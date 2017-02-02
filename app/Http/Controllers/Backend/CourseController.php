@@ -7,20 +7,10 @@ use Illuminate\Http\Request;
 use FisiLog\Http\Requests;
 use FisiLog\Http\Controllers\Controller;
 
-use FisiLog\DAO\DaoEloquentFactory;
-
 use FisiLog\Models\Course;
 
 class CourseController extends Controller
 {
-
-   public function __construct(DaoEloquentFactory $dao)
-   {
-      $this->course_persistence = $dao->getCourseDAO();
-      $this->eap_persistence = $dao->getSchoolDAO();
-      $this->academic_plan_persistence = $dao->getAcademicPlanDAO();
-   }
-
    public function index($eap, $academic_plan)
    {
       $eap = $this->eap_persistence->createBusinessClass($eap);

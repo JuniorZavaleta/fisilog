@@ -1,4 +1,5 @@
 <?php
+
 namespace FisiLog\Http\Controllers\Auth;
 
 use FisiLog\Http\Controllers\Controller;
@@ -6,63 +7,60 @@ use Illuminate\Foundation\Auth\ThrottlesLogins;
 
 use Auth;
 use FisiLog\Models\User;
+use FisiLog\Models\DocumentType;
 
 use FisiLog\Http\Requests\Auth\AuthenticationDocument;
 use FisiLog\Http\Requests\Auth\AuthenticationEmail;
 
-use FisiLog\DAO\DaoEloquentFactory;
-
 class AuthController extends Controller
 {
-   use ThrottlesLogins;
+    use ThrottlesLogins;
 
-   public function __construct(DaoEloquentFactory $dao)
-   {
-      $this->middleware('guest', ['except' => 'logout']);
-      $this->document_type_persistence = $dao->getDocumentTypeDAO();
-      $this->user_persistence          = $dao->getUserDAO();
-   }
+    public function __construct()
+    {
+        $this->middleware('guest', ['except' => 'logout']);
+    }
 
-   protected function getLogin()
-   {
-      $document_types = $this->document_type_persistence->getAll();
+    protected function getLogin()
+    {
+        $document_types = DocumentType::all();
 
-      $data = [
-         'document_types' => $document_types,
-      ];
+        $data = [
+            'document_types' => $document_types,
+        ];
 
-      return view('auth.login', $data);
-   }
+        return view('auth.login', $data);
+    }
 
-   protected function postLogin(AuthenticationEmail $request)
-   {
-      $email = $request->input('email');
-      $password = $request->input('password');
+    protected function postLogin(AuthenticationEmail $request)
+    {
+        $email = $request->input('email');
+        $password = $request->input('password');
 
-      if (Auth::attempt([ 'email' => $email, 'password' => $password ]))
-         return redirect()->intended('index');
+        if (Auth::attempt([ 'email' => $email, 'password' => $password ])) {
+            return redirect()->intended('index');
+        }
 
-      return redirect()->route('auth.login');
-   }
+        return redirect()->route('auth.login');
+    }
 
-   public function authenticationDocument(AuthenticationDocument $request)
-   {
-      extract($request->all());
+    public function authenticationDocument(AuthenticationDocument $request)
+    {
+        extract($request->all());
 
-      $user = $this->user_persistence->findByDocument($document_id, $document_type);
+        $user = $this->user_persistence->findByDocument($document_id, $document_type);
 
-      if ( $user && Auth::attempt(['email' => $user->getEmail(), 'password' => $password]) )
-         return redirect()->intended('index');
+        if ( $user && Auth::attempt(['email' => $user->getEmail(), 'password' => $password]) ) {
+            return redirect()->intended('index');
+        }
 
-      $error_message = 'Invalid credentials';
+        return redirect('/login')->with('error_message', 'Invalid credentials');
+    }
 
-      return redirect('/login')->with('error_message', $error_message);
-   }
+    public function logout()
+    {
+        Auth::logout();
 
-   public function logout()
-   {
-      Auth::logout();
-
-      return redirect()->route('auth.login');
-   }
+        return redirect()->route('auth.login');
+    }
 }

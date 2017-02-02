@@ -21,16 +21,16 @@
            </tr>
        </thead>
        <tbody>
-           @foreach($classes as $class)
+           @foreach ($classes as $class)
            <tr>
-              <td>{{ $class->getProfessorFullName() }}</td>
-              <td>{{ $class->getGroupNumber() }}</td>
-              <td>{{ $class->getClassType() }}</td>
-              <td>{{ $class->getSchedule() }}</td>
-              <td>{{ $class->getClassRoomName() }}</td>
+              <td>{{ $class->professor_fullname }}</td>
+              <td>{{ $class->group_number }}</td>
+              <td>{{ $class->type }}</td>
+              <td>{{ $class->schedule }}</td>
+              <td>{{ $class->classroom_name }}</td>
               <td>
-                 <a href="{{ route('classes.show', ['class' => $class->getId()]) }}" title="Ver datos de la clase"><i class="fa fa-eye fa-fw" aria-hidden="true"></i></a>
-                 <a href="{{ route('classes.attendances.index', ['class' => $class->getId()]) }}" title="Ver registro de asistencias"><i class="fa fa-database fa-fw" aria-hidden="true"></i></a>
+                 <a href="{{ route('classes.show', ['class' => $class->id]) }}" title="Ver datos de la clase"><i class="fa fa-eye fa-fw" aria-hidden="true"></i></a>
+                 <a href="{{ route('classes.attendances.index', ['class' => $class->id]) }}" title="Ver registro de asistencias"><i class="fa fa-database fa-fw" aria-hidden="true"></i></a>
               </td>
            </tr>
            @endforeach

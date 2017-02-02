@@ -3,20 +3,12 @@ namespace FisiLog\Http\Controllers\Backend;
 
 use FisiLog\Http\Controllers\Controller;
 
-use FisiLog\DAO\DaoEloquentFactory;
-
 use FisiLog\Http\Requests\Backend\AcademicPlan\StoreRequest;
 
 use FisiLog\BusinessClasses\AcademicPlan;
 
 class AcademicPlanController extends Controller
 {
-   public function __construct(DaoEloquentFactory $dao)
-   {
-      $this->academic_plan_persistence = $dao->getAcademicPlanDAO();
-      $this->eap_persistence = $dao->getSchoolDAO();
-   }
-
    public function index($eap)
    {
       $eap = $this->eap_persistence->createBusinessClass($eap);

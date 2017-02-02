@@ -5,8 +5,6 @@ use FisiLog\Http\Controllers\Controller;
 
 use FisiLog\Models\Clase;
 
-use FisiLog\DAO\DaoEloquentFactory;
-
 use FisiLog\BusinessClasses\Attendance;
 
 use Auth;
@@ -17,14 +15,6 @@ use FisiLog\Http\Requests\Backend\Student\GetByDocument;
 
 class AttendanceController extends Controller
 {
-   public function __construct(DaoEloquentFactory $dao)
-   {
-      $this->attendance_persistence = $dao->getAttendanceDAO();
-      $this->user_persistence = $dao->getUserDAO();
-      $this->session_class_persistence = $dao->getSessionClassDAO();
-      $this->clase_persistence = $dao->getClaseDAO();
-   }
-
    public function index($clase)
    {
       $user = Auth::user();

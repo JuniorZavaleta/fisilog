@@ -1,9 +1,8 @@
 <?php
+
 namespace FisiLog\Http\Controllers\Backend;
 
 use FisiLog\Http\Controllers\Controller;
-
-use FisiLog\DAO\DaoEloquentFactory;
 
 use FisiLog\Http\Requests\Backend\SessionClass\CancelRequest;
 
@@ -11,14 +10,6 @@ use Auth;
 
 class SessionClassController extends Controller
 {
-   public function __construct(DaoEloquentFactory $dao)
-   {
-      $this->document_type_persistence = $dao->getDocumentTypeDAO();
-      $this->student_persistence = $dao->getStudentDAO();
-      $this->clase_persistence = $dao->getClaseDAO();
-      $this->session_class_persistence = $dao->getSessionClassDAO();
-      $this->user_persistence = $dao->getUserDao();
-   }
 
    public function show($clase, $id)
    {
