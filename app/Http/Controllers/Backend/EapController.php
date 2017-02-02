@@ -1,4 +1,5 @@
 <?php
+
 namespace FisiLog\Http\Controllers\Backend;
 
 use FisiLog\Http\Controllers\Controller;

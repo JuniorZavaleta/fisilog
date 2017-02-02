@@ -17,9 +17,9 @@ class School extends Model
         return $this->belongsTo(Facultad::class);
     }
 
-    public function academic_plan()
+    public function academic_plans()
     {
-        return $this->hasMany(AcademicPlan::class,'id');
+        return $this->hasMany(AcademicPlan::class);
     }
 
     public function student()

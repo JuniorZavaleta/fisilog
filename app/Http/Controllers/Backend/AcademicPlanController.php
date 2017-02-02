@@ -1,26 +1,22 @@
 <?php
+
 namespace FisiLog\Http\Controllers\Backend;
 
 use FisiLog\Http\Controllers\Controller;
 
 use FisiLog\Http\Requests\Backend\AcademicPlan\StoreRequest;
 
-use FisiLog\BusinessClasses\AcademicPlan;
+use FisiLog\Models\AcademicPlan;
+use FisiLog\Models\School;
 
 class AcademicPlanController extends Controller
 {
-   public function index($eap)
-   {
-      $eap = $this->eap_persistence->createBusinessClass($eap);
-      $academic_plans = $this->academic_plan_persistence->getBySchoolId($eap->getId());
+    public function index($eap_id)
+    {
+        $eap = School::with('academic_plans')->find($eap_id);
 
-      $data = [
-         'academic_plans' => $academic_plans,
-         'eap' => $eap,
-      ];
-
-      return view('backend.eaps.academic_plans.index', $data);
-   }
+        return view('backend.eaps.academic_plans.index', compact('eap'));
+    }
 
    public function create($eap)
    {
