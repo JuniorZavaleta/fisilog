@@ -18,27 +18,22 @@ class AcademicPlanController extends Controller
         return view('backend.eaps.academic_plans.index', compact('eap'));
     }
 
-   public function create($eap)
-   {
-      $eap = $this->eap_persistence->createBusinessClass($eap);
+    public function create($eap_id)
+    {
+        $eap = School::find($eap_id);
 
-      $data = [
-         'eap' => $eap,
-      ];
+        return view('backend.eaps.academic_plans.new', compact('eap'));
+    }
 
-      return view('backend.eaps.academic_plans.new', $data);
-   }
+    public function store($eap_id, StoreRequest $request)
+    {
+        $academic_plan = new AcademicPlan;
+        $academic_plan->school_id           = $eap_id;
+        $academic_plan->name                = $request->get('name');
+        $academic_plan->year_of_publication = $request->get('year_of_publication');
+        $academic_plan->is_active           = $request->get('is_active') == 'on';
+        $academic_plan->save();
 
-   public function store($eap, StoreRequest $request)
-   {
-      extract($request->all());
-      $eap = $this->eap_persistence->createBusinessClass($eap);
-      $is_active = isset($is_active);
-
-      $academic_plan = new AcademicPlan($name, $eap, $year_of_publication, $is_active);
-
-      $this->academic_plan_persistence->save($academic_plan);
-
-      return redirect()->route('eaps.academic_plans.index', ['eap' => $eap->getId()])->with('message', 'Plan Académico registrado exitosamente');
-   }
+        return redirect()->route('eaps.academic_plans.index', ['eap_id' => $eap_id])->with('message', 'Plan Académico registrado exitosamente');
+    }
 }
