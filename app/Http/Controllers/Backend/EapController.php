@@ -35,34 +35,24 @@ class EapController extends Controller
         return redirect()->route('eaps.index')->with('message', 'EAP registrada existosamente.');
     }
 
-   public function edit($eap)
-   {
-      $eap = $this->school_persistence->createBusinessClass($eap);
-      $facultades = $this->facultad_persistence->getAll();
+    public function edit($id)
+    {
+        $eap        = School::find($id);
+        $facultades = Facultad::all();
 
-      $data = [
-         'eap' => $eap,
-         'facultades' => $facultades,
-      ];
+        return view('backend.eaps.edit', compact('eap', 'facultades'));
+    }
 
-      return view('backend.eaps.edit', $data);
-   }
+    public function update($id, StoreRequest $request)
+    {
+        $eap = School::find($id);
+        $eap->name        = $request->get('name');
+        $eap->code        = $request->get('code');
+        $eap->facultad_id = $request->get('facultad_id');
+        $eap->save();
 
-   public function update($eap, StoreRequest $request)
-   {
-      extract($request->all());
-
-      $eap = $this->school_persistence->createBusinessClass($eap);
-      $facultad = $this->facultad_persistence->findById($facultad_id);
-
-      $eap->setName($name);
-      $eap->setCode($code);
-      $eap->setFacultad($facultad);
-
-      $this->school_persistence->update($eap);
-
-      return redirect()->route('eaps.index')->with('message', 'EAP actualizada exitosamente.');
-   }
+        return redirect()->route('eaps.index')->with('message', 'EAP actualizada exitosamente.');
+    }
 
    public function getByFacultad($facultad)
    {
