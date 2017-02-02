@@ -12,8 +12,6 @@ class SessionClass extends Model
 
     public $timestamps = false;
 
-    protected $dates = ['session_date'];
-
     public function clase()
     {
         return $this->belongsTo(Clase::class, 'class_id');

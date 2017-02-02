@@ -15,8 +15,8 @@ class ClaseSeeder extends Seeder
             'group_id' => 1,
             'start_hour' => date('H:i:s', strtotime('13:00:00')),
             'end_hour'=> date('H:i:s', strtotime('16:00:00')),
-            'day' => 'J',
-            'type'=>'T',
+            'day' => 4,
+            'type'=>'Theory',
             'course_id' => 1,
          ],
          [
@@ -26,8 +26,8 @@ class ClaseSeeder extends Seeder
             'group_id' => 1,
             'start_hour' => date('H:i:s', strtotime('16:00:00')),
             'end_hour' => date('H:i:s', strtotime('18:00:00')),
-            'day' => 'J',
-            'type' => 'L',
+            'day' => 4,
+            'type' => 'Lab',
             'course_id' => 1,
          ],
          [
@@ -37,8 +37,8 @@ class ClaseSeeder extends Seeder
             'group_id' => 2,
             'start_hour' => date('H:i:s', strtotime('13:00:00')),
             'end_hour'=> date('H:i:s', strtotime('16:00:00')),
-            'day' => 'J',
-            'type'=>'T',
+            'day' => 4,
+            'type'=>'Theory',
             'course_id' => 1,
          ],
          [
@@ -48,8 +48,8 @@ class ClaseSeeder extends Seeder
             'group_id' => 2,
             'start_hour' => date('H:i:s', strtotime('16:00:00')),
             'end_hour' => date('H:i:s', strtotime('18:00:00')),
-            'day' => 'J',
-            'type' => 'L',
+            'day' => 4,
+            'type' => 'Lab',
             'course_id' => 1,
          ],
       ]);

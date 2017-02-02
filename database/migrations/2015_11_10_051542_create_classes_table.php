@@ -20,7 +20,7 @@ class CreateClassesTable extends Migration
             $table->unsignedInteger('course_id');
             $table->time('start_hour');
             $table->time('end_hour');
-            $table->char('day', 1);
+            $table->tinyInteger('day');
             $table->char('type', 1);
             $table->timestamps();
 

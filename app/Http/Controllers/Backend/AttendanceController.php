@@ -7,6 +7,9 @@ use Auth;
 
 use FisiLog\Models\Clase;
 use FisiLog\Models\Attendance;
+use FisiLog\Models\SessionClass;
+
+use Carbon\Carbon;
 
 use FisiLog\Http\Requests\Backend\Student\GetByDocument;
 
@@ -51,34 +54,40 @@ class AttendanceController extends Controller
       return response()->json(['message' => 'OK']);
    }
 
-   public function storeProfessor($clase)
-   {
-      $user_model = Auth::user();
-      $user = $this->user_persistence->createBusinessClass($user_model);
+    private function validateSchedule($clase)
+    {
+        $current_time = Carbon::now();
 
-      $clase_id = $clase->id;
-      $session_class = $this->session_class_persistence->findNextSessionClass($clase_id);
+        return ($current_time->dayOfWeek == $clase->day) &&
+            ($clase->start_hour <= $current_time->toTimeString()) &&
+            ($clase->end_hour   >= $current_time->toTimeString());
+    }
 
-      $verify_schedule = Attendance::verifyDateAndAttendanceDate($clase);
+    public function storeProfessor($clase_id)
+    {
+        $user  = Auth::user();
+        $clase = Clase::find($clase_id);
+        $session_class = SessionClass::where('session_date', '>=', Carbon::yesterday())
+            ->where('session_date', '<=', Carbon::today()->addWeek())
+            ->where('class_id', '=', $clase_id)
+            ->first();
 
-      if ($verify_schedule) {
-         $session_class_id = $session_class->getId();
-         $user_id = $user->getId();
-         $has_attendance = $this->attendance_persistence->verifyAttendance($user_id, $session_class_id);
+        if ($this->validateSchedule($clase) && !is_null($session_class)) {
+            $last_attendance = Attendance::where('user_id','=',$user->id)
+                ->where('session_class_id','=',$session_class->id)
+                ->first();
 
-         if ($has_attendance == false) {
-            $attendance = new Attendance($user, $session_class, 0);
+            if (is_null($last_attendance) || ($last_attendance->verified == false)) {
+                $attendance = new Attendance;
+                $attendance->user_id = $user->id;
+                $attendance->session_class_id = $session_class->id;
+                $attendance->verified = false;
+                $attendance->save();
+            }
 
-            $this->attendance_persistence->save($attendance);
+            return redirect()->route('sessions_class.index', ['clase_id' => $clase_id, 'session_class' => $session_class->id]);
+        }
 
-            $attendances = Clase::find($clase_id)->attendances;
-
-            return redirect()-> route('classes.sessions_class.index', ['clase' => $clase_id, 'session_class' => $session_class_id]);
-         } else {
-            return redirect()->route('index')->with('error', 'asistencia ya marcada');
-         }
-      }
-
-      return redirect()->route('index')->with('error', 'fuera de horario');
-   }
+        return redirect()->route('index')->with('error', 'fuera de horario');
+    }
 }

@@ -8,23 +8,22 @@ use FisiLog\Http\Requests\Backend\SessionClass\CancelRequest;
 
 use Auth;
 
+use FisiLog\Models\DocumentType;
+use FisiLog\Models\Clase;
+use FisiLog\Models\Student;
+
 class SessionClassController extends Controller
 {
+    public function show($clase_id, $session_class_id)
+    {
+        $document_types = DocumentType::all();
+        $clase = Clase::find($clase_id);
+        $students = Student::whereHas('groups', function ($groups) use ($clase) {
+            $groups->where('groups.id', $clase->group_id);
+        })->get();
 
-   public function show($clase, $id)
-   {
-      $document_types = $this->document_type_persistence->getAll();
-      $clase = $this->clase_persistence->createBusinessClass($clase);
-      $students = $this->student_persistence->getByGroupId($clase->getGroupId());
-
-      $data = [
-         'document_types' => $document_types,
-         'clase' => $clase,
-         'students' => $students,
-      ];
-
-      return view('backend.classes.sessions.index', $data);
-   }
+        return view('backend.classes.sessions.index', compact('document_types', 'clase', 'students'));
+    }
 
    public function cancel($clase, $session_class, CancelRequest $request)
    {

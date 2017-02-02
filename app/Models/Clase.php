@@ -1,4 +1,5 @@
 <?php
+
 namespace FisiLog\Models;
 
 use Illuminate\Database\Eloquent\Model;
