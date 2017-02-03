@@ -3,8 +3,8 @@ $(function(){
    var by_document = $('#by_document');
    var login_by_email      = $('#withEmail');
    var login_with_document = $('#withDocument');
-   var selected = 'btn-primary';
-   var unselected = 'btn-default';
+   var selected = 'primary';
+   var unselected = 'grey';
 
    $(by_email).click(function(){
       by_email.removeClass(unselected);
