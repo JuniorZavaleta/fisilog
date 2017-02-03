@@ -1,6 +1,8 @@
 @extends('app')
+
+@section('title', 'Registro de asistencia')
+
 @section('content')
-<title>Registro de asistencia</title>
 <style type="text/css">
   #view-student {
     margin-top: 20px;
@@ -26,7 +28,7 @@
     <div class="panel panel-primary">
       <div class="panel-heading">
         <h3 class="panel-title">Clases</h3>
-      </div>  
+      </div>
     <!-- Lista de clases -->
       <div class="panel-body">
         <table class="table table-hover">

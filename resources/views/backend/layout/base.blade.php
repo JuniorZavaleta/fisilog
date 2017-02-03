@@ -40,6 +40,7 @@
 
   <!-- Scripts -->
   <script>
+  var base_url = "{{ url('/') }}";
   $('#menu-button').click(function(){
     $('.ui.sidebar').sidebar({
       context: $('.bottom.segment')
