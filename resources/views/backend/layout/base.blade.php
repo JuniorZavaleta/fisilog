@@ -12,7 +12,11 @@
   <link rel="stylesheet" type="text/css" href="{{ asset('/semantic.min.css') }}">
   <script src="{{ asset('/jquery-3.1.1.min.js') }}"></script>
   <script src="{{ asset('/semantic.min.js') }}"></script>
-
+  <style type="text/css">
+    .pusher { padding: 10px !important; }
+    .pushable { height: auto; }
+    #content { height: calc(100% - 42px) !important; margin-bottom: 0px !important;}
+  </style>
   @stack('head')
 </head>
 
