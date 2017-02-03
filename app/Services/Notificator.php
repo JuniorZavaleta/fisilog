@@ -1,6 +1,8 @@
 <?php
-namespace FisiLog\BusinessClasses;
 
-interface Notificator {
+namespace FisiLog\Services;
+
+interface Notificator
+{
    public function notify($view, $data, $subject, $to);
 }

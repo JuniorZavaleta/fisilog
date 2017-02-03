@@ -1,4 +1,5 @@
 <?php
+
 namespace FisiLog\Http\Controllers\Backend;
 
 use FisiLog\Http\Controllers\Controller;
@@ -8,6 +9,9 @@ use Auth;
 use FisiLog\Models\Clase;
 use FisiLog\Models\Attendance;
 use FisiLog\Models\SessionClass;
+use FisiLog\Models\User;
+
+use FisiLog\Services\NotificationService;
 
 use Carbon\Carbon;
 
@@ -15,6 +19,11 @@ use FisiLog\Http\Requests\Backend\Student\GetByDocument;
 
 class AttendanceController extends Controller
 {
+    public function __construct()
+    {
+        $this->notificator = new NotificationService;
+    }
+
     public function index($clase_id)
     {
         $user  = Auth::user();
@@ -28,31 +37,41 @@ class AttendanceController extends Controller
         return view('backend.classes.attendances.index', compact('attendances', 'clase'));
     }
 
-   public function storeStudent($clase, $session_class, GetByDocument $request)
-   {
-      extract($request->all());
+    public function storeStudent($clase_id, $session_class_id, GetByDocument $request)
+    {
+        $document_code = $request->get('document_code');
+        $document_type = $request->get('document_type');
 
-      $user = $this->user_persistence->findByDocument($document_code, $document_type);
-      $clase = $this->clase_persistence->createBusinessClass($clase);
+        $user  = User::findByDocument($document_type, $document_code)->first();
+        $clase = Clase::find($clase_id);
 
-      $attendance = AttendanceModel::where('user_id', '=', $user->getId())
-      ->where('session_class_id', '=', $session_class->id)
-      ->first();
+        $attendance = Attendance::where('user_id', '=', $user->id)
+        ->where('session_class_id', '=', $session_class_id)
+        ->first();
 
-      if (!$attendance->verified) {
-         $attendance->verified = true;
-         $attendance->save();
-      }
+        if (is_null($attendance)) {
+            $attendance = new Attendance;
+            $attendance->user_id          = $user->id;
+            $attendance->session_class_id = $session_class_id;
+            $attendance->verified         = false;
+        }
 
-      $data = [
-         'full_name' => $user->getFullName(),
-         'course_name' => $clase->getCourseName(),
-      ];
+        if ($attendance->verified) {
+            return response()->json(['message' => 'Ya marco asistencia.'], 409);
+        } else {
+            $attendance->verified = true;
+            $attendance->save();
+        }
 
-      $user->notify('attendance', $data, 'Asistencia a clases');
+        $data = [
+            'full_name'   => $user->fullname,
+            'course_name' => $clase->course_name,
+        ];
 
-      return response()->json(['message' => 'OK']);
-   }
+        $this->notificator->notify('attendance', $data, 'Asistencia a clases', $user);
+
+        return response()->json(['message' => 'Asistencia registrada exitosamente.']);
+    }
 
     private function validateSchedule($clase)
     {

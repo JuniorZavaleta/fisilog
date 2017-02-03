@@ -51,4 +51,19 @@ class User extends Model implements AuthenticatableContract,
     {
         return $this->belongsTo(NotificationChannel::class);
     }
+
+    public function scopeFindByDocument($query, $type_id, $code)
+    {
+        $query->whereHas('documents', function ($documents) use (
+            $type_id, $code
+        ) {
+            $documents->where('document_type_id', $type_id)
+                      ->where('code', $code);
+        });
+    }
+
+    public function getFullnameAttribute()
+    {
+        return $this->name . ' ' . $this->lastname;
+    }
 }
