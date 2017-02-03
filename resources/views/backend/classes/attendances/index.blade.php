@@ -6,7 +6,7 @@
   <h2>Asistencia de las Sesiones de {{ $clase->course_name }} / {{ $clase->type }}</h2>
 </div>
 
-<table class="ui table">
+<table class="ui compact table">
   <thead>
     <th>#</th>
     <th>Fecha</th>
