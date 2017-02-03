@@ -26,8 +26,8 @@
       <td>{{ $class->schedule }}</td>
       <td>{{ $class->classroom_name }}</td>
       <td>
-         <a href="{{ route('classes.show', ['class' => $class->id]) }}" title="Ver datos de la clase"><i class="fa fa-eye fa-fw" aria-hidden="true"></i></a>
-         <a href="{{ route('classes.attendances.index', ['class' => $class->id]) }}" title="Ver registro de asistencias"><i class="fa fa-database fa-fw" aria-hidden="true"></i></a>
+         <a href="{{ route('classes.show', ['class' => $class->id]) }}" title="Ver datos de la clase"><i class="grey eye icon" aria-hidden="true"></i></a>
+         <a href="{{ route('classes.attendances.index', ['class' => $class->id]) }}" title="Ver registro de asistencias"><i class="teal database icon" aria-hidden="true"></i></a>
       </td>
     </tr>
   @endforeach
