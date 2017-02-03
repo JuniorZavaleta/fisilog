@@ -21,12 +21,12 @@
       <div class="ui basic segment">
         <div class="ui equal width padded grid">
           <div class="row">
-          <div class="column">
-          <a class="ui fluid large primary button" id="by_email"><i class="at icon"></i>Email</a>
-          </div>
-          <div class="column">
-            <a class="ui fluid large grey button" id="by_document"><i class="credit card alternative icon"></i> Document</a>
-          </div>
+            <div class="column">
+              <a class="ui fluid large primary button" id="by_email"><i class="at icon"></i>Email</a>
+            </div>
+            <div class="column">
+              <a class="ui fluid large grey button" id="by_document"><i class="credit card alternative icon"></i> Document</a>
+            </div>
           </div>
         </div>
       </div>
