@@ -1,4 +1,5 @@
 <?php
+
 namespace FisiLog\Models;
 
 use Illuminate\Auth\Authenticatable;
@@ -13,39 +14,41 @@ class User extends Model implements AuthenticatableContract,
                                     AuthorizableContract,
                                     CanResetPasswordContract
 {
-   use Authenticatable, Authorizable, CanResetPassword;
+    use Authenticatable, Authorizable, CanResetPassword;
 
-   protected $table = 'users';
-   protected $fillable = ['name', 'lastname', 'email', 'password', 'phone', 'notification_channel_id', 'photo_url', 'user_type_id'];
-   protected $hidden = ['password', 'remember_token'];
+    protected $table = 'users';
 
-   public function documents()
-   {
-      return $this->hasMany(Document::class);
-   }
+    protected $fillable = ['name', 'lastname', 'email', 'password', 'phone', 'notification_channel_id', 'photo_url', 'user_type_id'];
 
-   public function student()
-   {
-      return $this->hasOne(Student::class);
-   }
+    protected $hidden = ['password', 'remember_token'];
 
-   public function professor()
-   {
-      return $this->hasOne(Professor::class);
-   }
+    public function documents()
+    {
+        return $this->hasMany(Document::class);
+    }
 
-   public function attendances()
-   {
-      return $this->hasMany(Attendance::class);
-   }
+    public function student()
+    {
+        return $this->hasOne(Student::class);
+    }
 
-   public function user_type()
-   {
-      return $this->belongsTo(UserType::class);
-   }
+    public function professor()
+    {
+        return $this->hasOne(Professor::class);
+    }
 
-   public function notification_channel()
-   {
-      return $this->belongsTo(NotificationChannel::class);
-   }
+    public function attendances()
+    {
+        return $this->hasMany(Attendance::class);
+    }
+
+    public function user_type()
+    {
+        return $this->belongsTo(UserType::class);
+    }
+
+    public function notification_channel()
+    {
+        return $this->belongsTo(NotificationChannel::class);
+    }
 }

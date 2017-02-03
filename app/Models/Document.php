@@ -1,24 +1,24 @@
 <?php
 
 namespace FisiLog\Models;
-use FisiLog\Models\User;
-use FisiLog\Models\DocumentType;
+
 use Illuminate\Database\Eloquent\Model;
 
 class Document extends Model
 {
-   protected $table = 'documents';
-   protected $fillable = ['user_id', 'document_type_id', 'code'];
+    protected $table = 'documents';
 
-   public $timestamps = false;
+    protected $fillable = ['user_id', 'document_type_id', 'code'];
 
-   public function user()
-   {
-      return $this->belongsTo(User::class);
-   }
+    public $timestamps = false;
 
-   public function document_type()
-   {
-      return $this->belongsTo(DocumentType::class);
-   }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function document_type()
+    {
+        return $this->belongsTo(DocumentType::class);
+    }
 }
