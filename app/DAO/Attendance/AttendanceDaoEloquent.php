@@ -5,13 +5,16 @@ use FisiLog\BusinessClasses\Attendance as AttendanceBusiness;
 
 use FisiLog\Models\Attendance as AttendanceModel;
 
+use FisiLog\DAO\User\UserDaoEloquent as UserModel;
+
+use FisiLog\DAO\SessionClass\SessionClassDaoEloquent as SessionClassModel;
+
 class AttendanceDaoEloquent implements AttendanceDao {
 
-   public function verifyAttendance($user_id, $clase_id, $date)
+   public function verifyAttendance($user_id, $session_class_id)
    {
       $attendance_model = AttendanceModel::where('user_id','=',$user_id)
-                                         ->where('class_id','=',$clase_id)
-                                         ->where('date','=',$date)
+                                         ->where('session_class_id','=',$session_class_id)
                                          ->first();
 
       if ($attendance_model == null)
@@ -24,8 +27,7 @@ class AttendanceDaoEloquent implements AttendanceDao {
    {
       $attendance_model = new AttendanceModel;
       $attendance_model->user_id = $attendanceBusiness->getUser()->getId();
-      $attendance_model->class_id = $attendanceBusiness->getClase()->getId();
-      $attendance_model->date = date('Y-m-d H:i:s');
+      $attendance_model->session_class_id = $attendanceBusiness->getSessionClass()->getId();
       $attendance_model->verified = $attendanceBusiness->getVerified();
       $attendance_model->save();
       $attendanceBusiness->setId($attendance_model->id);
@@ -47,9 +49,9 @@ class AttendanceDaoEloquent implements AttendanceDao {
       return static::createBusinessClass($attendance_model);
    }
 
-   public function getByClaseId($clase_id)
+   public function getBySessionClassId($session_class_id)
    {
-      $attendance_models = AttendanceModel::where('class_id', '=', $clase_id)->get();
+      $attendance_models = AttendanceModel::where('session_class_id', '=', $session_class_id)->get();
       $attendances      = [];
 
       foreach ($attendance_models as $model)
@@ -63,13 +65,29 @@ class AttendanceDaoEloquent implements AttendanceDao {
       if ($attendance_model == null)
          return null;
 
-      $attendance_business = new AttendanceBusiness;
-      $attendance_business->setId($attendance_model->id);
-      $attendance_business->setUser($attendance_model->user);
-      $attendance_business->setClase($attendance_model->claser);
-      $attendance_business->setDate($attendance_model->date);
-      $attendance_business->setVerified($attendance_model->verified);
+      $attendance_business = new AttendanceBusiness(
+         UserModel::createBusinessClass($attendance_model->user),
+         SessionClassModel::createBusinessClass($attendance_model->session_class),
+         $attendance_model->verified,
+         $attendance_model->created_at,
+         $attendance_model->id
+      );
 
       return $attendance_business;
    }
+
+   public function getAttendancesOfUserByClase($user_id, $clase_id)
+   {
+      $attendance_models = AttendanceModel::where('user_id', '=', $user_id)
+                                          ->whereHas('session_class', function($session_class) use ($clase_id) {
+                                             $session_class->where('class_id', '=', $clase_id);
+                                          })->get();
+      $attendances      = [];
+
+      foreach ($attendance_models as $model)
+         $attendances[] = static::createBusinessClass($model);
+
+      return $attendances;
+   }
+
 }

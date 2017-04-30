@@ -58,7 +58,7 @@ class SessionClass {
       $this->id = $id;
    }
 
-   public function getId($id)
+   public function getId()
    {
       return $this->id;
    }

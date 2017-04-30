@@ -2,6 +2,12 @@
 
 @section('content')
 
+   @if ( session('error') )
+    <div class="alert alert-danger">
+       {{ session('error') }}
+    </div>
+   @endif
+
 <div class="row">
    <div class="panel panel-primary">
      <!-- Default panel contents -->
@@ -31,6 +37,7 @@
                <td>
                  <a href="{{ route('classes.show', ['class' => $class->getId()]) }}" title="Ver datos de la clase"><i class="fa fa-eye fa-fw" aria-hidden="true"></i></a>
                  <a href="{{ route('classes.attendances.index', ['class' => $class->getId()]) }}" title="Ver registro de asistencias"><i class="fa fa-database fa-fw" aria-hidden="true"></i></a>
+                 <a href="{{ route('classes.attendances.store', ['class' => $class->getId()]) }}" title="Registrar asistencia"><i class="fa fa-pencil fa-fw" aria-hidden="true"></i></a>
               </td>
            </tr>
            @endforeach

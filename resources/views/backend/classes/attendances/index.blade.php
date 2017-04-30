@@ -23,10 +23,10 @@
          @for($i = 0; $i < count($attendances) ; $i++)
          <tr>
             <td>{{ ($i+1) }}</td>
-            <td>{{ $attendances[$i]->session_class->session_date }}</td>
-            <td>{{ $attendances[$i]->session_class->status }}</td>
+            <td>{{ $attendances[$i]->getSessionClass()->getSessionDate() }}</td>
+            <td>{{ $attendances[$i]->getSessionClass()->getStatus() }}</td>
             <td>{{ $attendances[$i]->verified ? 'Asistio' : 'No Asistio'}}</td>
-            <td>{{ $attendances[$i]->created_at }}</td>
+            <td>{{ $attendances[$i]->getRegisterTime() }}</td>
             <td></td>
          </tr>
          @endfor
